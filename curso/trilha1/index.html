@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 1 - Atalhos do Claude | 6 Pilares do Claude Code</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6 Pilares CC</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="#" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="#" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="#" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="#" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="#" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 1
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🩵 Atalhos do Claude</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Aprenda os shortcuts, comandos rapidos, flags e tecnicas de pipe que aceleram drasticamente seu uso do Claude Code. Domine o terminal e ganhe velocidade real.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">5</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">30</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">~2h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-emerald-400">Basico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- NAVEGACAO RAPIDA - Cartoes simples -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <a href="#mod-1-1" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/50 p-4 transition-all">
+        <span class="text-emerald-400 font-bold text-sm">1.1</span>
+        <h3 class="font-semibold mt-1">⌨️ Comandos Essenciais do Terminal</h3>
+      </a>
+      <a href="#mod-1-2" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/50 p-4 transition-all">
+        <span class="text-emerald-400 font-bold text-sm">1.2</span>
+        <h3 class="font-semibold mt-1">⚡ Slash Commands Nativos</h3>
+      </a>
+      <a href="#mod-1-3" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/50 p-4 transition-all">
+        <span class="text-emerald-400 font-bold text-sm">1.3</span>
+        <h3 class="font-semibold mt-1">🚩 Flags de Linha de Comando</h3>
+      </a>
+      <a href="#mod-1-4" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/50 p-4 transition-all">
+        <span class="text-emerald-400 font-bold text-sm">1.4</span>
+        <h3 class="font-semibold mt-1">🔀 Pipe de Dados</h3>
+      </a>
+      <a href="#mod-1-5" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/50 p-4 transition-all sm:col-span-2">
+        <span class="text-emerald-400 font-bold text-sm">1.5</span>
+        <h3 class="font-semibold mt-1">🎯 Atalhos de Teclado e Aliases</h3>
+      </a>
+    </div>
+
+    <!-- DIVISOR -->
+    <div class="flex items-center space-x-4 mb-8">
+      <div class="flex-1 h-px bg-dark-600"></div>
+      <span class="text-neutral-500 text-sm font-medium">Conteudo Detalhado</span>
+      <div class="flex-1 h-px bg-dark-600"></div>
+    </div>
+
+    <!-- ===== MODULO 1.1 ===== -->
+    <div id="mod-1-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.1</span>
+          <span class="text-xs text-neutral-500">~25 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">⌨️ Comandos Essenciais do Terminal</h3>
+        <p class="text-neutral-400 text-sm">Os comandos internos do Claude Code que voce vai usar todos os dias. /help, /clear, /compact, /cost, /status e como combina-los.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <!-- Topico 1 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">/help</span>
+              <span class="text-neutral-500 text-sm ml-2">- O centro de ajuda instantaneo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Comando que exibe todos os comandos disponiveis, slash commands e flags do Claude Code. E seu manual de referencia rapida dentro da sessao.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Quando voce esquece um comando ou quer descobrir novas funcionalidades, /help e o primeiro lugar pra olhar. Evita ter que sair do terminal pra consultar documentacao.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Digite /help a qualquer momento na sessao. Mostra comandos internos, slash commands de skills, e flags CLI. Funciona como um indice vivo do que o Claude Code consegue fazer.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Topico 2 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🧹</span>
+            <div>
+              <span class="font-medium">/clear</span>
+              <span class="text-neutral-500 text-sm ml-2">- Limpando a sessao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Comando que limpa o historico visual da sessao atual no terminal. Nao apaga o contexto do Claude, apenas a exibicao na tela.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sessoes longas ficam poluidas visualmente. /clear da um respiro sem perder o fio da conversa. Voce mantem o contexto mas ganha clareza visual.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Diferente de /compact, o /clear so afeta o que aparece no terminal. O Claude continua lembrando de tudo. Use quando a tela esta cheia mas o contexto ainda e relevante.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Topico 3 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📦</span>
+            <div>
+              <span class="font-medium">/compact</span>
+              <span class="text-neutral-500 text-sm ml-2">- Otimizando o contexto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Comando que compacta o historico da conversa, resumindo mensagens anteriores para liberar espaco na janela de contexto. Essencial em sessoes longas.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">A janela de contexto tem limite. Quando voce atinge ~70-80% de uso, o Claude comeca a perder detalhes. /compact resume o historico e libera espaco para continuar trabalhando sem perder informacao critica.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Use /compact antes de migracoes longas ou refatoracoes grandes. Monitore com /cost para saber quando compactar. O Claude gera um resumo inteligente que preserva decisoes e contexto importante.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Topico 4 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💰</span>
+            <div>
+              <span class="font-medium">/cost</span>
+              <span class="text-neutral-500 text-sm ml-2">- Monitorando gastos e tokens</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Comando que mostra o custo acumulado da sessao atual em dolares, quantidade de tokens consumidos e estatisticas de uso. Seu medidor de consumo em tempo real.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Sem monitorar custo, voce pode queimar creditos sem perceber. /cost te da visibilidade total sobre quanto esta gastando e ajuda a decidir quando compactar ou iniciar nova sessao.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Mostra tokens de entrada, saida e custo em USD. Use como gatilho para /compact quando o contexto fica grande. Operadores profissionais checam /cost regularmente para otimizar uso.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Topico 5 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">/status</span>
+              <span class="text-neutral-500 text-sm ml-2">- Verificando o estado do ambiente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Mostra informacoes sobre a sessao atual: modelo em uso, MCPs conectados, ferramentas disponiveis e configuracoes ativas. Seu painel de controle do ambiente.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Quando algo nao funciona como esperado, /status ajuda a diagnosticar. Talvez um MCP esteja desconectado ou o modelo errado esteja selecionado. E o primeiro comando de troubleshooting.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Exibe modelo ativo, MCPs conectados, ferramentas e permissoes. Use antes de tarefas criticas para garantir que o ambiente esta correto. Complementa /cost para visao completa da sessao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Topico 6 -->
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Combinando Comandos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Fluxo diario com comandos internos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">A pratica de usar os comandos internos em conjunto durante uma sessao de trabalho. /status no inicio, /cost ao longo, /compact quando necessario, /clear para manter foco visual.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Comandos isolados sao uteis. Comandos combinados num fluxo consciente sao poderosos. Voce desenvolve um ritmo de trabalho que maximiza produtividade e minimiza desperdicio.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Fluxo recomendado: /status (verificar ambiente) > trabalhar > /cost (monitorar) > /compact (quando necessario) > /clear (limpar visual). Repita conforme a sessao avanca.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-1.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 1.2 ===== -->
+    <div id="mod-1-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.2</span>
+          <span class="text-xs text-neutral-500">~25 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">⚡ Slash Commands Nativos</h3>
+        <p class="text-neutral-400 text-sm">Comandos de acao do Claude Code: /commit, /review, /pr, /init e /doctor. Execucao direta sem digitar prompts longos.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">/commit</span>
+              <span class="text-neutral-500 text-sm ml-2">- Commit inteligente com IA</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Analisa todas as mudancas staged/unstaged, gera uma mensagem de commit descritiva automaticamente e executa o git commit. Elimina a friccao de escrever mensagens de commit.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Mensagens de commit ruins sao epidemia. O Claude analisa o diff real e gera mensagens que descrevem o "por que" da mudanca, nao so o "o que". Commits mais claros, historico mais util.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Claude le o diff, analisa staged + unstaged, gera mensagem no padrao do repo e executa. Voce pode revisar antes de confirmar. Segue convencoes como Conventional Commits se o repo ja usa.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">/review</span>
+              <span class="text-neutral-500 text-sm ml-2">- Code review automatico</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Revisa suas mudancas atuais procurando bugs, vulnerabilidades de seguranca, problemas de performance e qualidade de codigo. Como ter um senior reviewer disponivel 24/7.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Ninguem deveria fazer push sem review. Quando voce trabalha sozinho ou precisa de feedback rapido, /review pega coisas que voce nao viu: race conditions, SQL injection, imports desnecessarios.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Analisa mudancas por camadas: seguranca, bugs, performance e qualidade. Classifica em Critical, Important, Minor. Use antes de todo /commit em codigo de producao.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🚀</span>
+            <div>
+              <span class="font-medium">/pr</span>
+              <span class="text-neutral-500 text-sm ml-2">- Pull Request instantaneo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Analisa todos os commits da branch, gera titulo e descricao formatados e cria o Pull Request no GitHub automaticamente via gh CLI.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Criar PRs e tedioso. Escrever descricoes boas leva tempo. /pr faz isso em segundos, analisando o diff completo e gerando um resumo que outro dev consegue entender imediatamente.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Requer gh CLI instalado e autenticado. Analisa todos os commits (nao so o ultimo). Gera Summary + Test Plan. Voce revisa antes de publicar. Fluxo ideal: /review > /commit > /pr.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏗️</span>
+            <div>
+              <span class="font-medium">/init</span>
+              <span class="text-neutral-500 text-sm ml-2">- Inicializacao do projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Gera automaticamente um CLAUDE.md para o projeto atual. O Claude explora a estrutura, identifica stack, comandos e convencoes, e cria o arquivo de memoria do projeto.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">O CLAUDE.md e a fundacao do Claude Code (Trilha 2 inteira). /init cria esse arquivo automaticamente, economizando tempo e garantindo que os pontos essenciais estejam cobertos.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Explora o repo, detecta linguagem, framework, testes, scripts de build. Gera CLAUDE.md com overview, stack, comandos e convencoes. Voce deve revisar e personalizar o resultado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🩺</span>
+            <div>
+              <span class="font-medium">/doctor</span>
+              <span class="text-neutral-500 text-sm ml-2">- Diagnostico do ambiente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">Verifica a saude da instalacao do Claude Code: versao, autenticacao, MCPs, permissoes e dependencias. Seu checklist automatico de troubleshooting.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Quando algo nao conecta, um MCP falha ou um comando nao funciona, /doctor diagnostica o problema rapidamente. Evita horas de debug manual em configuracao.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Checa versao do Claude, Node.js, autenticacao API, MCPs instalados e suas conexoes. Aponta problemas com sugestoes de correcao. Execute quando qualquer integracao parar de funcionar.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Fluxo Completo</span>
+              <span class="text-neutral-500 text-sm ml-2">- Combinando slash commands no dia a dia</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div>
+                <span class="text-emerald-400 font-semibold">O que e:</span>
+                <p class="text-neutral-300 text-sm">O fluxo completo de trabalho usando slash commands em sequencia: /init (setup) > codigo > /review > /commit > /pr. O workflow profissional com Claude Code.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Por que aprender:</span>
+                <p class="text-neutral-300 text-sm">Slash commands isolados sao atalhos. Slash commands em sequencia sao um sistema de producao. Voce constroi um pipeline de qualidade que garante codigo revisado, commitado e publicado corretamente.</p>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-semibold">Conceitos-chave:</span>
+                <p class="text-neutral-300 text-sm">Pipeline padrao: /init (uma vez por projeto) > desenvolver > /review (antes de commitar) > /commit (com mensagem IA) > /pr (quando pronto). Cada passo agrega qualidade.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-2.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 1.3 ===== -->
+    <div id="mod-1-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.3</span>
+          <span class="text-xs text-neutral-500">~25 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚩 Flags de Linha de Comando</h3>
+        <p class="text-neutral-400 text-sm">Controle total do Claude via flags CLI: -p para prompts diretos, --model para escolher modelo, --resume para retomar sessoes e mais.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">💬</span>
+            <div>
+              <span class="font-medium">-p (Prompt Direto)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Execucao sem sessao interativa</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Flag que permite enviar um prompt direto ao Claude sem abrir sessao interativa. Ideal para scripts, automacoes e tarefas rapidas de uma linha.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Nem sempre voce quer abrir uma sessao completa. Com -p voce pode integrar Claude em shell scripts, cron jobs e pipelines de CI/CD.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sintaxe: claude -p "seu prompt aqui". Executa e retorna resultado no stdout. Combinavel com pipe: cat file.py | claude -p "explique este codigo". Nao mantem sessao.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🤖</span>
+            <div>
+              <span class="font-medium">--model</span>
+              <span class="text-neutral-500 text-sm ml-2">- Escolhendo o modelo certo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Flag que permite selecionar qual modelo Claude usar: Opus (mais capaz), Sonnet (equilibrado) ou Haiku (rapido e barato).</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Tarefas diferentes exigem modelos diferentes. Usar Opus pra tudo e desperdicio. Usar Haiku pra arquitetura complexa e insuficiente. Saber escolher economiza dinheiro e tempo.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Opus: arquitetura, decisoes complexas. Sonnet: desenvolvimento diario, 80% dos casos. Haiku: tarefas rapidas, formatacao, perguntas simples. Sintaxe: claude --model sonnet.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔁</span>
+            <div>
+              <span class="font-medium">--resume</span>
+              <span class="text-neutral-500 text-sm ml-2">- Retomando sessoes anteriores</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Flag que retoma uma sessao anterior do Claude Code com todo o contexto preservado. Voce continua exatamente de onde parou.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sessoes longas sao interrompidas por updates, reinicializacoes ou fim de expediente. Com --resume voce nao perde o contexto acumulado. Essencial para projetos que duram dias.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sintaxe: claude --resume. Retoma a ultima sessao. Pode especificar ID: claude --resume SESSION_ID. O contexto, decisoes e arquivos discutidos sao preservados.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔧</span>
+            <div>
+              <span class="font-medium">--allowedTools</span>
+              <span class="text-neutral-500 text-sm ml-2">- Controle de ferramentas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Flag que restringe quais ferramentas o Claude pode usar na sessao. Controle granular de permissoes para seguranca e previsibilidade.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Em ambientes de producao ou quando voce quer limitar o que o Claude pode fazer (ex: so leitura, sem executar bash), essa flag da o controle necessario.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Permite listar ferramentas permitidas explicitamente. Util em automacoes onde voce quer garantir que o Claude so use Read e Grep, por exemplo, sem modificar arquivos.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📄</span>
+            <div>
+              <span class="font-medium">--output-format</span>
+              <span class="text-neutral-500 text-sm ml-2">- Formato de saida estruturado</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Flag que define o formato de saida do Claude: texto puro, JSON ou streaming. Essencial para integracoes programaticas.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quando Claude e parte de um pipeline automatizado, voce precisa de saida parseavel. JSON estruturado permite que outros scripts processem o resultado do Claude.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Opcoes: text (padrao), json, stream-json. Para automacoes use json. Para UI em tempo real use stream-json. Combinavel com -p para pipelines completos.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Combinando Flags</span>
+              <span class="text-neutral-500 text-sm ml-2">- Receitas avancadas de CLI</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A arte de combinar multiplas flags para criar comandos poderosos e especificos. Cada combinacao desbloqueia um caso de uso diferente.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Flags individuais sao uteis. Flags combinadas criam automacoes reais: scripts de review automatico, pipelines de documentacao, analises de codebase sob demanda.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exemplos: claude -p "..." --model haiku --output-format json (analise rapida com saida parseavel). claude --resume --model opus (retomar com modelo mais capaz). Crie aliases para suas combinacoes favoritas.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-3.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 1.4 ===== -->
+    <div id="mod-1-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.4</span>
+          <span class="text-xs text-neutral-500">~25 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔀 Pipe de Dados</h3>
+        <p class="text-neutral-400 text-sm">Alimente o Claude com arquivos, logs e stack traces via pipe Unix. Integre com ferramentas do terminal para fluxos poderosos.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">cat | claude -p</span>
+              <span class="text-neutral-500 text-sm ml-2">- Alimentando arquivos diretamente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tecnica de enviar o conteudo de um arquivo diretamente ao Claude via stdin. O pipe Unix conecta a saida de cat com a entrada do Claude.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A forma mais rapida de fazer o Claude analisar um arquivo sem abrir sessao interativa. Funciona com qualquer tipo de arquivo texto: codigo, logs, configs, CSV.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sintaxe: cat app.py | claude -p "explique este codigo". O conteudo do arquivo vira parte do prompt. Funciona com qualquer comando que gere saida: grep, find, git diff.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🪵</span>
+            <div>
+              <span class="font-medium">Pipe com Logs e Erros</span>
+              <span class="text-neutral-500 text-sm ml-2">- Debug instantaneo via terminal</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Enviar logs de erro, stack traces ou saidas de aplicacao diretamente ao Claude para analise e diagnostico automatico.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Copiar e colar stack traces manualmente e lento e propenso a erros. Com pipe, voce envia o log inteiro direto do terminal. O Claude recebe o contexto completo sem nada cortado.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exemplos: cat error.log | claude -p "o que esta causando esses erros?". Funciona com tail -f para logs em tempo real. Combine com grep para filtrar antes de enviar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📚</span>
+            <div>
+              <span class="font-medium">Multiplos Arquivos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Concatenando contexto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tecnica de concatenar multiplos arquivos e enviar tudo ao Claude de uma vez. Util quando o contexto depende de varios arquivos relacionados.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitos bugs so fazem sentido quando voce ve multiplos arquivos juntos: o controller, o model e a rota. Enviar todos de uma vez da ao Claude o contexto completo.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sintaxe: cat model.py controller.py routes.py | claude -p "encontre inconsistencias". Use separadores ou file headers para o Claude saber qual arquivo e qual.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💾</span>
+            <div>
+              <span class="font-medium">Redirecionando Saida</span>
+              <span class="text-neutral-500 text-sm ml-2">- Salvando resultados do Claude</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar operadores de redirecionamento (> e >>) para salvar a saida do Claude em arquivos. Transforma respostas do Claude em artefatos permanentes.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Respostas do Claude no terminal sao efemeras. Redirecionando para arquivo, voce cria documentacao, relatorios e analises que podem ser compartilhados ou versionados.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sintaxe: claude -p "..." > resultado.md. Use >> para append. Combine com --output-format json > dados.json para pipelines automatizados com saida estruturada.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔗</span>
+            <div>
+              <span class="font-medium">Integracao Unix</span>
+              <span class="text-neutral-500 text-sm ml-2">- Claude como parte do ecossistema</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar Claude como mais uma ferramenta no pipeline Unix, combinando com grep, awk, sed, jq e outras ferramentas para criar fluxos de processamento inteligentes.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A filosofia Unix e compor ferramentas pequenas e especializadas. Claude adiciona inteligencia a esse pipeline. grep filtra, awk formata, Claude entende e analisa.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exemplos: git diff | claude -p "resuma estas mudancas". find . -name "*.py" -exec cat {} + | claude -p "encontre vulnerabilidades". O Claude funciona como qualquer outro comando Unix.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🚀</span>
+            <div>
+              <span class="font-medium">Pipelines Avancados</span>
+              <span class="text-neutral-500 text-sm ml-2">- Automacoes de ponta com pipe</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Combinacoes avancadas de pipe com multiplos estagios: filtragem, processamento com Claude, formatacao e saida. Automacoes reais para o dia a dia.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Este e o nivel operador. Voce constroi scripts que fazem analises completas automaticamente: review de PR, documentacao de API, auditoria de seguranca por todo o codebase.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Encadear Claude em shell scripts: for file in src/*.py; do cat $file | claude -p "analise" --output-format json >> report.json; done. Combine com cron para execucao agendada.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-4.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 1.5 ===== -->
+    <div id="mod-1-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-emerald-400 font-bold">1.5</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎯 Atalhos de Teclado e Aliases</h3>
+        <p class="text-neutral-400 text-sm">Navegacao rapida, edicao de prompt, controle de execucao e como criar aliases personalizados para suas combinacoes favoritas.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🧭</span>
+            <div>
+              <span class="font-medium">Navegacao na Sessao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Movendo-se rapidamente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Atalhos de teclado para navegar pelo historico da sessao, rolar para cima/baixo e acessar respostas anteriores sem usar o mouse.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Em sessoes longas, voce precisa revisar respostas anteriores. Navegar com teclado e mais rapido que scroll manual e mantem suas maos no teclado.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Setas cima/baixo para historico de input. Page Up/Down para scroll. Ctrl+Home/End para inicio/fim da sessao. Esses atalhos seguem convencoes padrao do terminal.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">✏️</span>
+            <div>
+              <span class="font-medium">Edicao de Prompt</span>
+              <span class="text-neutral-500 text-sm ml-2">- Editando antes de enviar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Atalhos para editar o prompt antes de enviar: mover cursor, selecionar texto, deletar palavras e linhas. Edicao eficiente sem mouse.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Prompts longos precisam de edicao. Ctrl+A (inicio), Ctrl+E (fim), Ctrl+W (deletar palavra), Alt+Backspace. Economiza segundos que acumulam em horas.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ctrl+A: inicio da linha. Ctrl+E: fim da linha. Ctrl+W: deletar palavra anterior. Ctrl+U: limpar linha inteira. Ctrl+K: deletar ate o fim. Sao atalhos padrao readline.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⏸️</span>
+            <div>
+              <span class="font-medium">Controle de Execucao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Pausar, cancelar e interromper</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Atalhos para controlar a execucao do Claude: interromper resposta em andamento, cancelar operacao e sair da sessao de forma limpa.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Se o Claude comecou a gerar algo errado, voce nao precisa esperar terminar. Interrompa, corrija o prompt e continue. Controle e produtividade.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Escape: interrompe a geracao atual. Ctrl+C: cancela e volta ao prompt. Ctrl+D: sai da sessao. Use Escape quando a resposta esta indo pro caminho errado para economizar tokens.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📜</span>
+            <div>
+              <span class="font-medium">Historico de Comandos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Reutilizando prompts anteriores</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Navegar pelo historico de prompts que voce ja digitou na sessao, reutilizando ou modificando comandos anteriores sem digitar novamente.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Voce frequentemente envia variancoes do mesmo prompt. Com historico, voce recupera o prompt anterior, faz um ajuste pequeno e reenvia. Muito mais rapido que redigitar.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Seta cima: prompt anterior. Seta baixo: proximo prompt. Funciona como historico de bash. Combine com edicao de prompt para iterar rapidamente sobre uma tarefa.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Multi-line Input</span>
+              <span class="text-neutral-500 text-sm ml-2">- Prompts de varias linhas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tecnica para escrever prompts com multiplas linhas no Claude Code sem enviar acidentalmente no meio. Essencial para prompts complexos e estruturados.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Prompts bons frequentemente precisam de estrutura: contexto numa linha, instrucao em outra, restricoes numa terceira. Multi-line permite prompts organizados e mais eficazes.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Shift+Enter: nova linha sem enviar. Backslash no final da linha: continuacao. Permite escrever prompts estruturados que o Claude interpreta melhor.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">Criando Aliases</span>
+              <span class="text-neutral-500 text-sm ml-2">- Seus atalhos personalizados</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-emerald-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Criar aliases no shell (bash/zsh) que encapsulam comandos Claude com flags, prompts e configuracoes que voce usa frequentemente.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Se voce digita "claude -p --model haiku --output-format json" toda hora, um alias transforma isso em "cq" (claude quick). Automatize o que repete.</p></div>
+              <div><span class="text-emerald-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Adicione ao .bashrc/.zshrc: alias cr="claude --resume", alias cq="claude -p --model haiku", alias crev="claude -p --model sonnet 'review este codigo'". Recarregue com source ~/.zshrc.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-1-5')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-1-5.html" class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO INFERIOR -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Voltar ao Inicio
+      </a>
+      <a href="#" class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors opacity-60 cursor-not-allowed">
+        Proxima Trilha: Starter Pack →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-1-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.1</span>
+          <span class="font-semibold">Comandos Essenciais do Terminal</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.2</span>
+          <span class="font-semibold">Slash Commands Nativos</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.3</span>
+          <span class="font-semibold">Flags de Linha de Comando</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.4</span>
+          <span class="font-semibold">Pipe de Dados</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-1-5" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-emerald-400 font-bold">1.5</span>
+          <span class="font-semibold">Atalhos de Teclado e Aliases</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-1-5.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.add('hidden');
+      });
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>
