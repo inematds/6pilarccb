@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 6.8 - Gerenciando MCPs | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6</a>
+      <span>/</span>
+      <span class="text-rose-400">Modulo 6.8</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 6.8
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🔧 Gerenciando MCPs</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Domine os comandos essenciais de gerenciamento: listar, adicionar e remover MCPs. Classifique entre essenciais e opcionais, e monte seu setup ideal com velocidade.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">12</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Operacional</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📋 claude mcp list</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Veja Todos os MCPs Ativos
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O comando <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp list</code> mostra todos os MCPs configurados, seu status de conexao e as tools que cada um expoe. E o equivalente de /status mas especifico para MCPs.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Lista nome de cada MCP configurado</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Mostra status: connected ou disconnected</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Exibe as tools disponiveis de cada MCP ativo</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Rode antes de adicionar novos MCPs para evitar duplicatas</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Quando Usar
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Antes de adicionar: verifique se o MCP ja esta configurado</li>
+          <li>Troubleshooting: confirme que o MCP esta connected</li>
+          <li>Auditoria: veja quantos MCPs estao consumindo tokens</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Faca de 'claude mcp list' o primeiro comando quando algo nao funciona com MCPs. Em 80% dos casos, o problema e que o MCP esta 'disconnected' e precisa ser re-adicionado. O list mostra isso imediatamente.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Rodar antes de adicionar novos MCPs</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar como primeiro passo de troubleshooting</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Verificar periodicamente quantos MCPs estao ativos</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Assumir que MCPs estao conectados sem verificar</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Adicionar MCPs duplicados</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar MCPs com status disconnected</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🗑️ claude mcp remove</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Desconecte MCPs Desnecessarios
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O comando <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp remove nome-do-mcp</code> desconecta e remove um MCP da configuracao. O efeito e imediato: o MCP para de consumir tokens na proxima mensagem. Voce pode re-adicionar a qualquer momento.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Sintaxe: <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp remove browser</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Efeito imediato: tokens do overhead param de ser cobrados</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Reversivel: voce pode re-adicionar com 'claude mcp add' a qualquer momento</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Sem perda de dados: remover nao apaga configs ou credenciais do sistema</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> A Acao Mais Direta de Economia
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Remove 5.000 tokens/msg? Desconecte Browser</li>
+          <li>Remove 2.000 tokens/msg? Desconecte GitHub quando nao usando</li>
+          <li>A economia se multiplica por cada mensagem restante na sessao</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Crie o habito de 'limpar MCPs' antes de sessoes longas de coding. Rode 'claude mcp list', identifique MCPs que nao vai usar, e remova todos exceto Filesystem. Isso e como fechar abas do navegador que nao esta usando - libera recursos para o que importa.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Remover MCPs que nao vai usar na proxima fase</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Criar habito de limpeza antes de sessoes longas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar remove como ferramenta de otimizacao</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Manter MCPs 'para depois' consumindo tokens</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ter medo de remover (voce pode re-adicionar)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar o impacto cumulativo de MCPs ociosos</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">➕ claude mcp add</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Adicione Novos MCPs
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O comando <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add nome -- comando-do-server</code> adiciona um novo MCP. O nome e como voce referencia o MCP, e o comando apos -- e o que inicia o servidor MCP.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Formato: <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add [nome] -- [comando]</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>O -- (double dash) separa nome do comando - NAO esqueca!</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Nome pode ser qualquer string: filesystem, github, meu-banco</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Argumentos do server vao depois do comando: npx -y @pkg /caminho</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Erros Comuns
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Esquecer o --: 'claude mcp add github npx...' nao funciona</li>
+          <li>Nome duplicado: verifique com 'mcp list' antes de add</li>
+          <li>Comando errado: teste 'npx -y @pkg --help' isolado primeiro</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Salve seus comandos de MCP add num arquivo de referencia rapida (cheatsheet.txt ou no CLAUDE.md). Quando precisar adicionar um MCP, copie e cole em vez de digitar do zero. Isso elimina erros de digitacao e acelera a rotacao de MCPs para menos de 10 segundos.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Salvar comandos de add num cheatsheet</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Testar o comando do server isoladamente antes</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Verificar com /status apos adicionar</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Esquecer o -- entre nome e comando</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Adicionar sem verificar duplicatas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Digitar comandos longos de memoria</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">⭐ Essencial vs Opcional</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Classificacao por Necessidade
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Classificar MCPs entre essenciais (sempre conectados) e opcionais (sob demanda) e a base da estrategia de gerenciamento. Essenciais tem baixo overhead e beneficio constante. Opcionais tem overhead variavel e beneficio pontual.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-emerald-400'>ESSENCIAL (always on):</strong> Filesystem (~500 tokens) - beneficio constante, custo minimo</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>OPCIONAL (sob demanda):</strong> GitHub (~2.000 tokens) - conecte quando trabalhando com issues/PRs</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>OPCIONAL (sob demanda):</strong> Database (~1.500 tokens) - conecte quando trabalhando com dados</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>OPCIONAL (sob demanda):</strong> Browser (~5.000 tokens) - conecte APENAS para tarefas web</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>OPCIONAL (sob demanda):</strong> Google Sheets (~800 tokens) - conecte quando interagindo com planilhas</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Por Que Classificar
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Sem classificacao: todos os MCPs parecem essenciais e voce acumula overhead</li>
+          <li>Com classificacao: 1 MCP fixo + 1-2 rotativos = overhead controlado</li>
+          <li>Decisoes se tornam automaticas: 'preciso de dados do banco? conecto Database MCP'</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Regra simples: se o MCP custa menos de 1.000 tokens E voce usa em >50% das sessoes, e essencial (keep always on). Se custa mais de 1.000 tokens OU voce usa em <50% das sessoes, e opcional (conecte sob demanda). Atualmente, so Filesystem passa no teste de 'essencial'.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Classificar cada MCP como essencial ou opcional</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Manter apenas essenciais always on</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Ter comandos de add prontos para opcionais</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Tratar todos como essenciais</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Manter opcionais ligados 'por precaucao'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Adicionar novos MCPs sem classificar primeiro</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🚀 Instale Imediatamente</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> MCPs Para Configurar Agora
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Estes sao os MCPs que voce deve instalar e configurar agora, antes de precisar. Ter o setup pronto antes de precisar evita interrupcoes no fluxo de trabalho.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Filesystem (obrigatorio):</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add filesystem -- npx -y @anthropic/mcp-filesystem ~/projetos</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>GitHub (se usa GitHub):</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add github -- npx -y @anthropic/mcp-github</code> (requer GITHUB_TOKEN)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Overhead combinado: ~2.500 tokens - aceitavel para qualquer sessao</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Estes dois cobrem 80% dos casos de uso de MCPs</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Por Que Agora
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Configurar previamente evita interrupcoes quando voce realmente precisa</li>
+          <li>Filesystem e essencial para qualquer tipo de projeto</li>
+          <li>GitHub e essencial para qualquer dev que usa GitHub (maioria)</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Execute estes comandos agora e nunca mais pense nisso: 1) claude mcp add filesystem -- npx -y @anthropic/mcp-filesystem ~/projetos 2) export GITHUB_TOKEN=seu_token (adicione ao .bashrc) 3) claude mcp add github -- npx -y @anthropic/mcp-github. Pronto, 80% do seu setup de MCPs esta feito.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Instalar Filesystem agora se ainda nao tem</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Configurar GitHub se trabalha com repos</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Adicionar GITHUB_TOKEN ao shell profile</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Adiar a instalacao 'para quando precisar'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Instalar todos os MCPs de uma vez (comece com esses 2)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Pular a configuracao de variaveis de ambiente</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">⏰ Instale Quando Precisar</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> MCPs Sob Demanda
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Estes MCPs devem ser instalados apenas quando a tarefa exigir. Mantenha os comandos prontos num cheatsheet para instalar em segundos quando necessario.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Browser:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add browser -- npx -y @anthropic/mcp-puppeteer</code> → Use para UI/scraping</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Database:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add postgres -- npx -y @anthropic/mcp-postgres "conn_string"</code> → Use para dados</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Supabase:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add supabase -- npx -y @supabase/mcp-server-supabase --supabase-url URL --supabase-key KEY</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Sheets:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add google-sheets -- npx -y @anthropic/mcp-google-sheets</code> → Use para planilhas</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> O Ciclo Add-Use-Remove
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Add: cole o comando do cheatsheet (5 segundos)</li>
+          <li>Use: faca a tarefa que precisa do MCP</li>
+          <li>Remove: claude mcp remove nome (5 segundos)</li>
+          <li>Ciclo completo em menos de 30 segundos de overhead</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Crie um arquivo ~/mcp-cheatsheet.txt com todos os comandos de add prontos para cada MCP. Quando precisar de um MCP, abra o arquivo, copie o comando e cole. Isso reduz a friccao de rotacao para quase zero e torna a estrategia de rotacao ativa (modulo 6.9) praticavel no dia a dia.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Manter cheatsheet com comandos de add prontos</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Praticar o ciclo add-use-remove ate ficar automatico</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Remover imediatamente apos usar</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Tentar lembrar comandos de memoria</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Instalar sob demanda sem ter credenciais configuradas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Esquecer de remover apos usar</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">claude mcp list</strong>
+              <span class="text-neutral-400"> - O comando <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp l...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">claude mcp remove</strong>
+              <span class="text-neutral-400"> - O comando <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp r...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">claude mcp add</strong>
+              <span class="text-neutral-400"> - O comando <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp a...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Essencial vs Opcional</strong>
+              <span class="text-neutral-400"> - Classificar MCPs entre essenciais (sempre conectados) e opcionais (sob demanda) ...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Instale Imediatamente</strong>
+              <span class="text-neutral-400"> - Estes sao os MCPs que voce deve instalar e configurar agora, antes de precisar. ...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Instale Quando Precisar</strong>
+              <span class="text-neutral-400"> - Estes MCPs devem ser instalados apenas quando a tarefa exigir. Mantenha os coman...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Proximo:</h3>
+          <p class="text-neutral-300">6.9 - Estrategia de Rotacao Ativa</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-6-7.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-6-9.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

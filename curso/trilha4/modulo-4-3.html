@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 4.3 - Prompts de Building | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">6P Resumido</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4</a>
+      <span>/</span>
+      <span class="text-amber-400">Modulo 4.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULO 4.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧑‍💻 Prompts de Building</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Prompts para construir features com qualidade desde o inicio. Feature Blueprint para planejar, Build With Tests para garantir cobertura, e workflows de aprovacao incremental para manter controle total sobre o que o Claude produz.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Interm.</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1: Feature Blueprint -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📐 Feature Blueprint</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-amber-400">Feature Blueprint</strong> transforma uma ideia vaga em um plano de implementacao concreto. Ele forca o Claude a decompor a feature em componentes, definir interfaces e mapear dependencias antes de escrever uma linha de codigo.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Template do Prompt
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 mb-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <pre class="whitespace-pre-wrap">Crie um blueprint para esta feature antes de implementar:
+
+Feature: [descricao detalhada]
+
+Preciso de:
+1. Decomposicao em sub-tarefas (max 5 passos)
+2. Para cada sub-tarefa: arquivos envolvidos, mudancas especificas
+3. Interfaces/tipos que serao criados ou modificados
+4. Dependencias entre os passos (o que precisa vir primeiro)
+5. Estimativa de complexidade por passo (simples/medio/complexo)
+6. Testes necessarios por passo
+
+Formato: tabela com colunas [Passo | Arquivos | Mudanca | Dependencia | Complexidade | Testes]
+
+NAO implemente. Apenas o blueprint.</pre>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <span>O formato <strong class="text-white">tabela</strong> facilita a visualizacao e revisao do plano</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <span>Limitar a <strong class="text-white">5 passos</strong> forca decomposicao sem over-engineering</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Apos receber o blueprint, diga <code class="bg-dark-700 px-2 py-1 rounded text-amber-400">"Implemente o passo 1"</code> e revise antes de prosseguir. Nunca diga "implemente tudo". A implementacao incremental passo a passo e a chave para manter qualidade.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2: Build With Tests -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🧪 Build With Tests</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-amber-400">Build With Tests</strong> garante que cada pedaco de codigo novo ja nasce com testes. Em vez de construir e testar depois, voce instrui o Claude a escrever o teste primeiro e depois a implementacao que o satisfaz.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Template do Prompt
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 mb-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <pre class="whitespace-pre-wrap">Implemente [FEATURE] usando TDD:
+
+1. PRIMEIRO: Escreva os testes que definem o comportamento esperado
+   - Happy path (caso normal)
+   - Edge cases (limites, valores nulos, erros)
+   - Integracão com componentes existentes
+
+2. DEPOIS: Implemente o codigo minimo que faz todos os testes passarem
+
+3. FINALMENTE: Rode os testes e me mostre o resultado
+
+Regras:
+- Cada teste deve ter um nome descritivo que explica O QUE testa
+- Use o framework de testes que ja existe no projeto
+- Nao use mocks desnecessarios - prefira testes de integracao quando possivel</pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Se os testes passarem de primeira, desconfie. Peca para o Claude adicionar casos de edge case mais agressivos. Testes que nunca falham podem estar testando a coisa errada.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Escrever teste ANTES do codigo de producao</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Incluir edge cases e cenarios de erro</span></li>
+            <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Rodar testes e verificar que passam</span></li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Construir tudo e "testar depois"</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Aceitar testes que so cobrem happy path</span></li>
+            <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar mocks para tudo em vez de testes reais</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPICO 3: Incremental Building -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🧱 Construcao Incremental</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-amber-400">construcao incremental</strong> e o principio de nunca pedir ao Claude que implemente mais do que um passo de cada vez. Cada passo e revisado, testado e aprovado antes de prosseguir. Isso elimina rewrites massivos e mantem o controle total.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Fluxo Incremental
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 mb-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <pre class="whitespace-pre-wrap">Passo 1: "Implemente apenas [componente A]. Nao toque em mais nada."
+         → Revise → Teste → Aprove
+
+Passo 2: "Agora implemente [componente B] que se conecta com A."
+         → Revise → Teste → Aprove
+
+Passo 3: "Integre A e B. Rode os testes de integracao."
+         → Revise → Teste → Aprove
+
+REGRA: Cada passo deve ser commitavel isoladamente.</pre>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <span>Cada passo <strong class="text-white">commitavel isoladamente</strong> significa que voce pode reverter sem perder tudo</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <span>Dizer <strong class="text-white">"nao toque em mais nada"</strong> previne mudancas indesejadas em outros arquivos</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Use <code class="bg-dark-700 px-2 py-1 rounded text-amber-400">git diff</code> apos cada passo para verificar que o Claude nao modificou arquivos que nao deveria. Se modificou, reverta e peca novamente com instrucoes mais explicitas.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 4: Test-First Approach -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔄 Abordagem Test-First</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A abordagem <strong class="text-amber-400">test-first</strong> vai alem do TDD classico. Voce usa testes como especificacao executavel: define o comportamento desejado em testes e pede ao Claude para fazer os testes passarem. Isso inverte o fluxo e gera codigo mais focado.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Template do Prompt
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 mb-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <pre class="whitespace-pre-wrap">Eu ja escrevi os testes que definem o comportamento esperado.
+Eles estao em [caminho/do/teste].
+
+Sua tarefa:
+1. Leia os testes e entenda o que cada um espera
+2. Implemente o codigo de producao que faz TODOS passarem
+3. NAO modifique os testes - eles sao a especificacao
+4. Se algum teste parece impossivel de satisfazer, me avise antes de mudar
+
+Rode os testes ao final e me mostre o resultado.</pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Escreva voce mesmo os testes mais criticos (regras de negocio, seguranca) e deixe o Claude escrever os testes de edge case e integracao. Voce mantem controle sobre o "que" enquanto delega o "como".
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5: Approval Workflow -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">✅ Workflow de Aprovacao</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-amber-400">workflow de aprovacao</strong> define checkpoints onde voce para, revisa e decide se o Claude deve prosseguir. Sem esses gates, o Claude pode construir uma feature inteira em uma direcao errada antes que voce perceba.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Template com Gates
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 mb-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <pre class="whitespace-pre-wrap">Implemente [FEATURE] com os seguintes gates de aprovacao:
+
+GATE 1 - Plano: Me mostre o plano antes de codar. PARE e espere aprovacao.
+GATE 2 - Interfaces: Crie os tipos/interfaces. PARE e espere aprovacao.
+GATE 3 - Implementacao core: Implemente a logica principal. PARE e espere aprovacao.
+GATE 4 - Testes: Escreva e rode os testes. PARE e espere aprovacao.
+GATE 5 - Integracao: Conecte com o resto do sistema. PARE e espere aprovacao.
+
+Em NENHUM momento pule um gate. Sempre espere meu "ok" ou "aprovado" para continuar.</pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Para tarefas simples, use apenas 2 gates (plano e implementacao). Para tarefas criticas, use 5. Ajuste a granularidade dos gates conforme o risco da mudanca.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6: Quality Gates -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🏁 Quality Gates Automaticos</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Os <strong class="text-amber-400">quality gates automaticos</strong> sao instrucoes que voce coloca no CLAUDE.md para que o Claude aplique verificacoes de qualidade automaticamente, sem voce precisar pedir a cada vez.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Quality Gates para CLAUDE.md
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 mb-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <pre class="whitespace-pre-wrap"># Quality Gates (CLAUDE.md)
+
+Antes de considerar qualquer tarefa como "completa":
+- [ ] Testes escritos E passando
+- [ ] Sem erros de linting
+- [ ] Sem TODO/FIXME sem issue associada
+- [ ] Tipos corretos (sem any desnecessario)
+- [ ] Error handling para todos os caminhos de falha
+- [ ] Sem dados hardcoded (use env vars ou config)
+- [ ] git diff revisado - nenhuma mudanca inesperada</pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Adicione esses quality gates ao seu CLAUDE.md e o Claude vai automaticamente verificar cada item antes de dizer que terminou. Se voce perceber que um gate e sempre ignorado, torne a instrucao mais explicita.
+        </p>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Feature Blueprint</strong><span class="text-neutral-400"> - Decomponha em sub-tarefas antes de implementar, max 5 passos</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Build With Tests</strong><span class="text-neutral-400"> - Teste primeiro, implementacao depois, sempre com edge cases</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Construcao incremental</strong><span class="text-neutral-400"> - Um passo de cada vez, cada passo commitavel isoladamente</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Test-first como spec</strong><span class="text-neutral-400"> - Use testes como especificacao executavel do comportamento desejado</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Approval workflow</strong><span class="text-neutral-400"> - Gates de aprovacao em cada etapa critica, ajuste a granularidade</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Quality gates no CLAUDE.md</strong><span class="text-neutral-400"> - Checklist automatico de qualidade antes de cada "concluido"</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-amber-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">4.4 - Prompts de Debugging</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-4-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="modulo-4-4.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+    function toggleTopic(id) { const el = document.getElementById(id); if (el) el.classList.toggle('active'); }
+  </script>
+
+</body>
+</html>

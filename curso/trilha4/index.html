@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 4 - Painel de Prompts | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 4
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧑‍💻 Painel de Prompts</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Seu sistema de prompts de uso diario. Os 5 prompts que resolvem 80% do trabalho real, mais a biblioteca completa organizada por categoria: getting started, building, debugging, code quality, arquitetura e deployment.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">8</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">48</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">~2h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Intermediario</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- NAVEGACAO RAPIDA -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <a href="#mod-4-1" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/50 p-4 transition-all">
+        <span class="text-amber-400 font-bold text-sm">4.1</span>
+        <h3 class="font-semibold mt-1">🏆 Os 5 Prompts Diarios (Daily Drivers)</h3>
+      </a>
+      <a href="#mod-4-2" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/50 p-4 transition-all">
+        <span class="text-amber-400 font-bold text-sm">4.2</span>
+        <h3 class="font-semibold mt-1">🚀 Prompts de Getting Started</h3>
+      </a>
+      <a href="#mod-4-3" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/50 p-4 transition-all">
+        <span class="text-amber-400 font-bold text-sm">4.3</span>
+        <h3 class="font-semibold mt-1">🏗️ Prompts de Building</h3>
+      </a>
+      <a href="#mod-4-4" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/50 p-4 transition-all">
+        <span class="text-amber-400 font-bold text-sm">4.4</span>
+        <h3 class="font-semibold mt-1">🐛 Prompts de Debugging</h3>
+      </a>
+      <a href="#mod-4-5" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/50 p-4 transition-all">
+        <span class="text-amber-400 font-bold text-sm">4.5</span>
+        <h3 class="font-semibold mt-1">✨ Prompts de Code Quality</h3>
+      </a>
+      <a href="#mod-4-6" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/50 p-4 transition-all">
+        <span class="text-amber-400 font-bold text-sm">4.6</span>
+        <h3 class="font-semibold mt-1">🏛️ Prompts de Arquitetura</h3>
+      </a>
+      <a href="#mod-4-7" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/50 p-4 transition-all">
+        <span class="text-amber-400 font-bold text-sm">4.7</span>
+        <h3 class="font-semibold mt-1">🚢 Prompts de Deployment</h3>
+      </a>
+      <a href="#mod-4-8" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/50 p-4 transition-all">
+        <span class="text-amber-400 font-bold text-sm">4.8</span>
+        <h3 class="font-semibold mt-1">🎯 Estrategia de Uso: Quando Usar Cada Prompt</h3>
+      </a>
+    </div>
+
+    <!-- DIVISOR -->
+    <div class="flex items-center space-x-4 mb-8">
+      <div class="flex-1 h-px bg-dark-600"></div>
+      <span class="text-neutral-500 text-sm font-medium">Conteudo Detalhado</span>
+      <div class="flex-1 h-px bg-dark-600"></div>
+    </div>
+
+    <!-- ===== MODULO 4.1 ===== -->
+    <div id="mod-4-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.1</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏆 Os 5 Prompts Diarios (Daily Drivers)</h3>
+        <p class="text-neutral-400 text-sm">Os 5 prompts que resolvem 80% do trabalho real com Claude Code. 95% Confidence, Plan Mode Blueprint, Structured Bug Report, Brutal Audit e Teach Me What You Did.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">95% Confidence</span>
+              <span class="text-neutral-500 text-sm ml-2">- Comecando qualquer tarefa corretamente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O prompt "Ask me clarifying questions one at a time until you're 95% confident you can complete the task successfully." Forca o Claude a perguntar antes de agir.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Previne blind-spot coding. Em vez do Claude assumir coisas e gerar codigo errado, ele pergunta o que precisa saber primeiro. Reduz drasticamente retrabalho.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use para qualquer feature nova, migracao ou mudanca complexa. O Claude faz perguntas uma por vez ate ter confianca suficiente. Resultado: menos iteracoes, codigo mais preciso.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Plan Mode Blueprint</span>
+              <span class="text-neutral-500 text-sm ml-2">- Planejar antes de construir</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O prompt que ativa Plan Mode: identifica arquivos afetados, delineia abordagem passo a passo, sinaliza tradeoffs e espera aprovacao antes de escrever codigo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Think first, build second. Sem planejamento, o Claude mergulha direto no codigo e pode ir por um caminho subotimo. Plan Mode garante alinhamento antes da execucao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use para features nao-triviais. O Claude lista arquivos, passos, riscos. Voce aprova ou ajusta. So entao ele comecar a codar. Economiza horas de refatoracao.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🐛</span>
+            <div>
+              <span class="font-medium">Structured Bug Report</span>
+              <span class="text-neutral-500 text-sm ml-2">- Relato estruturado de bugs</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Template que estrutura o bug: acao executada, erro recebido, comportamento esperado vs. real, stack trace. E a instrucao "Investigate the root cause before attempting a fix."</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Forca diagnostico antes de patch. Sem estrutura, o Claude tenta corrigir o sintoma. Com estrutura, ele analisa a causa raiz primeiro. Bugs sao resolvidos de verdade, nao mascarados.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Inclua sempre: acao, erro, esperado, real, stack trace. A frase-chave e "Investigate root cause before fix". Funciona para qualquer tipo de bug: frontend, backend, infra.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">Brutal Audit</span>
+              <span class="text-neutral-500 text-sm ml-2">- Auditoria sem piedade</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que pede auditoria completa: edge cases, vulnerabilidades de seguranca, bottlenecks de performance, cenarios de crash, e tudo que um senior engineer flagaria. "Be brutally honest."</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Encontra o que voce nao sabe que perdeu. Apos construir algo significativo, esse prompt faz o Claude agir como um reviewer senior implacavel. Pega problemas antes de irem pra producao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use apos construir qualquer coisa significativa. As 5 areas: edge cases, seguranca, performance, crash, senior review. A frase "be brutally honest" e essencial para evitar respostas amenas.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🎓</span>
+            <div>
+              <span class="font-medium">Teach Me What You Did</span>
+              <span class="text-neutral-500 text-sm ml-2">- Transformando IA em amplificador de skill</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Apos o Claude resolver algo, este prompt pede: causa raiz, por que esta abordagem, o que quebraria sem o fix, e o que observar na proxima vez. "Explain it so I could do it myself."</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Transforma o Claude de ferramenta em amplificador de habilidades. Em vez de depender do Claude para sempre, voce aprende a fazer sozinho. AI como professor, nao como muleta.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use apos fixes e refactors. 4 perguntas: causa raiz, escolha de abordagem, consequencia de nao corrigir, sinais de alerta. Voce cresce como desenvolvedor a cada uso.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔗</span>
+            <div>
+              <span class="font-medium">Combinando Estrategicamente</span>
+              <span class="text-neutral-500 text-sm ml-2">- Os 5 prompts como sistema integrado</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O fluxo completo: 95% Confidence (entender) > Plan Mode (planejar) > Build > Structured Bug (debug) > Brutal Audit (validar) > Teach Me (aprender). Um sistema, nao prompts isolados.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Prompts isolados sao bons. Prompts em sequencia estrategica sao um sistema de producao profissional. Cada prompt cobre uma lacuna que os outros deixam.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Nao e preciso usar todos em toda tarefa. O ponto e saber quando usar qual. Tarefas simples: so Build. Tarefas complexas: ciclo completo. O julgamento do "quando" e o que separa operadores de usuarios.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-4-1.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 4.2 ===== -->
+    <div id="mod-4-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.2</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Prompts de Getting Started</h3>
+        <p class="text-neutral-400 text-sm">Prompts para iniciar projetos e sessoes: 95% Confidence deep dive, Project Kickoff, Codebase Onboarding, estrategia de primeira sessao e padroes de perguntas.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">95% Confidence Deep Dive</span>
+              <span class="text-neutral-500 text-sm ml-2">- Analise profunda do prompt mais importante</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Analise detalhada de como o 95% Confidence funciona internamente: por que "one at a time" e crucial, como o threshold de 95% muda o comportamento, e variacoes do prompt.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a mecanica permite adaptar o prompt a diferentes contextos. O "one at a time" previne sobrecarga. O "95%" cria um padrao de qualidade mensuravel.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">"One at a time" evita que o Claude faca 10 perguntas de uma vez. "95% confident" forca profundidade. Variacoes: ajustar o threshold (99% para critico, 80% para exploratoria).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🏗️</span>
+            <div>
+              <span class="font-medium">Project Kickoff</span>
+              <span class="text-neutral-500 text-sm ml-2">- Iniciando projetos do zero</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt completo de kickoff: descreva o que quer construir, o Claude pergunta, propoe tech stack com justificativa, cria plano de milestones e espera aprovacao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Comecar errado custa caro. Este prompt garante que stack, arquitetura e plano estejam alinhados antes da primeira linha de codigo. Evita rewrite completo depois.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">4 etapas: perguntas clarificadoras, proposta de tech stack, plano de milestones, espera por aprovacao. Cada etapa e um checkpoint que previne desvios.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📖</span>
+            <div>
+              <span class="font-medium">Codebase Onboarding</span>
+              <span class="text-neutral-500 text-sm ml-2">- Entendendo um codebase existente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que faz o Claude ler o codebase e entregar: overview geral, tech stack, estrutura de pastas, fluxo de dados e convencoes utilizadas. Onboarding instantaneo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entrar num projeto novo sem contexto e perder horas. Este prompt transforma horas de exploracao manual em minutos de analise automatizada. Ideal para projetos legados ou novos times.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">5 entregas: overview, stack, estrutura, data flow, convencoes. O Claude explora o repo inteiro e sintetiza. Use como primeiro passo antes de qualquer modificacao em codebase desconhecido.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🎬</span>
+            <div>
+              <span class="font-medium">Estrategia de Primeira Sessao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Como comecar do jeito certo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A sequencia ideal para primeira sessao num projeto: Codebase Onboarding primeiro, depois 95% Confidence para a tarefa especifica, depois Project Kickoff se for projeto novo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A ordem dos prompts importa. Fazer onboarding antes de perguntar garante que o Claude entende o contexto. Perguntar antes de planejar garante que o plano esta alinhado.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Projeto existente: Onboarding > 95% Confidence > Plan Mode. Projeto novo: 95% Confidence > Kickoff > Plan Mode. Sempre termina com plano aprovado antes de codar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">Padroes de Perguntas</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tipos de perguntas que o Claude faz</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Reconhecer os tipos de perguntas que o Claude faz com 95% Confidence: escopo, restricoes tecnicas, preferencias de design, edge cases, e integracao com existente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber que tipos de perguntas esperar ajuda voce a preparar respostas melhores. Quanto mais rapido e preciso voce responde, mais rapido o Claude atinge 95% de confianca.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">5 categorias de perguntas: escopo (o que incluir/excluir), tecnicas (stack, constraints), design (UI/UX, API), edge cases (falhas, limites), integracao (o que ja existe).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🚫</span>
+            <div>
+              <span class="font-medium">Evitando Pontos Cegos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Blind spots comuns ao comecar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Os erros mais comuns ao iniciar: pular o onboarding, nao usar 95% Confidence, aceitar a primeira proposta sem questionar, e comecar a codar antes de planejar.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Blind-spot coding e a maior causa de retrabalho. Saber quais pontos cegos existem permite evita-los conscientemente. Prevention > cure.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Top 3 blind spots: assumir que o Claude entendeu (use 95%), pular planejamento (use Plan Mode), nao verificar existente (use Onboarding). Cada prompt de getting started previne um blind spot especifico.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-4-2.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 4.3 ===== -->
+    <div id="mod-4-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.3</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏗️ Prompts de Building</h3>
+        <p class="text-neutral-400 text-sm">Feature Blueprint, Build With Tests, construcao incremental, abordagem test-first, workflow de aprovacao e quality gates durante o build.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">Feature Blueprint</span><span class="text-neutral-500 text-sm ml-2">- Mapeando a feature antes de codar</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que ativa Plan Mode: identifica arquivos afetados, delineia abordagem, sinaliza riscos e espera aprovacao. "Enter plan mode. Before writing any code..."</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Construir sem blueprint e navegar sem mapa. O Claude identifica todos os arquivos que precisam mudar e os riscos antes de tocar em qualquer codigo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">4 passos: identificar arquivos, delinear abordagem, sinalizar riscos/tradeoffs, esperar aprovacao. Nunca pule o passo 4 - aprovacao e seu checkpoint de seguranca.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🧪</span>
+            <div><span class="font-medium">Build With Tests</span><span class="text-neutral-500 text-sm ml-2">- Construir com testes integrados</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que forca TDD: para cada peca, escreve teste primeiro, depois implementacao, roda testes, move para proxima peca. "Do not batch tests." - cada peca e validada individualmente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Codigo sem testes e bomba-relogio. Este prompt garante que cada peca tem cobertura antes de avancar. Bugs sao pegos no momento da criacao, nao semanas depois.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ciclo: teste > implementacao > rodar > proxima peca. "Do not batch" e crucial - batching de testes esconde falhas. Cada peca e validada antes de construir sobre ela.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🧱</span>
+            <div><span class="font-medium">Construcao Incremental</span><span class="text-neutral-500 text-sm ml-2">- Peca por peca, nao tudo de uma vez</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A filosofia de construir features em pecas pequenas e validadas, em vez de gerar tudo de uma vez. Cada peca funciona independentemente antes de ser integrada.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Features grandes geradas de uma vez sao impossiveis de debugar. Construcao incremental permite identificar exatamente onde algo quebrou. Menos retrabalho, mais controle.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Dividir a feature em unidades independentes. Construir e testar cada uma. Integrar gradualmente. Se algo quebra, voce sabe exatamente qual peca causou.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Abordagem Test-First</span><span class="text-neutral-500 text-sm ml-2">- Por que teste antes de codigo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A pratica de escrever o teste que define o comportamento esperado antes de escrever o codigo que implementa esse comportamento. TDD aplicado com Claude Code.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Testes escritos depois do codigo testam a implementacao. Testes escritos antes testam a especificacao. A diferenca e entre "funciona?" e "faz o que deveria?".</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Red > Green > Refactor. Escrever teste que falha (red), implementar para passar (green), melhorar o codigo (refactor). Com Claude, esse ciclo e extremamente rapido.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">✅</span>
+            <div><span class="font-medium">Workflow de Aprovacao</span><span class="text-neutral-500 text-sm ml-2">- Checkpoints humanos no processo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A pratica de inserir pontos de aprovacao humana no fluxo de building. "Wait for my approval" no Plan Mode garante que voce valida o plano antes da execucao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem checkpoints, o Claude pode seguir por caminhos subotimos por dezenas de arquivos. Aprovacao humana no ponto certo previne cascatas de mudancas indesejadas.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pontos de aprovacao: apos o plano, apos cada peca importante, antes de integrar. "Wait for approval" e a frase-chave. Voce controla o ritmo, o Claude executa.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🚧</span>
+            <div><span class="font-medium">Quality Gates</span><span class="text-neutral-500 text-sm ml-2">- Barreiras de qualidade durante o build</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Criterios automaticos que devem ser atendidos antes de avancar: testes passando, sem erros de lint, build funcionando. "Run tests after each change. Stop if tests fail."</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quality gates previnem acumulo de debt tecnico durante o build. Cada peca que passa no gate e confiavel. Pecas que falham sao corrigidas imediatamente, nao depois.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Gates minimos: testes passam, sem regressao, build compila. "Stop if tests fail" e um hard gate - nao avance ate resolver. Quanto mais cedo o bug e pego, mais barato de corrigir.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-4-3.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 4.4 ===== -->
+    <div id="mod-4-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.4</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐛 Prompts de Debugging</h3>
+        <p class="text-neutral-400 text-sm">Structured Bug prompt, Log Analysis prompt, tratamento de stack traces, categorizacao de erros, metodologia de causa raiz e workflow de debugging.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📝</span>
+            <div><span class="font-medium">Structured Bug Prompt</span><span class="text-neutral-500 text-sm ml-2">- Template completo de report</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Template: acao, erro, esperado, real, stack trace + "Investigate root cause first." Estrutura toda informacao que o Claude precisa para diagnosticar antes de corrigir.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Bugs descritos vagamente geram correcoes vagas. Estrutura forca precisao. O Claude recebe toda informacao necessaria de uma vez, sem precisar pedir mais contexto.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Campos obrigatorios: acao (reproduzir), erro (mensagem exata), esperado vs real, stack trace. "Root cause first" previne patches superficiais.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Log Analysis Prompt</span><span class="text-neutral-500 text-sm ml-2">- Analise sistematica de logs</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que envia logs e pede: identificar erros distintos, agrupar relacionados, rankear por severidade, rastrear causa raiz dos criticos. Analise sistematica, nao aleatorio.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Logs longos sao ruido sem analise. Este prompt transforma logs em informacao acionavel: quais erros importam, quais estao relacionados, e qual e a causa raiz dos criticos.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">4 passos: identify, group, rank, trace. Identificar erros unicos, agrupar por relacao, ranquear por severidade, rastrear causa raiz dos criticos. Estrutura > scan visual.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📚</span>
+            <div><span class="font-medium">Stack Trace Handling</span><span class="text-neutral-500 text-sm ml-2">- Lendo e enviando stack traces</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tecnicas para capturar, formatar e enviar stack traces ao Claude de forma que maximize a qualidade do diagnostico. Stack trace completo > fragmento.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Stack traces truncados ou mal formatados levam a diagnosticos errados. Enviar o trace completo com contexto permite que o Claude identifique a causa raiz com precisao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sempre envie o stack trace completo, nao so a ultima linha. Use pipe para enviar direto: comando 2>&1 | claude -p "debug this". Inclua versoes de dependencias se relevante.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏷️</span>
+            <div><span class="font-medium">Categorizacao de Erros</span><span class="text-neutral-500 text-sm ml-2">- Classificando para priorizar</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Sistema de classificacao de erros por severidade e tipo: critical (crash/data loss), high (funcionalidade quebrada), medium (degradacao), low (cosmetic). Rankear antes de corrigir.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Nem todo bug merece atencao imediata. Categorizar permite atacar os criticos primeiro e agendar os menores. Triage e a diferenca entre reativo e estrategico.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use o Log Analysis prompt com "rank by severity". Categorias: Critical, Important, Minor, Nitpick (mesmas do Code Review). Resolva de cima pra baixo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔬</span>
+            <div><span class="font-medium">Metodologia de Causa Raiz</span><span class="text-neutral-500 text-sm ml-2">- Por que o bug existe, nao so o que e</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A pratica de perguntar "por que" ate chegar na causa fundamental, nao no sintoma. "Investigate root cause before attempting a fix" forca essa profundidade.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Corrigir sintomas cria whack-a-mole bugs - voce corrige um, outro aparece. Causa raiz resolve a familia inteira de bugs de uma vez. Menos patches, mais solucoes.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tecnica dos 5 Porques: por que o erro acontece? Por que essa condicao existe? Por que nao foi prevenida? Continue ate chegar na raiz. O Claude faz isso automaticamente com o prompt certo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Debugging Workflow</span><span class="text-neutral-500 text-sm ml-2">- O fluxo completo de debug</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O fluxo integrado: Structured Bug (report) > Log Analysis (contexto) > Root Cause (diagnostico) > Fix > Test > Teach Me (aprender). Debug sistematico, nao tentativa e erro.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Debug por tentativa e erro desperdicam tokens e tempo. Um workflow sistematico resolve bugs mais rapido e gera aprendizado. Cada debug session te torna melhor.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sequencia: reportar estruturadamente > analisar logs > identificar causa raiz > corrigir > testar > aprender com Teach Me. O ultimo passo e o que separa operadores de usuarios.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-4-4.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 4.5 ===== -->
+    <div id="mod-4-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.5</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">✨ Prompts de Code Quality</h3>
+        <p class="text-neutral-400 text-sm">Code Review prompt, Refactor Guardrails, severity ratings, regra de no-behavior-change, edits incrementais e checklist de review.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">Code Review Prompt</span><span class="text-neutral-500 text-sm ml-2">- Review automatico com classificacao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que revisa branch por: bugs, seguranca, performance, legibilidade, error handling faltante. Classifica cada issue: Critical / Important / Minor / Nitpick.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Todo codigo merece review, mas nem todo time tem reviewer disponivel. Este prompt garante review de qualidade antes de cada merge. Pega o que voce nao viu.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">5 areas: bugs, security, performance, readability, error handling. 4 niveis: Critical (bloqueia merge), Important (deveria corrigir), Minor (nice to have), Nitpick (opiniao).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🛡️</span>
+            <div><span class="font-medium">Refactor Guardrails</span><span class="text-neutral-500 text-sm ml-2">- Refatoracao segura com regras</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt com 4 regras de refatoracao: sem mudanca de comportamento, rodar testes apos cada mudanca, parar se testes falharem, somente edits pequenos e incrementais.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Refatoracao sem guardrails vira rewrite. Cada regra previne um tipo de desastre: no-behavior-change previne regressoes, stop-on-fail previne cascatas, incremental previne chaos.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">4 regras: no behavior change, test after each change, stop if tests fail, small incremental edits. Nenhuma e negociavel. Se qualquer regra for violada, a refatoracao parou.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Severity Ratings</span><span class="text-neutral-500 text-sm ml-2">- Critical, Important, Minor, Nitpick</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O sistema de classificacao de issues do Code Review: Critical (bloqueia deploy), Important (deveria corrigir antes de merge), Minor (melhoria nice-to-have), Nitpick (estilo/opiniao).</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem classificacao, todas as issues parecem iguais. Com ratings, voce sabe exatamente o que bloqueia e o que pode esperar. Prioridade clara = acao eficiente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Critical: seguranca, data loss, crash. Important: bugs, performance. Minor: legibilidade, convencoes. Nitpick: preferencias pessoais. Resolva de cima pra baixo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔒</span>
+            <div><span class="font-medium">Regra No-Behavior-Change</span><span class="text-neutral-500 text-sm ml-2">- O principio mais importante de refatoracao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A regra fundamental: refatoracao NUNCA muda o comportamento externo. Inputs e outputs permanecem identicos. Apenas a estrutura interna muda. Se o comportamento mudou, nao e refatoracao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A maior causa de bugs em refatoracao e mudar comportamento "sem querer". Esta regra, combinada com testes, cria uma rede de seguranca contra regressoes.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Testes existentes sao a prova de no-behavior-change. Se um teste quebra, o comportamento mudou. "No behavior change" e a regra 1 do Refactor Guardrails por um motivo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📐</span>
+            <div><span class="font-medium">Edits Incrementais</span><span class="text-neutral-500 text-sm ml-2">- Mudancas pequenas e validadas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A pratica de fazer mudancas pequenas e testaveis em vez de refatoracoes massivas. Cada edit e isolado, testado e commitado antes do proximo. "Small incremental edits only."</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Refatoracoes grandes sao impossiveis de revisar e reverter. Edits incrementais permitem git bisect, review facil e rollback preciso. Menos risco, mais controle.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cada edit faz uma coisa: renomear variavel, extrair funcao, mover arquivo. Testa apos cada um. Commit apos cada um. Se algo quebrar, voce sabe exatamente qual edit causou.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✅</span>
+            <div><span class="font-medium">Review Checklist</span><span class="text-neutral-500 text-sm ml-2">- O que verificar antes de merge</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Checklist padrao pre-merge: Code Review passado, nenhum Critical pendente, testes passando, Brutal Audit feito em mudancas significativas. O gate final antes do merge.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Uma checklist simples previne erros de omissao. Quando voce esta no ritmo e quer fazer merge rapido, a checklist e o freio de seguranca que impede bugs em producao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Checklist minima: Code Review (sem Criticals), testes passam, build funciona, Brutal Audit (para mudancas grandes). Adicione items especificos do seu projeto conforme necessario.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-5')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-4-5.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 4.6 ===== -->
+    <div id="mod-4-6" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.6</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏛️ Prompts de Arquitetura</h3>
+        <p class="text-neutral-400 text-sm">Architecture Decision prompt, API Design prompt, comparacao de opcoes, analise de escalabilidade, manutencao de longo prazo e padroes de documentacao.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⚖️</span>
+            <div><span class="font-medium">Architecture Decision Prompt</span><span class="text-neutral-500 text-sm ml-2">- Comparando opcoes de arquitetura</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que compara opcoes: pros/cons, complexidade, escalabilidade, manutencao de longo prazo, recomendacao. "Compare [A] vs [B]" com 5 criterios estruturados.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Decisoes de arquitetura sao as mais caras de reverter. Este prompt forca analise estruturada em vez de gut feeling. Cada criterio e avaliado explicitamente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">5 criterios: pros/cons, complexidade de implementacao, escalabilidade, manutencao longo prazo, recomendacao final. A recomendacao deve justificar com base nos criterios, nao em preferencia.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔌</span>
+            <div><span class="font-medium">API Design Prompt</span><span class="text-neutral-500 text-sm ml-2">- Projetando APIs REST completas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que projeta API REST completa: endpoints, schemas, autenticacao, formato de erro, paginacao/filtering. "Design a REST API for [feature]" com 5 deliverables.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">APIs mal desenhadas geram debt tecnico permanente. Este prompt garante que todos os aspectos sao considerados: nao so os endpoints, mas auth, erros, paginacao - tudo que uma API real precisa.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">5 deliverables: endpoints (paths + methods), schemas (request/response), auth (strategy), error format (padrao), pagination/filtering. API completa, nao so rotas.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Comparando Opcoes</span><span class="text-neutral-500 text-sm ml-2">- Framework para decisoes tecnicas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A pratica de sempre comparar pelo menos 2 opcoes antes de decidir. Nunca aceite a primeira sugestao. O Architecture Decision prompt forca essa comparacao estruturada.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Viés de ancoragem faz voce aceitar a primeira opcao. Comparar forca pensamento critico. Mesmo quando a opcao A e claramente melhor, a comparacao valida essa decisao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sempre compare pelo menos 2 opcoes. Use criterios objetivos. Documente a decisao e o "por que". Se nao consegue articular por que A > B, voce nao analisou o suficiente.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📈</span>
+            <div><span class="font-medium">Analise de Escalabilidade</span><span class="text-neutral-500 text-sm ml-2">- Pensando no crescimento</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Avaliar como a solucao se comporta com 10x, 100x, 1000x mais carga. O criterio "Scalability" do Architecture Decision prompt forca essa analise antes da implementacao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Solucoes que funcionam com 100 usuarios podem quebrar com 10.000. Pensar em escala na fase de design e ordens de magnitude mais barato do que refatorar depois.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Perguntas-chave: bottlenecks esperados, pontos de contenção, estrategia de caching, opcoes de particionamento. Nao precisa resolver tudo agora, mas precisa saber onde estao os limites.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔧</span>
+            <div><span class="font-medium">Manutencao de Longo Prazo</span><span class="text-neutral-500 text-sm ml-2">- Pensando alem do deploy</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Avaliar o custo de manter a solucao ao longo de anos: complexidade de onboarding, debugging, atualizacoes de dependencias, e evolucao de features.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O custo de manutencao supera o custo de desenvolvimento em qualquer projeto que vive mais de 6 meses. Decisoes que facilitam manutencao pagam dividendos por anos.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Criterios: facilidade de onboarding, debuggability, dependencias (quantidade e saude), acoplamento. Solucoes simples e entediantes sao frequentemente as melhores para longo prazo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📄</span>
+            <div><span class="font-medium">Padroes de Documentacao</span><span class="text-neutral-500 text-sm ml-2">- ADRs e documentacao de decisao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A pratica de documentar decisoes de arquitetura (ADRs - Architecture Decision Records). O output do Architecture Decision prompt ja e uma ADR pronta para ser salva.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Daqui a 6 meses, ninguem vai lembrar por que escolheu PostgreSQL em vez de MongoDB. ADRs preservam o contexto da decisao para o futuro. O Claude gera a ADR automaticamente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">ADR minima: titulo, contexto, opcoes consideradas, decisao, consequencias. Salve o output do Architecture Decision prompt como ADR. Versione junto com o codigo.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-6')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-4-6.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 4.7 ===== -->
+    <div id="mod-4-7" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.7</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚢 Prompts de Deployment</h3>
+        <p class="text-neutral-400 text-sm">Deployment Prep prompt, CI/CD Setup prompt, validacao de ambiente, checks de seguranca, verificacao de build e design de pipeline.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🚀</span>
+            <div><span class="font-medium">Deployment Prep Prompt</span><span class="text-neutral-500 text-sm ml-2">- Preparando para producao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que prepara deploy: checa configs de localhost, valida env vars, garante build passando, verifica seguranca, atualiza config de deploy. 5 checks pre-deploy automatizados.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Deploys quebrados sao caros e estressantes. Este prompt automatiza o checklist pre-deploy que todo time deveria seguir mas frequentemente pula por pressa.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">5 checks: localhost configs (remove hardcoded URLs), env vars (todas definidas), build (compila sem erro), security (secrets expostos?), deploy config (atualizada para plataforma).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚙️</span>
+            <div><span class="font-medium">CI/CD Setup Prompt</span><span class="text-neutral-500 text-sm ml-2">- Pipeline de integracao continua</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt que configura CI/CD: roda em PR, lint + typecheck, testes, build, deploy em merge. 5 estagios de pipeline que garantem qualidade automatica em cada mudanca.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">CI/CD manual e erro esperando pra acontecer. Este prompt gera o pipeline completo para sua plataforma (GitHub Actions, GitLab CI, etc). Setup de horas em minutos.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">5 estagios: trigger em PR, lint + typecheck, run tests, build, deploy on merge. Cada estagio e um quality gate. Se qualquer um falha, o merge e bloqueado.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🌍</span>
+            <div><span class="font-medium">Validacao de Ambiente</span><span class="text-neutral-500 text-sm ml-2">- Garantindo que tudo esta correto</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Verificar que todas as variaveis de ambiente, configs e dependencias estao corretas para o ambiente de destino (staging, production). O check 2 do Deployment Prep.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A causa #1 de deploys quebrados e env vars faltantes ou incorretas. Validar antes de deploy e infinitamente mais barato do que debugar em producao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Checklist: todas env vars definidas, nenhum valor de dev em prod, secrets nao hardcoded, database URLs corretas, API keys validas. O Claude compara .env.example com o ambiente real.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔐</span>
+            <div><span class="font-medium">Security Checks</span><span class="text-neutral-500 text-sm ml-2">- Auditoria de seguranca pre-deploy</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Verificacoes de seguranca antes do deploy: secrets expostos em codigo, dependencias com vulnerabilidades conhecidas, endpoints sem autenticacao, CORS mal configurado.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Vulnerabilidades em producao sao criticas. Esse check combina com o Brutal Audit mas focado especificamente em seguranca de deploy. Prevention > incident response.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Checklist: .env no .gitignore, nenhum secret hardcoded, npm audit/pip audit limpo, HTTPS forcado, CORS restrito, rate limiting configurado. O Claude verifica cada item.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">Verificacao de Build</span><span class="text-neutral-500 text-sm ml-2">- Garantindo que compila limpo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Verificar que o build passa sem erros nem warnings: compilacao limpa, sem imports nao utilizados, sem type errors, bundle size aceitavel. O check 3 do Deployment Prep.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Warnings ignorados acumulam e eventualmente viram erros. Build limpo e a base de um deploy confiavel. Zero warnings e o padrao profissional.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Build limpo = zero errors + zero warnings. O Claude roda o build, analisa output, identifica e resolve problemas antes do deploy. Includes: bundle analysis para apps frontend.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔀</span>
+            <div><span class="font-medium">Pipeline Design</span><span class="text-neutral-500 text-sm ml-2">- Arquitetura do fluxo de deploy</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O design completo do pipeline: trigger > lint > test > build > staging > approval > production. Cada estagio e um gate que previne problemas no proximo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pipelines bem desenhados sao a espinha dorsal de times de alta performance. O CI/CD Setup prompt gera o pipeline, mas entender o design permite personalizar para seu contexto.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Estagios: trigger (PR/merge), quality (lint/typecheck), confidence (tests), artifact (build), validation (staging), approval (manual/auto), release (production). Ordem importa.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-7')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-4-7.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 4.8 ===== -->
+    <div id="mod-4-8" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-amber-400 font-bold">4.8</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🎯 Estrategia de Uso: Quando Usar Cada Prompt</h3>
+        <p class="text-neutral-400 text-sm">Mapeamento do workflow diario, quando usar cada prompt, combinacoes estrategicas e o sistema completo de prompts como operador-nivel.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🗺️</span>
+            <div><span class="font-medium">Mapeamento do Workflow Diario</span><span class="text-neutral-500 text-sm ml-2">- Qual prompt em cada momento</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O mapa que conecta cada momento do dia de trabalho ao prompt ideal: inicio de sessao (Getting Started), desenvolvimento (Building), problemas (Debugging), qualidade (Review), decisoes (Architecture).</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ter prompts sem saber quando usar e como ter ferramentas sem saber qual e a certa para cada trabalho. O mapeamento transforma prompts isolados em sistema integrado.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Manha: Getting Started + Plan Mode. Desenvolvimento: Building + Tests. Problemas: Debugging. Pre-merge: Code Review + Brutal Audit. Fim do dia: Teach Me.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Trabalho Complexo: 95% Confidence</span><span class="text-neutral-500 text-sm ml-2">- Sempre comece por aqui</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A regra #1: sempre comece trabalho complexo com 95% Confidence. Features novas, migracoes, refatoracoes grandes - tudo comeca com perguntas clarificadoras.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pular 95% Confidence em trabalho complexo e a causa #1 de retrabalho. 2 minutos de perguntas economizam 2 horas de codigo errado. ROI absurdo.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Regra simples: se a tarefa leva mais de 30 minutos, comece com 95% Confidence. Se leva menos, pode ir direto. O threshold de complexidade e o gatilho.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">Construindo em Plan Mode</span><span class="text-neutral-500 text-sm ml-2">- Sempre planeje antes de codar</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A regra #2: sempre construa em Plan Mode. Apos 95% Confidence estabelecer o "o que", Plan Mode define o "como". Plano aprovado > codigo escrito.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Codigo sem plano e como construir sem planta. Pode funcionar pra casinha de cachorro, nao pra edificio. Plan Mode e a planta do seu software.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fluxo: 95% Confidence > Plan Mode > aprovacao > Build With Tests. Cada transicao e um checkpoint. Nunca pule direto de pergunta para codigo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">Finalizando com Brutal Audit</span><span class="text-neutral-500 text-sm ml-2">- Sempre audite trabalho significativo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A regra #3: sempre finalize trabalho significativo com Brutal Audit. Depois de construir, antes de mergear. E a ultima linha de defesa contra bugs em producao.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O viés de confirmacao faz voce achar que seu codigo esta perfeito. Brutal Audit quebra essa ilusao. Melhor descobrir problemas aqui do que em producao com usuarios reais.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Timing: apos build completo, antes do merge. Scope: edge cases, security, performance, crash, senior review. Action: resolva Criticals antes de merge, Important antes do sprint acabar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🎓</span>
+            <div><span class="font-medium">Aprendendo com Teach Me</span><span class="text-neutral-500 text-sm ml-2">- Crescendo a cada sessao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A regra #4: sempre termine momentos de aprendizado com Teach Me. Apos fixes, refactors, ou qualquer momento onde o Claude fez algo que voce nao faria sozinho.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem Teach Me, voce e dependente do Claude para sempre. Com Teach Me, cada sessao te torna mais capaz. AI como amplificador de skill, nao como muleta permanente.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Momento ideal: apos o Claude resolver algo complexo. 4 perguntas: causa raiz, escolha de abordagem, consequencia, sinais de alerta. Voce aprende o "por que", nao so o "o que".</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧹</span>
+            <div><span class="font-medium">Limpando Contexto para Migracoes</span><span class="text-neutral-500 text-sm ml-2">- Context hygiene para tarefas grandes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-amber-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A regra #5: limpe contexto antes de migracoes grandes. Use /compact ou inicie sessao nova. Migracoes precisam de janela de contexto limpa para manter precisao do inicio ao fim.</p></div>
+              <div><span class="text-amber-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Migracoes em sessoes poluidas geram erros. O Claude perde detalhes quando o contexto esta cheio. Sessao limpa = migracoes mais precisas e menos rollbacks.</p></div>
+              <div><span class="text-amber-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Antes de migracoes: /compact com instrucoes ou sessao nova. Comece com Codebase Onboarding + 95% Confidence. Contexto limpo + entendimento fresco = migracoes bem-sucedidas.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-4-8')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-4-8.html" class="px-4 py-2 text-sm bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO INFERIOR -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Voltar ao Inicio
+      </a>
+      <a href="../trilha5/index.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">
+        Proxima Trilha: Skills →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-4-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.1</span><span class="font-semibold">Os 5 Prompts Diarios (Daily Drivers)</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.2</span><span class="font-semibold">Prompts de Getting Started</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.3</span><span class="font-semibold">Prompts de Building</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.4</span><span class="font-semibold">Prompts de Debugging</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-5" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.5</span><span class="font-semibold">Prompts de Code Quality</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-5.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-6" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.6</span><span class="font-semibold">Prompts de Arquitetura</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-6.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-7" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.7</span><span class="font-semibold">Prompts de Deployment</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-7.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-4-8" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-amber-400 font-bold">4.8</span><span class="font-semibold">Estrategia de Uso: Quando Usar Cada Prompt</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-4-8.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.add('hidden');
+      });
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

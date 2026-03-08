@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 2.3 - Escopos: Projeto, Subdiretorio e Global | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Modulo 2.3</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.3</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🎬 Escopos: Projeto, Subdiretorio e Global</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Entenda os tres niveis de escopo do CLAUDE.md e como usá-los estrategicamente. Aprenda quando usar cada um e como eles se combinam para formar o contexto completo.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">25</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Interm.</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Conceitual</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Topico 1: Project Root -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📁 Escopo de Projeto (Raiz)</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O escopo mais comum e o <strong class="text-blue-400">CLAUDE.md na raiz do projeto</strong>. Este arquivo contem as instrucoes gerais que se aplicam a todo o repositorio. E o ponto de partida para qualquer configuracao do Claude Code.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O CLAUDE.md na raiz e lido sempre que voce inicia o Claude Code em qualquer lugar dentro do projeto. Ele define o contexto base que se aplica a todos os arquivos e diretorios.</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
+          <p class="text-neutral-500">meu-projeto/</p>
+          <p class="text-blue-400 font-bold">├── CLAUDE.md          ← Escopo de Projeto</p>
+          <p>├── src/</p>
+          <p>├── tests/</p>
+          <p>├── package.json</p>
+          <p>└── ...</p>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Sempre carregado, independente do subdiretorio atual</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Ideal para convencoes gerais, tech stack e comandos</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Deve ser versionado no Git junto com o projeto</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Se voce so vai ter um CLAUDE.md, coloque na raiz. Ele cobre 90% dos casos de uso. So crie outros escopos quando tiver necessidades especificas por area do projeto.</p>
+      </div>
+    </section>
+
+    <!-- Topico 2: Subdirectory -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📂 Escopo de Subdiretorio</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Voce pode colocar arquivos <strong class="text-blue-400">CLAUDE.md em subdiretorios</strong> para adicionar instrucoes especificas para aquela area do projeto. Isso e util em monorepos ou projetos com partes muito distintas (ex: frontend vs backend).</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">CLAUDE.md em subdiretorios sao carregados quando o Claude trabalha com arquivos naquele diretorio. Eles complementam (nao substituem) o CLAUDE.md da raiz.</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
+          <p class="text-neutral-500">meu-projeto/</p>
+          <p>├── CLAUDE.md              ← Regras gerais</p>
+          <p>├── frontend/</p>
+          <p class="text-blue-400 font-bold">│   ├── CLAUDE.md          ← Regras do frontend</p>
+          <p>│   ├── src/</p>
+          <p>│   └── ...</p>
+          <p>├── backend/</p>
+          <p class="text-blue-400 font-bold">│   ├── CLAUDE.md          ← Regras do backend</p>
+          <p>│   ├── src/</p>
+          <p>│   └── ...</p>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Complementa o CLAUDE.md da raiz (nao substitui)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Ideal para monorepos com frontend/backend separados</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Pode ter convencoes de codigo especificas por area</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Em um monorepo, o CLAUDE.md do frontend pode especificar "use React Server Components" enquanto o do backend diz "use FastAPI com Pydantic v2". Cada area tem suas regras.</p>
+      </div>
+    </section>
+
+    <!-- Topico 3: Global -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🌍 Escopo Global</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O <strong class="text-blue-400">CLAUDE.md global</strong> fica em <code class="bg-dark-700 px-2 py-1 rounded text-blue-400">~/.claude/CLAUDE.md</code> e se aplica a TODOS os projetos em que voce usa o Claude Code. E o lugar para preferencias pessoais que valem para qualquer projeto.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O CLAUDE.md global e pessoal e nao e compartilhado com a equipe. Use para preferencias que sao suas, independente do projeto.</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
+          <p class="text-neutral-500">~/.claude/</p>
+          <p class="text-blue-400 font-bold">└── CLAUDE.md              ← Escopo Global</p>
+          <p class="mt-2 text-neutral-500"># Conteudo exemplo:</p>
+          <p>- Sempre responda em portugues brasileiro</p>
+          <p>- Use comentarios explicativos no codigo</p>
+          <p>- Prefira abordagens funcionais quando possivel</p>
+          <p>- Sempre inclua tratamento de erros</p>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Localizado em <code class="bg-dark-700 px-1 rounded text-sm">~/.claude/CLAUDE.md</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Aplicado a todos os projetos automaticamente</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Nao e versionado no Git (e pessoal)</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Coloque no CLAUDE.md global: seu idioma preferido para respostas, seu estilo de commit message, e preferencias de formatacao que voce quer em todos os projetos.</p>
+      </div>
+    </section>
+
+    <!-- Topico 4: Hierarquia -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🏗️ Hierarquia e Combinacao</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Quando existem multiplos arquivos CLAUDE.md, o Claude Code os <strong class="text-blue-400">combina hierarquicamente</strong>. O global e carregado primeiro, depois o da raiz do projeto, e por fim o do subdiretorio. Instrucoes mais especificas tem prioridade sobre as mais gerais.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">A ordem de carregamento e de prioridade segue a logica do mais geral para o mais especifico:</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
+          <p class="text-neutral-500"># Ordem de carregamento:</p>
+          <p>1. ~/.claude/CLAUDE.md        (Global - menos especifico)</p>
+          <p>2. /projeto/CLAUDE.md          (Projeto)</p>
+          <p>3. /projeto/src/CLAUDE.md      (Subdiretorio - mais especifico)</p>
+          <p class="mt-2 text-neutral-500"># Se houver conflito, o mais especifico vence</p>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Todos os niveis sao combinados, nao substituidos</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Em caso de conflito, o mais especifico (subdiretorio) prevalece</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>O Claude recebe todas as instrucoes como um unico contexto</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Evite contradizer no subdiretorio o que esta na raiz. Se o CLAUDE.md raiz diz "use Tailwind" e o do subdiretorio diz "use CSS Modules", isso pode confundir o Claude. Seja intencional com as excecoes.</p>
+      </div>
+    </section>
+
+    <!-- Topico 5: Multiplos Arquivos -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📑 Trabalhando com Multiplos Arquivos</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Em projetos grandes, voce pode ter <strong class="text-blue-400">varios CLAUDE.md espalhados</strong> pelo repositorio. A chave e manter cada um focado no seu escopo e evitar duplicacao de informacao entre eles.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">A regra de ouro e: informacao geral na raiz, informacao especifica nos subdiretorios. Nunca duplique conteudo.</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 mb-4">
+          <p class="text-neutral-500">monorepo/</p>
+          <p>├── CLAUDE.md           # TypeScript, convencoes gerais</p>
+          <p>├── apps/</p>
+          <p>│   ├── web/</p>
+          <p>│   │   └── CLAUDE.md   # Next.js, React, Tailwind</p>
+          <p>│   └── mobile/</p>
+          <p>│       └── CLAUDE.md   # React Native, Expo</p>
+          <p>├── packages/</p>
+          <p>│   └── shared/</p>
+          <p>│       └── CLAUDE.md   # Regras para codigo compartilhado</p>
+        </div>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Cada CLAUDE.md deve ser autocontido no seu escopo</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Evite duplicar informacoes entre niveis</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Mantenha os arquivos curtos e objetivos</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Lembre-se que cada CLAUDE.md consome tokens do contexto. Mantenha-os concisos. Se o total de todos os CLAUDE.md ficar muito grande, o Claude pode perder informacoes importantes que foram "empurradas" para fora da janela de contexto.</p>
+      </div>
+    </section>
+
+    <!-- Topico 6: Quando Usar Cada Um -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Quando Usar Cada Escopo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Saber <strong class="text-blue-400">quando usar cada escopo</strong> e fundamental para manter a organizacao. Cada nivel tem seu proposito e usar o escopo errado pode causar problemas de manutencao.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Use este guia rapido para decidir onde colocar cada instrucao:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Global</strong> → Preferencias pessoais (idioma, estilo de resposta, formatacao)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Projeto (Raiz)</strong> → Tech stack, comandos, convencoes gerais, things to avoid</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Subdiretorio</strong> → Regras especificas de uma area (frontend, API, testes)</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Para a maioria dos projetos, um unico CLAUDE.md na raiz e suficiente. So adicione subdiretorios quando tiver areas com tecnologias ou convencoes realmente diferentes. Comece simples e expanda conforme necessario.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Escopo de Projeto (Raiz)</strong><span class="text-neutral-400"> - CLAUDE.md na raiz, sempre carregado, ideal para regras gerais</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Escopo de Subdiretorio</strong><span class="text-neutral-400"> - CLAUDE.md em pastas especificas, complementa a raiz</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Escopo Global</strong><span class="text-neutral-400"> - ~/.claude/CLAUDE.md, preferencias pessoais para todos os projetos</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Hierarquia</strong><span class="text-neutral-400"> - Global → Projeto → Subdiretorio, mais especifico prevalece</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Multiplos arquivos</strong><span class="text-neutral-400"> - Evite duplicacao, mantenha cada um focado no seu escopo</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Comece simples</strong><span class="text-neutral-400"> - Um CLAUDE.md na raiz cobre 90% dos casos</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">2.4 - Exemplo Real: Next.js SaaS App</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-2-2.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar</a>
+          <a href="modulo-2-4.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) exp.classList.remove('active'); });
+      explanation.classList.toggle('active');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

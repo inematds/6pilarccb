@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.4 - Entender um Codebase Novo | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; } .dark body { background-color: #111827; }
+    .topic-explanation { display: none; } .topic-explanation.active { display: block; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; } html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; } html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; } html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; } html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; } html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">6P Resumido</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a><span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a><span>/</span>
+      <span class="text-purple-400">Modulo 3.4</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULO 3.4</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">👾 Entender um Codebase Novo</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Como usar o Claude Code para fazer onboarding rapido em qualquer projeto, entendendo arquitetura, padroes e fluxos em minutos.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">20</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Inic.</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Pratico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🌍 Visao Geral (Big Picture)</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Comece pedindo ao Claude uma <strong class="text-purple-400">visao geral da arquitetura</strong> do projeto. Isso te da o mapa antes de explorar os detalhes.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Perguntas para entender o big picture rapidamente:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Descreva a arquitetura geral deste projeto. Quais sao os principais modulos?"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Quais tecnologias e frameworks este projeto usa?"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Qual e a estrutura de pastas e o que cada pasta contem?"</code></span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Comece simples: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">claude "O que este projeto faz? Me de uma visao geral em 5 pontos"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔬 Zoom In</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Apos entender o big picture, <strong class="text-purple-400">mergulhe nos modulos especificos</strong> que voce precisa trabalhar.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Explore areas especificas com perguntas direcionadas:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Explique como o sistema de pagamentos funciona. Quais arquivos estao envolvidos?"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Como os dados fluem do frontend ate o banco de dados?"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Quais padroes de design sao usados neste modulo?"</code></span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Foque na area onde voce vai trabalhar: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Preciso mexer no modulo de usuarios. Me explique tudo sobre ele em detalhes"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🔄 Rastrear um Fluxo</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Peca ao Claude para <strong class="text-purple-400">rastrear um fluxo completo</strong> de ponta a ponta. Isso e a melhor forma de entender como as pecas se conectam.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Trace request flows para entender a integracao:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Trace o fluxo completo quando um usuario faz login: do click no botao ate a resposta"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Siga o caminho de um pedido: da criacao ate o envio do email de confirmacao"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>O Claude vai listar cada arquivo e funcao na ordem em que sao chamados</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Peca com detalhes: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Trace o fluxo incluindo: arquivo, funcao, linha, e o que cada passo faz"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📖 Usar /init</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O comando <strong class="text-purple-400">/init</strong> gera um arquivo CLAUDE.md com um resumo do projeto, padroes e convencoes que o Claude usara em todas as interacoes futuras.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O /init cria memoria persistente do projeto:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Digite <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">/init</code> na raiz do projeto</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>O Claude analisa o codebase e gera um arquivo <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">CLAUDE.md</code> com: tecnologias, estrutura, padroes, comandos uteis</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Nas proximas sessoes, o Claude le o CLAUDE.md automaticamente e ja sabe o contexto</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Rode <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">/init</code> assim que clonar um repo novo. Depois edite o CLAUDE.md para adicionar detalhes que voce descobriu manualmente.</p>
+      </div>
+    </section>
+
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">❓ Perguntas "Por que?"</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">As perguntas mais valiosas sao as de <strong class="text-purple-400">"por que"</strong> - elas revelam decisoes de design, trade-offs e contexto historico que nenhum README explica.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Perguntas "por que" para entender decisoes arquiteturais:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Por que usaram MongoDB ao inves de PostgreSQL neste projeto?"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Por que tem dois sistemas de autenticacao? Qual devo usar?"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Por que esta funcao e tao complexa? Tem algum edge case especial?"</code></span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">O Claude pode analisar o git log para inferir decisoes: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Olhe o historico de commits deste arquivo e me diga por que essa mudanca foi feita"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🚀 Onboarding Rapido</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Combine todas as tecnicas para fazer <strong class="text-purple-400">onboarding em minutos</strong> ao inves de dias. O Claude transforma semanas de exploracao em uma conversa.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Roteiro de onboarding completo em 5 passos:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>1. <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">/init</code> para gerar o CLAUDE.md</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>2. Peca a visao geral da arquitetura</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>3. Trace 2-3 fluxos principais do sistema</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>4. Faca perguntas "por que" sobre decisoes que nao entendeu</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>5. Peca: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Quais sao as armadilhas comuns que um novo dev encontraria neste projeto?"</code></span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Finalize com: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Se eu precisar adicionar uma nova feature de X, por onde eu comecaria? Quais arquivos preciso criar/modificar?"</code></p>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Big Picture</strong><span class="text-neutral-400"> - Entenda a arquitetura geral primeiro</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Zoom In</strong><span class="text-neutral-400"> - Mergulhe nos modulos que vai trabalhar</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Trace Flow</strong><span class="text-neutral-400"> - Siga fluxos de ponta a ponta</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">/init</strong><span class="text-neutral-400"> - Gere CLAUDE.md para memoria persistente</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Why Questions</strong><span class="text-neutral-400"> - Pergunte "por que" para entender decisoes</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Onboarding</strong><span class="text-neutral-400"> - Combine tudo para onboarding em minutos</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">3.5 - Escrever Testes</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-3-3.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar</a>
+          <a href="modulo-3-5.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) { const t=button.closest('.topic-item'); const e=t.querySelector('.topic-explanation'); const m=button.closest('.bg-dark-800'); m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')}); e.classList.toggle('active'); }
+    const themeToggle=document.getElementById('theme-toggle'); const themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'); const themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'); const html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

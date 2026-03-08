@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 5.2 - Onde as Skills Vivem | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-teal-400">Inicio</a><span>/</span>
+      <a href="index.html" class="hover:text-teal-400">Trilha 5</a><span>/</span>
+      <span class="text-teal-400">Modulo 5.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">MODULO 5.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💙 Onde as Skills Vivem</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Entenda a estrutura de pastas, o sistema de auto-discovery do Claude Code, e como organizar suas Skills para que sejam encontradas automaticamente como slash commands.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">20</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">Basico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-teal-400">Pratico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📁 A Pasta .claude/commands/</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O diretorio <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">.claude/commands/</code> e o coracao do sistema de Skills. Todo arquivo <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">.md</code> colocado aqui vira automaticamente um slash command acessivel dentro do Claude Code. Nao precisa registrar, configurar ou reiniciar nada.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center"><span class="mr-2">🎯</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Existem dois niveis de Skills:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Projeto:</strong> <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">.claude/commands/</code> na raiz do projeto → acessiveis via <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">/project:nome</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Usuario:</strong> <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">~/.claude/commands/</code> no home → acessiveis via <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">/user:nome</code> em qualquer projeto</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Skills de projeto vao no git e sao compartilhadas com o time. Skills de usuario sao pessoais e funcionam em todos os seus projetos. Coloque skills genericas (code review, gerar testes) no usuario, e skills especificas (deploy deste projeto, padroes deste codebase) no projeto.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔍 Auto-Discovery</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Claude Code escaneia automaticamente as pastas de commands quando inicia uma sessao. Todo arquivo <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">.md</code> encontrado vira um slash command sem nenhuma configuracao extra. O nome do arquivo vira o nome do comando.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center"><span class="mr-2">🎯</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O mapeamento e direto: nome do arquivo → nome do comando.</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">code-review.md</code> → <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">/project:code-review</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">generate-tests.md</code> → <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">/project:generate-tests</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span>Subpastas criam namespaces: <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">devops/deploy.md</code> → <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">/project:devops:deploy</code></span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Use nomes descritivos com hifens: <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">senior-code-review.md</code> e melhor que <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">scr.md</code>. Voce vai digitar Tab para autocompletar de qualquer forma, e nomes claros ajudam todo o time a entender o proposito sem abrir o arquivo.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">⚡ Slash Commands em Acao</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Depois que a skill esta na pasta certa, usar ela e tao simples quanto digitar <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">/</code> seguido do prefixo e nome. O Claude carrega o conteudo do .md e segue as instrucoes como se voce tivesse colado tudo no chat.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center"><span class="mr-2">🎯</span> Conceito Principal</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">/project:nome</strong> - Skills do projeto atual (pasta .claude/commands/)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">/user:nome</strong> - Skills pessoais (pasta ~/.claude/commands/)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Argumentos:</strong> Use <code class="bg-dark-700 px-1 py-0.5 rounded text-teal-400">$ARGUMENTS</code> no .md para receber parametros apos o comando</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">O placeholder <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">$ARGUMENTS</code> e poderoso: quando voce digita <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">/project:code-review src/auth.ts</code>, o Claude substitui $ARGUMENTS por "src/auth.ts" dentro das instrucoes da skill. Use isso para criar skills parametrizadas que funcionam com qualquer arquivo ou input.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🏢 Cowork Built-ins</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O Claude Code Cowork (versao colaborativa/web) vem com Skills pre-instaladas que cobrem os casos de uso mais comuns. Essas built-ins servem como referencia de como estruturar suas proprias skills.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center"><span class="mr-2">🎯</span> Conceito Principal</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Code Review:</strong> Analise completa com security, performance, bugs e sugestoes</span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Generate Tests:</strong> Criacao automatica de testes unitarios e de integracao</span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Refactor:</strong> Refatoracao guiada com preservacao de funcionalidade</span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Document:</strong> Geracao de documentacao tecnica a partir do codigo</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Estude as built-ins antes de criar as suas. Elas mostram o padrao de qualidade esperado: instrucoes claras, passos numerados, criterios de qualidade e formato de saida definido. Copie a estrutura e adapte o conteudo para seu caso de uso.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🛒 Plugin Marketplace</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Alem de Skills individuais, existe um ecossistema crescente de plugins que empacotam multiplas skills. O marketplace permite instalar conjuntos completos de funcionalidades com um unico comando.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center"><span class="mr-2">🎯</span> Conceito Principal</h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Plugins oficiais:</strong> Mantidos pela Anthropic ou parceiros verificados</span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Plugins comunitarios:</strong> Criados pela comunidade, qualidade variavel</span></li>
+          <li class="flex items-start space-x-2"><span class="text-teal-400 mt-1">•</span><span><strong class="text-white">Instalacao:</strong> Via CLI ou marketplace web, registrado automaticamente</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Antes de instalar um plugin, leia o codigo-fonte. Plugins tem acesso ao seu sistema de arquivos e podem executar comandos. Verifique o que cada skill faz, quais ferramentas usa, e se o repositorio tem manutencao ativa. Plugin abandonado e risco de seguranca.</p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🗂️ Estrutura de Arquivos Recomendada</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Uma boa organizacao de Skills faz a diferenca entre um projeto limpo e um caos de arquivos. Aqui esta a estrutura recomendada para escalar de 2 para 20 skills sem perder o controle.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center"><span class="mr-2">🎯</span> Conceito Principal</h3>
+        <pre class="text-neutral-300 text-sm bg-dark-700/50 rounded-lg p-4 overflow-x-auto"><code>.claude/
+├── commands/                  # Skills do projeto
+│   ├── code-review.md         # /project:code-review
+│   ├── generate-tests.md      # /project:generate-tests
+│   ├── devops/
+│   │   ├── deploy.md          # /project:devops:deploy
+│   │   └── rollback.md        # /project:devops:rollback
+│   └── research/
+│       ├── lead-research.md   # /project:research:lead-research
+│       └── competitor.md      # /project:research:competitor
+├── settings.json              # MCPs e configuracoes
+└── CLAUDE.md                  # Instrucoes persistentes</code></pre>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Use subpastas para agrupar skills por dominio (devops, research, frontend). Isso cria namespaces automaticos nos slash commands e facilita a navegacao. Quando o projeto crescer para 10+ skills, voce vai agradecer ter organizado desde o inicio.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-teal-900/40 via-dark-800 to-dark-800 rounded-xl border border-teal-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">.claude/commands/ e a casa das Skills</strong><span class="text-neutral-400"> - Projeto vs Usuario, cada uma com seu escopo</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Auto-discovery transforma .md em slash command</strong><span class="text-neutral-400"> - Nome do arquivo = nome do comando, zero config</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">$ARGUMENTS permite parametrizacao</strong><span class="text-neutral-400"> - Skills que recebem input dinamico do usuario</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Cowork tem built-ins de referencia</strong><span class="text-neutral-400"> - Estude antes de criar as suas</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Marketplace expande com plugins</strong><span class="text-neutral-400"> - Mas sempre leia o codigo antes de instalar</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-teal-400 mt-1">✓</span><div><strong class="text-white">Organize com subpastas por dominio</strong><span class="text-neutral-400"> - Cria namespaces automaticos e mantem tudo limpo</span></div></div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-5-1.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="modulo-5-3.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const m=button.closest('.bg-dark-800');m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')});e.classList.toggle('active');}
+    const themeToggle=document.getElementById('theme-toggle');const themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon');const themeToggleLightIcon=document.getElementById('theme-toggle-light-icon');const html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 6.5 - MCP #3: Browser/Chrome | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6</a>
+      <span>/</span>
+      <span class="text-rose-400">Modulo 6.5</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 6.5
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🌐 MCP #3: Browser/Chrome</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        O MCP mais poderoso e mais caro do ecossistema. De ao Claude olhos para navegar a web, extrair dados, verificar UI e testar flows de usuario. Poder insubstituivel com custo proporcional.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">12</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🌐 O que o Browser MCP Faz</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Navegacao Web Programatica
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O Browser MCP da ao Claude a capacidade de abrir paginas web reais, interagir com elementos da pagina, tirar screenshots e extrair conteudo. Ele usa Puppeteer/Playwright por tras para controlar um navegador Chrome real em modo headless.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>navigate:</strong> Abre qualquer URL no navegador controlado</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>click / fill:</strong> Clica em elementos e preenche formularios</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>screenshot:</strong> Captura screenshot da pagina atual (consome muitos tokens!)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>get_text / evaluate_js:</strong> Extrai texto da pagina ou executa JavaScript</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> O Unico MCP Com 'Olhos'
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Nenhum outro MCP permite verificacao visual de UI</li>
+          <li>Pode navegar sites JavaScript-heavy (SPAs, React apps)</li>
+          <li>Interage como usuario real: clica, preenche, scrolls</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Sempre prefira get_text sobre screenshot quando possivel. get_text retorna texto puro (poucos tokens) enquanto screenshot envia uma imagem inteira (milhares de tokens). Use screenshot apenas quando a verificacao VISUAL e necessaria - layout, cores, posicionamento.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar get_text quando precisa de conteudo textual</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar screenshot apenas para verificacao visual</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Desconectar apos concluir tarefas web</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Pedir screenshots 'para ver como esta' sem necessidade</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Manter Browser ligado durante coding backend</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Navegar sites pesados sem necessidade</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">👑 Por Que e Elite</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Poder Insubstituivel
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Browser e classificado como 'elite' porque oferece uma capacidade que NENHUM outro MCP replica: acesso visual e interativo a web. Para tarefas de QA visual, web scraping e verificacao de deploy, nao existe alternativa.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>QA Visual: verifica se o deploy esta renderizando corretamente</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Web Scraping: extrai dados estruturados de qualquer site</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Testing: testa flows de usuario (login, checkout, forms)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Competitive Intel: analisa sites de concorrentes</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Quando O Custo Vale
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Vale quando: a tarefa REQUER ver a web (QA, scraping, UI testing)</li>
+          <li>Nao vale quando: voce so precisa de codigo ou dados de API</li>
+          <li>Regra: se pode fazer sem ver uma pagina web, nao precisa de Browser</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          O caso de uso com melhor ROI do Browser MCP e QA pos-deploy: 'navegue para meusite.com e verifique se o header, footer e pagina principal estao corretos'. Um unico comando substitui 5-10 minutos de verificacao manual e captura bugs visuais que voce poderia nao notar.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar para QA visual apos deploys</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar para scraping de dados nao disponiveis via API</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Avaliar ROI antes de conectar (custo alto!)</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Manter conectado 'por precaucao' (custo altissimo)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar para tarefas que nao requerem acesso web</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Confiar apenas em screenshots sem validar dados com get_text</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">⚙️ Instalacao</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Setup com Puppeteer
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          A instalacao requer Chrome/Chromium instalado no sistema. O MCP usa Puppeteer para controlar o navegador em modo headless (sem interface visual). Se Chrome nao estiver disponivel, a instalacao falhara.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Pre-requisito:</strong> Chrome ou Chromium instalado no sistema</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Comando:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add browser -- npx -y @anthropic/mcp-puppeteer</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Verificacao:</strong> Rode /status e confirme que Browser aparece como connected</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Teste:</strong> Peca ao Claude 'navegue para google.com e diga o titulo da pagina'</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Troubleshooting da Instalacao
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Se falhar: verifique se Chrome esta instalado (google-chrome --version)</li>
+          <li>Em Linux sem GUI: instale chromium-browser (apt install chromium-browser)</li>
+          <li>Em Docker: adicione --no-sandbox ao puppeteer args</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Se voce esta em um servidor sem interface grafica (VPS, Docker), o Chrome headless funciona normalmente mas pode precisar de flags extras. Teste com: npx -y @anthropic/mcp-puppeteer diretamente para ver se ha erros antes de adicionar ao Claude.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Verificar Chrome instalado antes de instalar MCP</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Testar com navegacao simples apos instalacao</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar headless mode (padrao) em servidores</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Instalar sem Chrome/Chromium disponivel</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar erros de instalacao</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Tentar usar em ambientes sem suporte a Chrome</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">💼 Casos de Uso</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Workflows de Alto Valor
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O Browser MCP transforma o Claude em um agente web completo. Os casos de uso mais valiosos sao aqueles onde verificacao visual ou interacao web e obrigatoria e nao pode ser substituida por APIs.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>QA Visual:</strong> 'navegue para localhost:3000 e verifique se o layout esta correto'</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Web Scraping:</strong> 'extraia nome e email de todas empresas listadas em diretorio.com/sp'</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Deploy Check:</strong> 'abra producao.com e confirme que a nova feature esta visivel'</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Competitive:</strong> 'compare o pricing de concorrente-a.com vs concorrente-b.com'</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> ROI por Caso de Uso
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>QA Visual: salva 5-10 min por deploy, captura bugs visuais</li>
+          <li>Web Scraping: salva horas de coleta manual de dados</li>
+          <li>Deploy Check: confianca automatizada que o deploy funcionou</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Para web scraping em escala, combine Browser MCP com Google Sheets MCP: Browser extrai dados de paginas, Sheets armazena em planilha organizada. Workflow: 'para cada empresa em diretorio.com/lista, extraia nome, email e telefone, e salve na planilha Leads'.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Combinar com Sheets MCP para scraping em escala</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar get_text para dados e screenshot para verificacao visual</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Desconectar imediatamente apos a tarefa web</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Scrape sites com proteção anti-bot agressiva</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Pedir screenshots de paginas inteiras (foque em secoes)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar para tarefas que nao envolvem web</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🔴 Token Impact: HIGH (~5.000+ tokens)</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O MCP Mais Caro
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Browser MCP tem o maior token tax do ecossistema: ~5.000+ tokens de overhead fixo por mensagem, MAIS tokens extras para cada screenshot ou conteudo de pagina extraido. Um unico screenshot pode custar 10.000+ tokens adicionais.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Overhead fixo: ~5.000 tokens por mensagem (10x mais que Filesystem)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Screenshot: +5.000-15.000 tokens dependendo da resolucao e complexidade</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Conteudo de pagina (get_text): +1.000-5.000 tokens dependendo do tamanho</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Em 20 mensagens sem usar: 100.000 tokens desperdicados so com overhead fixo</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Por Que e Tao Caro
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Browser expoe 10+ tools complexas com muitos parametros</li>
+          <li>Cada tool tem descricao longa para o Claude entender como usar</li>
+          <li>Screenshots sao imagens codificadas em base64 - muito pesadas em tokens</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          REGRA DE OURO DO BROWSER MCP: conecte apenas quando for usar, use o que precisa, desconecte imediatamente. O fluxo correto e: claude mcp add browser → use → claude mcp remove browser. NUNCA deixe Browser conectado durante sessoes de coding. Os 5.000 tokens por mensagem se multiplicam rapidamente.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Conectar APENAS quando precisar de acesso web</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Desconectar IMEDIATAMENTE apos usar</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Monitorar /cost durante uso do Browser</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>NUNCA manter Browser 'always on'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>NUNCA esquecer Browser conectado durante coding</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>NUNCA pedir screenshots desnecessarios</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔌 Desconecte Quando Nao For UI</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Disciplina Operacional Obrigatoria
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          A regra mais importante do Browser MCP e: desconecte quando nao estiver trabalhando em UI ou web. Backend puro? Desconecte. Refatorando API? Desconecte. Escrevendo testes? Desconecte. So precisa verificar UI? Conecte, verifique, desconecte.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Conectar:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add browser -- npx -y @anthropic/mcp-puppeteer</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Usar:</strong> Faca suas tarefas web (QA, scraping, teste)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Desconectar:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp remove browser</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Ciclo completo:</strong> Menos de 30 segundos entre add → use → remove</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> O Impacto da Disciplina
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Browser ligado 30 msgs desnecessarias = 150.000 tokens desperdicados</li>
+          <li>Browser ligado apenas 5 msgs necessarias = 25.000 tokens (economia de 83%)</li>
+          <li>A diferenca entre operador profissional e amador esta nessa disciplina</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Salve os comandos de add/remove do Browser num alias do shell: alias br-on='claude mcp add browser -- npx -y @anthropic/mcp-puppeteer' e alias br-off='claude mcp remove browser'. Assim, conectar e desconectar vira dois caracteres + Enter. Zero friccao para manter a disciplina.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Criar aliases para add/remove rapido</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Desenvolver o reflexo de desconectar apos usar</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Tratar Browser como ferramenta pontual, nao permanente</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Deixar Browser conectado 'para depois'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Esquecer de desconectar ao mudar de tarefa</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Tratar Browser como MCP que pode ficar 'always on'</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">O que o Browser MCP Faz</strong>
+              <span class="text-neutral-400"> - O Browser MCP da ao Claude a capacidade de abrir paginas web reais, interagir co...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Por Que e Elite</strong>
+              <span class="text-neutral-400"> - Browser e classificado como 'elite' porque oferece uma capacidade que NENHUM out...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Instalacao</strong>
+              <span class="text-neutral-400"> - A instalacao requer Chrome/Chromium instalado no sistema. O MCP usa Puppeteer pa...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Casos de Uso</strong>
+              <span class="text-neutral-400"> - O Browser MCP transforma o Claude em um agente web completo. Os casos de uso mai...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Token Impact: HIGH (~5.000+ tokens)</strong>
+              <span class="text-neutral-400"> - Browser MCP tem o maior token tax do ecossistema: ~5.000+ tokens de overhead fix...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Desconecte Quando Nao For UI</strong>
+              <span class="text-neutral-400"> - A regra mais importante do Browser MCP e: desconecte quando nao estiver trabalha...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Proximo:</h3>
+          <p class="text-neutral-300">6.6 - MCP #4: Database/Supabase</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-6-4.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-6-6.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

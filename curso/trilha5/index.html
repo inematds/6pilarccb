@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 5 - Skills de IA | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 5
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💙 Skills de IA</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Domine o sistema de Skills do Claude Code: crie, encontre, instale e gerencie skills que automatizam tarefas repetitivas. De templates a plugins, aprenda a economizar 90% dos tokens com instrucoes reutilizaveis.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">11</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">66</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">~3h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- NAVEGACAO RAPIDA -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <a href="#mod-5-1" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.1</span>
+        <h3 class="font-semibold mt-1">🔀 Skills vs MCPs vs Plugins</h3>
+      </a>
+      <a href="#mod-5-2" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.2</span>
+        <h3 class="font-semibold mt-1">📁 Onde as Skills Vivem</h3>
+      </a>
+      <a href="#mod-5-3" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.3</span>
+        <h3 class="font-semibold mt-1">📝 Template de Skill</h3>
+      </a>
+      <a href="#mod-5-4" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.4</span>
+        <h3 class="font-semibold mt-1">📸 Skill: Screenshot to Website</h3>
+      </a>
+      <a href="#mod-5-5" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.5</span>
+        <h3 class="font-semibold mt-1">🔍 Skill: Lead Research</h3>
+      </a>
+      <a href="#mod-5-6" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.6</span>
+        <h3 class="font-semibold mt-1">🔒 Skill: Senior Code Review</h3>
+      </a>
+      <a href="#mod-5-7" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.7</span>
+        <h3 class="font-semibold mt-1">🌐 Onde Encontrar Skills Prontas</h3>
+      </a>
+      <a href="#mod-5-8" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.8</span>
+        <h3 class="font-semibold mt-1">🔌 Plugins: O Game-Changer</h3>
+      </a>
+      <a href="#mod-5-9" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.9</span>
+        <h3 class="font-semibold mt-1">🔄 Sincronizando Skills Code e Cowork</h3>
+      </a>
+      <a href="#mod-5-10" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all">
+        <span class="text-teal-400 font-bold text-sm">5.10</span>
+        <h3 class="font-semibold mt-1">🛡️ Seguranca de Skills</h3>
+      </a>
+      <a href="#mod-5-11" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-teal-500/50 p-4 transition-all sm:col-span-2">
+        <span class="text-teal-400 font-bold text-sm">5.11</span>
+        <h3 class="font-semibold mt-1">💰 Token Math: 90% de Economia</h3>
+      </a>
+    </div>
+
+    <!-- DIVISOR -->
+    <div class="flex items-center space-x-4 mb-8">
+      <div class="flex-1 h-px bg-dark-600"></div>
+      <span class="text-neutral-500 text-sm font-medium">Conteudo Detalhado</span>
+      <div class="flex-1 h-px bg-dark-600"></div>
+    </div>
+
+    <!-- ===== MODULO 5.1 ===== -->
+    <div id="mod-5-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.1</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔀 Skills vs MCPs vs Plugins</h3>
+        <p class="text-neutral-400 text-sm">Entenda as diferencas fundamentais entre Skills, MCPs e Plugins. Saiba quando usar cada um e como eles se complementam no ecossistema Claude Code.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🧩</span>
+            <div>
+              <span class="font-medium">O que sao Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Instrucoes reutilizaveis em Markdown</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Skills sao arquivos Markdown que contem instrucoes estruturadas para o Claude executar tarefas especificas. Vivem na pasta .claude/commands/ e sao invocadas como slash commands.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Skills transformam prompts longos e repetitivos em comandos de uma linha. Em vez de redigitar instrucoes complexas, voce escreve uma vez e reutiliza infinitamente.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Uma skill e basicamente um prompt salvo com estrutura. Ela define Purpose, Inputs, Steps e Quality Checks. O Claude le o markdown e executa como se voce tivesse digitado tudo manualmente.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔗</span>
+            <div>
+              <span class="font-medium">O que sao MCPs</span>
+              <span class="text-neutral-500 text-sm ml-2">- Conexoes com servicos externos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">MCPs (Model Context Protocol) sao servidores que conectam o Claude a ferramentas e servicos externos: bancos de dados, APIs, sistemas de arquivos remotos, navegadores e mais.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">MCPs expandem o que o Claude pode fazer. Sem MCPs, ele so le e escreve arquivos locais. Com MCPs, ele consulta bancos de dados, navega na web, gerencia infraestrutura.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">MCPs sao processos separados que rodam ao lado do Claude. Eles expoe tools via protocolo padronizado. Sao configurados em .claude/settings.json ou settings.local.json.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔌</span>
+            <div>
+              <span class="font-medium">O que sao Plugins</span>
+              <span class="text-neutral-500 text-sm ml-2">- Pacotes instalados de funcionalidade</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Plugins sao pacotes que combinam skills, configuracoes e ate MCPs em um unico instalavel. Voce instala uma vez e ganha um conjunto completo de funcionalidades.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Plugins sao o futuro do ecossistema Claude Code. Em vez de configurar tudo manualmente, voce instala um plugin e ganha skills profissionais prontas para uso.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Um plugin pode conter multiplas skills, CLAUDE.md configs e MCPs bundled. Distribuidos via marketplace ou repositorios Git. Instale com um comando, use imediatamente.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Tabela Comparativa</span>
+              <span class="text-neutral-500 text-sm ml-2">- Skills vs MCPs vs Plugins lado a lado</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Comparacao direta: Skills sao Markdown com instrucoes (zero infra), MCPs sao servidores com tools (requer processo rodando), Plugins sao pacotes distribuiveis (combinam tudo).</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A confusao entre esses tres conceitos e o erro #1 de iniciantes. Saber quando usar cada um evita complexidade desnecessaria e garante que voce escolha a ferramenta certa.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Skills: leves, texto puro, qualquer um cria. MCPs: poderosos, requerem setup, conectam servicos. Plugins: empacotados, instalacao facil, combinam skills + MCPs.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Quando Usar Cada Um</span>
+              <span class="text-neutral-500 text-sm ml-2">- Cenarios praticos de escolha</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Guia pratico de decisao: use Skill quando quer automatizar um prompt. Use MCP quando precisa conectar a um servico externo. Use Plugin quando quer distribuir ou instalar funcionalidades prontas.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Escolher errado significa desperdicio. Criar um MCP quando uma skill resolve e over-engineering. Criar uma skill quando precisa de banco de dados e insuficiente.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Regra simples: se e instrucao de prompt, Skill. Se precisa de API/servico externo, MCP. Se quer compartilhar/distribuir, Plugin. Comece sempre pelo mais simples.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧭</span>
+            <div>
+              <span class="font-medium">O Framework de Decisao</span>
+              <span class="text-neutral-500 text-sm ml-2">- Arvore de decisao para escolher a abordagem</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Arvore de decisao: Precisa de conexao externa? -> MCP. E instrucao reutilizavel? -> Skill. Quer distribuir para outros? -> Plugin. Precisa de tudo junto? -> Plugin com MCP.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ter um framework mental evita paralisia por analise. Quando surge uma necessidade, voce segue o fluxograma e chega na resposta em segundos.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Principio KISS aplicado: comece com Skill (mais simples), escale para MCP (quando precisar), empacote em Plugin (quando quiser distribuir). Nunca comece pelo mais complexo.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-5-1.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.2 ===== -->
+    <div id="mod-5-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.2</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📁 Onde as Skills Vivem</h3>
+        <p class="text-neutral-400 text-sm">Descubra o diretorio .claude/commands/, como o auto-discovery funciona, e como organizar skills entre Claude Code e Claude Cowork.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📂</span>
+            <div>
+              <span class="font-medium">.claude/commands/</span>
+              <span class="text-neutral-500 text-sm ml-2">- O diretorio das skills</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O diretorio .claude/commands/ na raiz do projeto e onde o Claude Code busca skills personalizadas. Cada arquivo .md dentro dele vira um slash command automaticamente.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem saber onde colocar, voce nao consegue criar skills. E o ponto de partida obrigatorio para qualquer automacao com skills.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Crie o diretorio: mkdir -p .claude/commands/. Cada arquivo .md dentro vira /nome-do-arquivo. Subpastas criam namespaces: .claude/commands/review/security.md vira /review/security.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">Auto-discovery</span>
+              <span class="text-neutral-500 text-sm ml-2">- Como o Claude encontra skills</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Claude Code escaneia automaticamente o diretorio .claude/commands/ ao iniciar uma sessao. Novos arquivos .md sao detectados sem necessidade de reload ou configuracao.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber que o discovery e automatico significa que voce pode criar skills on-the-fly. Crie o arquivo, e ele ja esta disponivel na proxima vez que digitar /.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O scan acontece no inicio da sessao. Se voce criar uma skill durante a sessao, pode precisar iniciar nova sessao para vela. O /help lista todas as skills descobertas.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">Slash Commands</span>
+              <span class="text-neutral-500 text-sm ml-2">- Invocando skills como comandos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Cada skill vira um slash command: /nome-do-arquivo. Voce digita / e o Claude mostra todas as skills disponiveis. Selecione e execute com um Enter.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Slash commands sao a interface entre voce e suas skills. E a forma mais rapida de invocar instrucoes complexas sem digitar nada alem de /nome.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Arquivo review.md vira /review. Arquivo screenshot-to-site.md vira /screenshot-to-site. Use nomes descritivos e kebab-case. Argumentos sao passados apos o comando.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🤝</span>
+            <div>
+              <span class="font-medium">Cowork Built-in Skills</span>
+              <span class="text-neutral-500 text-sm ml-2">- Skills pre-configuradas no Cowork</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Claude Cowork (interface web) vem com skills built-in que nao existem no Claude Code CLI. Sao skills visuais como criacao de dashboards, slides e documentos formatados.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conhecer as skills nativas do Cowork evita recriar o que ja existe. Algumas tarefas sao melhor executadas no Cowork do que no CLI.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cowork tem skills visuais pre-built. Algumas sao exclusivas da interface web. O desafio e sincronizar skills entre Code e Cowork (modulo 5.9 trata isso).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🏪</span>
+            <div>
+              <span class="font-medium">Plugin Marketplace</span>
+              <span class="text-neutral-500 text-sm ml-2">- Onde encontrar skills empacotadas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O marketplace de plugins e um repositorio centralizado onde voce encontra skills e plugins criados pela comunidade, prontos para instalar e usar.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Nao reinvente a roda. Antes de criar uma skill do zero, verifique se alguem ja criou algo similar. O marketplace acelera adocao e compartilha melhores praticas.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">SkillsMP, SkillHub.club e awesome-claude-code sao fontes populares. Plugins sao avaliados pela comunidade. Sempre revise o codigo antes de instalar (seguranca no modulo 5.10).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🗂️</span>
+            <div>
+              <span class="font-medium">Estrutura de Arquivos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Organizacao ideal do diretorio</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A organizacao recomendada: .claude/commands/ para skills do projeto, ~/.claude/commands/ para skills globais. Subpastas por categoria: review/, generate/, analyze/.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Organizacao escala. Com 2 skills, qualquer estrutura funciona. Com 20, voce precisa de categorias. Planejar a estrutura cedo evita bagunca depois.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Projeto: .claude/commands/review.md. Global: ~/.claude/commands/review.md. Categorias: .claude/commands/review/security.md, .claude/commands/review/performance.md. Git: versione as skills do projeto.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-5-2.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.3 ===== -->
+    <div id="mod-5-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.3</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📝 Template de Skill</h3>
+        <p class="text-neutral-400 text-sm">A anatomia de uma skill bem escrita: Purpose, Inputs, Steps, Quality Checks e Output. Aprenda a escrever instrucoes que o Claude segue com precisao.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Purpose Section</span><span class="text-neutral-500 text-sm ml-2">- Definindo o objetivo da skill</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A secao Purpose define em uma frase clara o que a skill faz. E o norte que guia toda a execucao e evita que o Claude desvie do objetivo.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem Purpose claro, o Claude interpreta a skill de formas diferentes a cada execucao. Um Purpose bem escrito garante consistencia e previsibilidade.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Formato: "# Purpose\nTransformar [input] em [output] seguindo [criterio]." Seja especifico. "Fazer review de codigo" e vago. "Identificar vulnerabilidades de seguranca em codigo Python" e preciso.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📥</span>
+            <div><span class="font-medium">Inputs Required</span><span class="text-neutral-500 text-sm ml-2">- O que a skill precisa receber</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A secao Inputs lista tudo que a skill precisa para funcionar: arquivos, variaveis, contexto, parametros. Define o que e obrigatorio e o que e opcional.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Inputs mal definidos levam a execucoes incompletas. O Claude pede informacoes faltantes ou assume valores errados. Inputs claros = execucao limpa.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use $ARGUMENTS para capturar input do usuario. Liste inputs com tipo: "- Screenshot (imagem PNG/JPG)", "- Stack tecnologico (string, opcional)". Defina defaults para opcionais.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">Steps Structure</span><span class="text-neutral-500 text-sm ml-2">- Os passos de execucao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A secao Steps define a sequencia de acoes que o Claude deve seguir. Cada step e uma instrucao clara e acionavel, numerada em ordem de execucao.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Steps sao o coracao da skill. Sem eles, o Claude decide sozinho o que fazer. Com Steps claros, voce controla exatamente a sequencia de acoes.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use numeracao: 1. Analise o input, 2. Identifique padroes, 3. Gere output. Cada step deve ser atomico (uma acao). Inclua decisoes: "Se X, faca Y. Senao, faca Z."</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">✅</span>
+            <div><span class="font-medium">Quality Checks</span><span class="text-neutral-500 text-sm ml-2">- Validacao automatica de qualidade</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A secao Quality Checks define criterios que o output deve atender antes de ser entregue. O Claude auto-valida o resultado contra esses criterios.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quality Checks transformam skills boas em skills excelentes. O Claude revisa o proprio trabalho e corrige problemas antes de entregar. E self-review automatico.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Checklist: "- [ ] Output contem todas as secoes obrigatorias", "- [ ] Nenhum placeholder generico restante", "- [ ] Formatacao consistente". O Claude marca cada item.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📤</span>
+            <div><span class="font-medium">Output Definition</span><span class="text-neutral-500 text-sm ml-2">- Formato do resultado esperado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A secao Output define exatamente como o resultado deve ser formatado: arquivo, formato, estrutura, nome. Elimina ambiguidade sobre o que a skill produz.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem Output definido, o Claude decide o formato. As vezes gera Markdown, as vezes texto puro, as vezes JSON. Definir o output garante consistencia.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Especifique: formato (JSON, CSV, HTML), estrutura (campos obrigatorios), destino (arquivo, stdout, clipboard). Exemplo: "Output: arquivo leads.csv com colunas Nome, Email, Classificacao."</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✍️</span>
+            <div><span class="font-medium">Escrevendo Instrucoes Eficazes</span><span class="text-neutral-500 text-sm ml-2">- Boas praticas de redacao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tecnicas de escrita para maximizar a eficacia das instrucoes: verbos imperativos, especificidade, exemplos concretos e restricoes explicitas.</p></div>
+              <div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A qualidade da skill e proporcional a qualidade das instrucoes. Instrucoes vagas geram resultados inconsistentes. Instrucoes precisas geram resultados previsiveis.</p></div>
+              <div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use verbos imperativos: "Analise", "Identifique", "Gere". Evite ambiguidade: "bom codigo" vs "codigo sem warnings, com tipos tipados, cobertura > 80%". Inclua exemplos do output esperado.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-5-3.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.4 ===== -->
+    <div id="mod-5-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.4</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📸 Skill: Screenshot to Website</h3>
+        <p class="text-neutral-400 text-sm">Skill pratica que transforma screenshots de design em codigo HTML/Tailwind funcional. Analise de layout, HTML semantico e loop de comparacao.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Proposito e Caso de Uso</span><span class="text-neutral-500 text-sm ml-2">- Quando usar esta skill</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Skill que recebe um screenshot de design (Figma, Dribbble, site existente) e gera o codigo HTML + Tailwind CSS que replica o visual fielmente.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Transformar design em codigo e uma das tarefas mais repetitivas do desenvolvimento web. Esta skill automatiza 80% do trabalho, deixando voce focar nos detalhes finais.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Input: screenshot PNG/JPG. Output: arquivo HTML com Tailwind. O Claude analisa layout, cores, tipografia e espacamento do screenshot e gera o codigo equivalente.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📐</span>
+            <div><span class="font-medium">Analise de Layout</span><span class="text-neutral-500 text-sm ml-2">- Decomposicao visual do screenshot</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O primeiro step da skill: analisar o screenshot e identificar grid, secoes, componentes, hierarquia visual, paleta de cores e tipografia usada.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem analise estruturada, o Claude gera codigo que parece certo mas nao escala. A analise sistematica garante que a estrutura do HTML reflita a logica do design.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O Claude identifica: header, hero, features, footer. Mapeia grid: 12 colunas, flexbox, grid CSS. Extrai cores em hex/tailwind. Identifica fontes e tamanhos.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">HTML Semantico</span><span class="text-neutral-500 text-sm ml-2">- Estrutura com significado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A skill instrui o Claude a usar tags semanticas (nav, main, section, article, aside, footer) em vez de divs genericas. Acessibilidade e SEO de graca.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">HTML semantico e requisito de qualidade profissional. A skill garante que o codigo gerado nao seja "div soup" mas sim HTML estruturado e acessivel.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">nav para navegacao, main para conteudo principal, section para secoes, article para conteudo independente. Alt text em imagens. Aria labels onde necessario.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🎨</span>
+            <div><span class="font-medium">Implementacao Tailwind</span><span class="text-neutral-500 text-sm ml-2">- Estilizacao com utility classes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A skill gera codigo usando Tailwind CSS utility classes em vez de CSS customizado. Resultado: codigo manutivel, responsivo e consistente com o design system.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Tailwind e o padrao da industria para prototipagem rapida. O codigo gerado pela skill e imediatamente utilizavel em qualquer projeto Tailwind.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Classes responsivas: sm:, md:, lg:. Espacamento: p-4, m-2, gap-6. Layout: flex, grid, grid-cols-3. A skill mapeia o design visual para classes Tailwind equivalentes.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔁</span>
+            <div><span class="font-medium">Loop de Comparacao</span><span class="text-neutral-500 text-sm ml-2">- Refinamento iterativo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A skill inclui um loop de self-review: o Claude compara o resultado gerado com o screenshot original, identifica diferencas e refina o codigo ate atingir fidelidade alta.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O primeiro draft nunca e perfeito. O loop de comparacao garante que o Claude iterate automaticamente, corrigindo espacamentos, cores e proporcoes sem voce pedir.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Step de self-review: "Compare o HTML gerado com o screenshot. Identifique 3 diferencas. Corrija e repita ate score de fidelidade > 90%." Maximo de 3 iteracoes.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✅</span>
+            <div><span class="font-medium">Checklist de Qualidade</span><span class="text-neutral-500 text-sm ml-2">- Validacao final do output</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Checklist final: HTML valido, responsivo (mobile-first), semantico, acessivel, sem CSS inline, Tailwind puro, imagens com alt text, links funcionais.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O checklist garante que nenhum aspecto de qualidade seja esquecido. E a diferenca entre codigo de prototipo e codigo de producao.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Checklist: responsividade (3 breakpoints), acessibilidade (alt, aria), performance (sem bibliotecas desnecessarias), consistencia (design system), validade (W3C validator).</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-4.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.5 ===== -->
+    <div id="mod-5-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.5</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔍 Skill: Lead Research</h3>
+        <p class="text-neutral-400 text-sm">Skill de pesquisa de leads: confirmacao de nicho, metodologia de pesquisa, classificacao Hot/Warm/Cold, deduplicacao e output CSV estruturado.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Proposito e Caso de Uso</span><span class="text-neutral-500 text-sm ml-2">- Pesquisa automatizada de leads</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Skill que pesquisa e organiza leads potenciais para um nicho especifico. Gera lista classificada com informacoes de contato, empresa e nivel de interesse estimado.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pesquisa manual de leads leva horas. Esta skill sistematiza o processo: define criterios, pesquisa, classifica e formata. Resultado consistente em minutos.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Input: nicho/industria alvo. Output: CSV com leads classificados. O Claude pesquisa, valida e organiza leads seguindo metodologia estruturada.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎪</span>
+            <div><span class="font-medium">Confirmacao de Nicho</span><span class="text-neutral-500 text-sm ml-2">- Validando o mercado alvo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Primeiro step: confirmar com o usuario o nicho exato, personas alvo, tamanho de empresa e geografia. Evita pesquisar leads errados.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Pesquisa sem nicho definido gera leads irrelevantes. A confirmacao inicial garante que todo o esforco de pesquisa seja direcionado corretamente.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Perguntas de confirmacao: "Qual industria?", "Tamanho de empresa (PME, Enterprise)?", "Geografia (Brasil, LATAM, Global)?", "Cargo do decisor?" Sem isso, nao avanca.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔬</span>
+            <div><span class="font-medium">Metodologia de Pesquisa</span><span class="text-neutral-500 text-sm ml-2">- Fontes e processo sistematico</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A metodologia define onde e como buscar leads: LinkedIn, sites de empresas, diretorios de industria, eventos, publicacoes setoriais. Processo sistematico com fontes prioritizadas.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem metodologia, a pesquisa e aleatoria e incompleta. Com metodologia, voce garante cobertura ampla e qualidade uniforme dos dados coletados.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fontes primarias: LinkedIn, Crunchbase, sites corporativos. Secundarias: eventos, publicacoes, associacoes. Para cada lead: nome, cargo, empresa, email, telefone, LinkedIn.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🌡️</span>
+            <div><span class="font-medium">Classificacao Hot/Warm/Cold</span><span class="text-neutral-500 text-sm ml-2">- Priorizacao por temperatura</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Sistema de classificacao: Hot (sinais claros de interesse/necessidade), Warm (perfil compativel, sem sinais ativos), Cold (match demografico apenas).</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Nem todos os leads sao iguais. Classificar por temperatura permite priorizar outreach e alocar tempo nos leads com maior probabilidade de conversao.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Hot: publicou sobre o problema, contratando para a area, mencionou o tema. Warm: empresa do perfil certo, cargo certo. Cold: industria certa mas sem sinais de timing.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Deduplicacao</span><span class="text-neutral-500 text-sm ml-2">- Removendo leads duplicados</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Step de limpeza: identificar e remover leads duplicados baseado em email, nome+empresa ou LinkedIn URL. Manter apenas o registro mais completo.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Leads duplicados geram contato duplo, que e desprofissional e desperdiça tempo. A deduplicacao garante lista limpa e confiavel.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Criterios: email identico, nome+empresa identicos, LinkedIn URL identico. Merge: manter o registro com mais campos preenchidos. Reportar quantos duplicados foram removidos.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Formato CSV de Output</span><span class="text-neutral-500 text-sm ml-2">- Estrutura do arquivo final</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O output e um CSV com colunas padronizadas: Nome, Cargo, Empresa, Email, Telefone, LinkedIn, Classificacao, Notas. Pronto para importar em CRM.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">CSV estruturado e importavel diretamente no HubSpot, Salesforce, Pipedrive. Sem formatacao manual. A skill gera o arquivo pronto para uso.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Colunas obrigatorias: Nome, Empresa, Classificacao. Opcionais: Email, Telefone, LinkedIn, Cargo, Notas. Encoding UTF-8. Separador virgula. Header na primeira linha.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-5')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-5.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.6 ===== -->
+    <div id="mod-5-6" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.6</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔒 Skill: Senior Code Review</h3>
+        <p class="text-neutral-400 text-sm">Skill de review profissional em 4 camadas: seguranca, bugs, performance e qualidade. Output com severity levels e feedback positivo.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🛡️</span>
+            <div><span class="font-medium">Security Layer</span><span class="text-neutral-500 text-sm ml-2">- Revisao de vulnerabilidades</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Primeira camada do review: buscar SQL injection, XSS, secrets expostos, autenticacao fraca, CORS misconfiguration, dependencias vulneraveis.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Seguranca e a camada mais critica. Um unico SQL injection pode comprometer todo o banco de dados. O review de seguranca deve ser sempre o primeiro.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Checklist: inputs sanitizados, queries parametrizadas, tokens seguros, HTTPS enforced, headers de seguranca, secrets em env vars (nunca hardcoded).</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🐛</span>
+            <div><span class="font-medium">Bug Detection</span><span class="text-neutral-500 text-sm ml-2">- Encontrando bugs potenciais</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Segunda camada: buscar race conditions, null pointer exceptions, off-by-one errors, resource leaks, error handling faltante, edge cases nao tratados.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Bugs em producao custam 10x mais que bugs encontrados em review. A skill sistematiza a busca por padroes de bugs conhecidos que olhos humanos frequentemente perdem.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Padroes: null checks faltantes, async sem await, try sem catch adequado, loops infinitos potenciais, divisao por zero, array out of bounds.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">Performance Analysis</span><span class="text-neutral-500 text-sm ml-2">- Otimizacao de desempenho</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Terceira camada: N+1 queries, loops desnecessarios, falta de cache, indices ausentes, algoritmos O(n2) quando O(n) e possivel, bundle size excessivo.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Performance ruim mata experiencia do usuario. A skill identifica problemas de performance que so aparecem sob carga, antes de chegar a producao.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Padroes: queries em loops, falta de paginacao, renders desnecessarios (React), imports pesados, falta de lazy loading, memoizacao ausente.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💎</span>
+            <div><span class="font-medium">Code Quality</span><span class="text-neutral-500 text-sm ml-2">- Legibilidade e manutencao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quarta camada: naming conventions, DRY violations, funcoes longas demais, acoplamento excessivo, falta de tipagem, testes ausentes, documentacao inline.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Codigo que funciona mas e ilegivel vira divida tecnica. A camada de qualidade garante que o codigo seja mantivel a longo prazo, nao so hoje.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Principios: funcoes < 30 linhas, nomes descritivos, single responsibility, comentarios explicam "por que" nao "o que", tipagem forte, cobertura de testes.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Output com Severity</span><span class="text-neutral-500 text-sm ml-2">- Formato de saida com prioridades</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O output classifica cada finding em Critical (bloqueia deploy), Important (deve corrigir), Minor (nice to have). Inclui localizacao, descricao e sugestao de fix.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Severity permite priorizar correcoes. Criticals primeiro, importants depois, minors quando houver tempo. Sem classificacao, tudo parece igualmente urgente.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Formato: [CRITICAL] arquivo:linha - descricao - sugestao de fix. [IMPORTANT] arquivo:linha - descricao. [MINOR] arquivo:linha - descricao. Sumario no final com contagem.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">👏</span>
+            <div><span class="font-medium">Feedback Positivo</span><span class="text-neutral-500 text-sm ml-2">- Destacando boas praticas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A skill inclui secao de feedback positivo: destacar o que foi bem feito. Patterns bons, abstractions elegantes, error handling robusto, testes completos.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Review so negativo desmotiva. Incluir feedback positivo reforça boas praticas e torna o review mais construtivo. Equilibrio entre critica e reconhecimento.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Secao "Destaques Positivos": listar 3-5 coisas bem feitas. Exemplos: "Boa separacao de concerns", "Error handling completo", "Testes cobrem edge cases". Sempre incluir.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-6')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-6.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.7 ===== -->
+    <div id="mod-5-7" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.7</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🌐 Onde Encontrar Skills Prontas</h3>
+        <p class="text-neutral-400 text-sm">Mapa completo de repositorios, marketplaces e comunidades onde voce encontra skills prontas: awesome-claude-code, SkillsMP, SkillHub.club e mais.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📚</span>
+            <div><span class="font-medium">awesome-claude-code</span><span class="text-neutral-500 text-sm ml-2">- O repositorio curado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Repositorio GitHub curado pela comunidade com lista de skills, MCPs, plugins, tutoriais e recursos para Claude Code. O ponto de partida obrigatorio.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Antes de criar qualquer coisa, verifique se ja existe neste repositorio. Economia de tempo e acesso a skills testadas pela comunidade.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Organizado por categorias: development, review, testing, documentation. Cada item tem descricao, link e stars. Contribua com suas skills apos testa-las.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">awesome-agent-skills</span><span class="text-neutral-500 text-sm ml-2">- Skills para agentes de IA</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Repositorio focado em skills para agentes de IA em geral, nao apenas Claude. Muitas skills sao portaveis e adaptaveis para o formato .claude/commands/.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Skills de outros ecossistemas de IA podem ser adaptadas para Claude Code. A logica e a mesma, so o formato muda. Amplia muito seu catalogo de opcoes.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Skills de pesquisa, analise, geracao de conteudo. Adapte o formato para Markdown com Purpose/Steps/Output. A logica principal se preserva na conversao.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🦸</span>
+            <div><span class="font-medium">Superpowers Framework</span><span class="text-neutral-500 text-sm ml-2">- Framework de produtividade</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Framework que organiza skills em categorias de "superpoderes": velocidade, qualidade, criatividade, automacao. Inclui skills pre-construidas para cada categoria.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O framework ajuda a pensar sistematicamente sobre quais skills voce precisa. Em vez de criar ad-hoc, voce identifica gaps no seu workflow e busca skills para preenche-los.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Categorias: Speed (automacao de tarefas repetitivas), Quality (review e testing), Creativity (geracao de conteudo), Intelligence (analise e pesquisa).</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏪</span>
+            <div><span class="font-medium">SkillsMP Marketplace</span><span class="text-neutral-500 text-sm ml-2">- Marketplace de skills da comunidade</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Marketplace comunitario onde desenvolvedores publicam e compartilham skills. Inclui reviews, ratings e instalacao com um clique.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">SkillsMP e o marketplace mais ativo do ecossistema. Skills sao revisadas pela comunidade e testadas antes de publicacao. Qualidade acima da media.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Browse por categoria, popularidade ou recencia. Instalacao via CLI ou download manual. Cada skill tem README com instrucoes e exemplos de uso.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🏠</span>
+            <div><span class="font-medium">SkillHub.club</span><span class="text-neutral-500 text-sm ml-2">- Hub de skills com preview</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Plataforma web com catalogo visual de skills. Permite preview do output antes de instalar, com exemplos de execucao real e comparacao de skills similares.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ver o output antes de instalar economiza tempo. Voce compara skills similares lado a lado e escolhe a que melhor atende sua necessidade.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Catalogo visual com screenshots de output. Filtros por linguagem, categoria e rating. Botao de instalacao direta. Secao de comentarios da comunidade.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🌟</span>
+            <div><span class="font-medium">awesomeclaude.ai</span><span class="text-neutral-500 text-sm ml-2">- Diretorio completo do ecossistema</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Diretorio abrangente de tudo relacionado ao Claude: skills, MCPs, plugins, tutoriais, exemplos, templates. O Google do ecossistema Claude.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quando voce nao sabe onde procurar, awesomeclaude.ai e o ponto de partida. Agrega recursos de todas as fontes em um unico lugar pesquisavel.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Busca por keyword, categoria ou tipo de recurso. Links diretos para repositorios. Atualizacao frequente pela comunidade. Secao de "trending" mostra o que e popular agora.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-7')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-7.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.8 ===== -->
+    <div id="mod-5-8" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.8</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔌 Plugins: O Game-Changer</h3>
+        <p class="text-neutral-400 text-sm">O sistema de plugins do Claude Code: o que sao, por que importam, exemplos como Supabase plugin, marketplace e o paradigma "instale uma vez, use sempre".</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">O que sao Plugins</span><span class="text-neutral-500 text-sm ml-2">- Pacotes completos de funcionalidade</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Plugins sao pacotes que empacotam skills, CLAUDE.md configs, MCPs e scripts em um unico instalavel. Sao a evolucao das skills individuais para solucoes completas.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Plugins simplificam drasticamente o setup. Em vez de configurar 5 skills + 2 MCPs + CLAUDE.md manualmente, voce instala um plugin e tudo funciona.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Um plugin = bundle de resources. Pode conter: skills (.md), config (CLAUDE.md patches), MCPs (servers bundled), scripts (setup/teardown). Versionado como software.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🚀</span>
+            <div><span class="font-medium">Por que Plugins Importam</span><span class="text-neutral-500 text-sm ml-2">- O impacto no ecossistema</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Plugins democratizam capacidades avancadas. Um expert cria, milhares usam. E o mesmo modelo que fez npm, VS Code extensions e WordPress plugins explodirem.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O ecossistema de plugins vai definir quem e produtivo e quem fica pra tras. Quem adotar cedo tera vantagem competitiva massiva em produtividade.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Efeito rede: mais plugins = mais valor. Especializacao: plugins verticais para cada industria/stack. Composabilidade: combine plugins para workflows complexos.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🗄️</span>
+            <div><span class="font-medium">Supabase Plugin</span><span class="text-neutral-500 text-sm ml-2">- Exemplo pratico de plugin</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O plugin Supabase adiciona skills para gerenciar banco de dados, auth, storage e edge functions diretamente do Claude Code. Exemplo real de plugin poderoso.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E o caso de estudo perfeito: um plugin que combina MCP (conexao ao Supabase) com skills (criar tabelas, configurar auth, deploy functions). Mostra o poder do modelo.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Instale uma vez, acesse: criacao de tabelas, migrations, configuracao de RLS, deploy de edge functions, gerenciamento de storage. Tudo via slash commands.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🏪</span>
+            <div><span class="font-medium">Plugin Marketplace</span><span class="text-neutral-500 text-sm ml-2">- Onde encontrar e publicar plugins</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O marketplace de plugins centraliza descoberta, instalacao e atualizacao. Similar ao npm mas para funcionalidades do Claude Code.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O marketplace e onde voce encontra plugins testados e confiados pela comunidade. Tambem e onde voce publica seus proprios plugins para outros usarem.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Browse, instale, atualize. Categorias: development, database, deployment, testing, documentation. Cada plugin tem README, rating e numero de instalacoes.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">♾️</span>
+            <div><span class="font-medium">Instale Uma Vez, Use Sempre</span><span class="text-neutral-500 text-sm ml-2">- O paradigma de reutilizacao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O principio fundamental: configure uma vez, use em todos os projetos. Plugins globais ficam em ~/.claude/ e funcionam em qualquer repositorio automaticamente.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Repetir setup em cada projeto e desperdicio. Plugins globais garantem que suas ferramentas favoritas estejam sempre disponiveis, em qualquer contexto.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Global: ~/.claude/commands/ (disponivel em todos os projetos). Local: .claude/commands/ (especifico do projeto). Combine ambos para maximo de cobertura.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🌱</span>
+            <div><span class="font-medium">Crescimento da Comunidade</span><span class="text-neutral-500 text-sm ml-2">- O ecossistema em expansao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O ecossistema de plugins esta em crescimento exponencial. Novos plugins surgem diariamente, cobrindo cada vez mais use cases e stacks tecnologicos.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Quem contribui cedo ganha visibilidade e influencia. Criar plugins populares estabelece reputacao na comunidade e pode virar fonte de receita.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Contribua: crie plugins para seu stack, publique no marketplace, itere com feedback. A comunidade cresce quando cada um compartilha suas solucoes.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-8')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-8.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.9 ===== -->
+    <div id="mod-5-9" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.9</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔄 Sincronizando Skills Code e Cowork</h3>
+        <p class="text-neutral-400 text-sm">O desafio de manter skills sincronizadas entre Claude Code (CLI) e Claude Cowork (web). Tres opcoes praticas e a ferramenta skill-creator.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⚠️</span>
+            <div><span class="font-medium">O Problema de Sync</span><span class="text-neutral-500 text-sm ml-2">- Por que as skills nao sincronizam</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Claude Code (CLI) e Claude Cowork (web) tem sistemas de skills separados. Uma skill criada no Code nao aparece automaticamente no Cowork e vice-versa.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitos usuarios usam ambas as interfaces. Sem sync, voce mantem duas versoes de cada skill, o que gera inconsistencia e desperdicio de esforco.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Code skills: .claude/commands/ (arquivos locais). Cowork skills: configuradas na interface web. Nao ha sincronizacao automatica nativa entre eles.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📂</span>
+            <div><span class="font-medium">Opcao 1: Selecionar Pasta</span><span class="text-neutral-500 text-sm ml-2">- Apontar Cowork para .claude/</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Configurar o Cowork para ler a pasta .claude/commands/ do seu projeto. Assim ambas as interfaces leem do mesmo local, mantendo sync natural.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E a solucao mais simples e direta. Nao requer ferramentas extras. Funciona imediatamente para skills baseadas em arquivos.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">No Cowork, selecione a pasta do projeto. As skills em .claude/commands/ ficam automaticamente disponiveis. Limitacao: so funciona com o projeto selecionado.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">Opcao 2: Empacotar como Plugin</span><span class="text-neutral-500 text-sm ml-2">- Distribuicao via plugin</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Empacotar suas skills como plugin e instala-lo tanto no Code quanto no Cowork. O plugin garante que ambos tenham a mesma versao das skills.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Plugins sao a solucao mais robusta para sync. Uma atualizacao no plugin atualiza ambas as interfaces. Versionamento incluso.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Crie um repositorio para o plugin. Estruture: /commands/, /config/, README.md. Instale no Code e no Cowork. Atualize via git pull ou marketplace.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔨</span>
+            <div><span class="font-medium">Opcao 3: Rebuild no Cowork</span><span class="text-neutral-500 text-sm ml-2">- Recriar manualmente na web</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Recriar as skills diretamente na interface do Cowork. Opcao mais trabalhosa mas permite aproveitar features exclusivas do Cowork como UI interativa.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Algumas skills funcionam melhor no Cowork que no Code. Skills visuais, interativas ou que precisam de UI se beneficiam de rebuild especifico.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Copie a logica, adapte o formato. Cowork tem campos especificos para inputs, steps e outputs. Mantenha a essencia da skill, adapte a interface.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🛠️</span>
+            <div><span class="font-medium">Skill-Creator Tool</span><span class="text-neutral-500 text-sm ml-2">- Ferramenta de criacao automatizada</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Ferramenta que automatiza a criacao de skills a partir de descricao em linguagem natural. Voce descreve o que quer e ela gera o .md no formato correto.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Escrever skills do zero requer conhecimento do formato. O skill-creator abstrai isso, permitindo que qualquer pessoa crie skills profissionais rapidamente.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Input: "Quero uma skill que faca review de seguranca em APIs Python". Output: arquivo .md completo com Purpose, Steps, Quality Checks e Output. Pronto para usar.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📏</span>
+            <div><span class="font-medium">Melhores Praticas</span><span class="text-neutral-500 text-sm ml-2">- Dicas para manter tudo organizado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Conjunto de boas praticas: versione skills no Git, use naming conventions, documente cada skill, teste antes de publicar, mantenha changelog.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Skills desorganizadas viram tech debt. Boas praticas desde o inicio garantem que seu catalogo de skills escale sem virar bagunca.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Git: versione tudo em .claude/commands/. Naming: kebab-case descritivo. Docs: cada skill tem header com descricao. Testing: teste com dados reais antes de commit.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-9')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-9.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.10 ===== -->
+    <div id="mod-5-10" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.10</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🛡️ Seguranca de Skills</h3>
+        <p class="text-neutral-400 text-sm">Riscos de seguranca ao instalar skills de terceiros: acesso a filesystem, shell e environment. Como verificar instrucoes ocultas e revisar plugins.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📁</span>
+            <div><span class="font-medium">Riscos de Filesystem</span><span class="text-neutral-500 text-sm ml-2">- Skills podem ler/escrever arquivos</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Skills podem instruir o Claude a ler, modificar ou deletar arquivos no seu sistema. Uma skill maliciosa pode acessar arquivos sensiiveis fora do projeto.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Confiar cegamente em skills de terceiros e como executar scripts desconhecidos. Voce precisa entender os riscos para tomar decisoes informadas sobre o que instalar.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Riscos: leitura de ~/.ssh/, ~/.aws/credentials, .env files. Escrita: modificacao de configs, criacao de backdoors. Mitigacao: sandbox, permissoes restritas, review do codigo.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">💻</span>
+            <div><span class="font-medium">Riscos de Shell</span><span class="text-neutral-500 text-sm ml-2">- Execucao de comandos arbitrarios</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Skills podem instruir o Claude a executar comandos shell. Uma skill maliciosa pode rodar scripts que instalam malware, enviam dados ou alteram configuracoes do sistema.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Shell access e o risco mais serio. Com bash, o Claude pode fazer qualquer coisa que voce pode fazer no terminal. Incluindo coisas destrutivas.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Riscos: curl | bash de URLs maliciosas, rm -rf, exfiltracao de dados via curl/wget. Mitigacao: use --allowedTools para restringir, revise cada comando antes de aprovar.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔑</span>
+            <div><span class="font-medium">Riscos de Environment</span><span class="text-neutral-500 text-sm ml-2">- Acesso a variaveis de ambiente</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Skills podem acessar variaveis de ambiente que contem API keys, tokens de autenticacao, credenciais de banco de dados e outros secrets.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Variaveis de ambiente sao o local padrao para secrets. Uma skill que le $DATABASE_URL ou $OPENAI_KEY pode exfiltrar credenciais sem voce perceber.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Riscos: echo $API_KEY, env | curl -X POST. Mitigacao: use .env files com permissoes restritas, nao exporte secrets desnecessarios, monitore network requests.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📖</span>
+            <div><span class="font-medium">Lendo o Raw Markdown</span><span class="text-neutral-500 text-sm ml-2">- Sempre leia antes de instalar</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Regra numero 1: sempre leia o arquivo .md raw antes de instalar. Skills sao texto puro, voce pode ler e entender tudo que elas instruem o Claude a fazer.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E a unica forma de garantir que a skill faz o que diz. Confiar na descricao do marketplace sem ler o codigo e o equivalente a instalar npm packages sem auditoria.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Abra o .md raw. Procure: instrucoes de shell, acesso a arquivos fora do projeto, requests de rede, leitura de env vars. Se algo parece suspeito, nao instale.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">Instrucoes Ocultas</span><span class="text-neutral-500 text-sm ml-2">- Prompt injection em skills</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Prompt injection via skills: instrucoes ocultas em comentarios HTML, unicode invisivel ou formatacao que parece inofensiva mas instrui o Claude a fazer algo diferente.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ataques sofisticados usam tecnicas de prompt injection em skills. Conhecer os vetores de ataque permite identifica-los antes que causem dano.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Vetores: comentarios HTML com instrucoes, caracteres unicode zero-width, "ignore previous instructions" escondido em texto longo. Use editor com visualizacao de caracteres especiais.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔒</span>
+            <div><span class="font-medium">Review de Seguranca de Plugins</span><span class="text-neutral-500 text-sm ml-2">- Checklist de auditoria</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Checklist de seguranca para avaliar plugins antes de instalar: fonte confiavel, codigo auditado, sem network requests suspeitos, permissoes minimas, comunidade ativa.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um framework de avaliacao sistematico evita decisoes por impulso. Ter um checklist garante que voce nao esqueca nenhum aspecto de seguranca.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Checklist: fonte confiavel? Codigo aberto? Reviews positivos? Sem network calls suspeitos? Permissoes minimas? Mantido ativamente? Se falhar em qualquer item, nao instale.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-10')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-10.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 5.11 ===== -->
+    <div id="mod-5-11" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-teal-400 font-bold">5.11</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">💰 Token Math: 90% de Economia</h3>
+        <p class="text-neutral-400 text-sm">A matematica por tras da economia de tokens com skills. Comparacao de custos, calculo de ROI e estrategia de escala para maximizar savings.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">⌨️</span>
+            <div><span class="font-medium">Re-typing vs Skill Invocation</span><span class="text-neutral-500 text-sm ml-2">- O custo de digitar vs invocar</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Comparacao direta: digitar um prompt de 500 palavras custa ~700 tokens de input. Invocar uma skill com /review custa ~20 tokens de input (o conteudo da skill e processado internamente).</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada token custa dinheiro. Re-digitar o mesmo prompt 100 vezes custa 100x. Invocar uma skill 100 vezes custa quase o mesmo que 1 vez. A economia e dramatica.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt manual: 500 palavras = ~700 tokens/uso. Skill: conteudo do .md carregado uma vez + ~20 tokens do slash command. Diferenca: ~97% de reducao no input do usuario.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">Tabela de Comparacao de Tokens</span><span class="text-neutral-500 text-sm ml-2">- Numeros reais de economia</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tabela comparativa: Code Review manual (800 tokens) vs /review (skill, 20 tokens). Lead Research manual (1200 tokens) vs /lead-research (20 tokens). Screenshot to Site manual (600 tokens) vs /screenshot-to-site (20 tokens).</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Numeros concretos tornam o argumento irrefutavel. Quando voce ve que esta pagando 40x mais por nao usar skills, a motivacao para criar skills dispara.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Economia media por skill: 90-97% de reducao de tokens de input do usuario. Skills mais longas = maior economia. A skill de review de 800 palavras economiza mais que a skill de 200 palavras.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔢</span>
+            <div><span class="font-medium">Calculo de 100 Usos</span><span class="text-neutral-500 text-sm ml-2">- Economia acumulada em escala</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Calculo pratico: 100 reviews manuais = 80.000 tokens de input. 100 reviews via skill = 2.000 tokens. Economia: 78.000 tokens. Em dolares: aproximadamente $2-3 de economia direta.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O valor real nao e so financeiro. E temporal: digitar 100 prompts de 500 palavras = ~4 horas de digitacao. 100 invocacoes de skill = ~5 minutos. Economia de ~3h55min.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tokens salvos: 78k por 100 usos. Tempo salvo: ~4 horas por 100 usos. Consistencia: 100% das execucoes seguem o mesmo padrao. Zero variacao humana na qualidade do prompt.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📈</span>
+            <div><span class="font-medium">Economia Composta</span><span class="text-neutral-500 text-sm ml-2">- O efeito multiplicador</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Economia composta: 10 skills x 100 usos cada = 1.000 invocacoes. Economia: 780.000 tokens + 40 horas de digitacao economizadas. Em um time de 5 pessoas: 5x isso.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A economia escala exponencialmente com numero de skills, usos e pessoas. Um investimento de 2 horas criando 10 skills retorna 200+ horas de economia no ano.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Multiplicadores: mais skills, mais usos, mais pessoas. ROI cresce com cada variavel. Time de 10 devs usando 20 skills = economia massiva em tokens e tempo.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Estrategia de Escala</span><span class="text-neutral-500 text-sm ml-2">- Plano de adocao progressiva</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Plano de adocao: Semana 1 crie 3 skills para tarefas mais repetitivas. Semana 2 adicione 3 mais. Mes 1: 12 skills cobrindo 80% do workflow. Mes 2: compartilhe com o time.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Adocao gradual garante que cada skill seja testada e refinada antes de adicionar a proxima. Melhor 5 skills excelentes que 20 mediocres.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Priorize por frequencia: as tarefas que voce faz 10+ vezes por semana devem virar skill primeiro. Depois as semanais. Depois as mensais. ROI maximo primeiro.</p></div></div></div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💎</span>
+            <div><span class="font-medium">ROI de Skill Building</span><span class="text-neutral-500 text-sm ml-2">- Retorno sobre investimento</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-teal-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Calculo de ROI: criar uma skill leva ~15 minutos. Ela economiza ~2 minutos por uso. Apos 8 usos, o investimento ja se pagou. Tudo apos o 8o uso e lucro puro.</p></div><div><span class="text-teal-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">ROI quantificavel justifica o investimento de tempo. Quando o gestor pergunta "por que gastar tempo criando skills?", voce tem numeros concretos para responder.</p></div><div><span class="text-teal-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Break-even: 8 usos. ROI em 30 dias (uso diario): 2.900%. ROI em 1 ano: 34.000%+. Skills sao o investimento de maior retorno em produtividade com IA.</p></div></div></div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-5-11')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">Ver em Modal</button>
+        <a href="modulo-5-11.html" class="px-4 py-2 text-sm bg-teal-600 hover:bg-teal-500 text-white rounded-lg transition-colors">Ver Completo</a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO INFERIOR -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha4/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Trilha 4: Prompts
+      </a>
+      <a href="../trilha6/index.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">
+        Proxima Trilha: MCPs →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-5-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.1</span><span class="font-semibold">Skills vs MCPs vs Plugins</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.2</span><span class="font-semibold">Onde as Skills Vivem</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.3</span><span class="font-semibold">Template de Skill</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.4</span><span class="font-semibold">Skill: Screenshot to Website</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-5" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.5</span><span class="font-semibold">Skill: Lead Research</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-5.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-6" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.6</span><span class="font-semibold">Skill: Senior Code Review</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-6.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-7" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.7</span><span class="font-semibold">Onde Encontrar Skills Prontas</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-7.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-8" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.8</span><span class="font-semibold">Plugins: O Game-Changer</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-8.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-9" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.9</span><span class="font-semibold">Sincronizando Skills Code e Cowork</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-9.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-10" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.10</span><span class="font-semibold">Seguranca de Skills</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-10.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-5-11" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-teal-400 font-bold">5.11</span><span class="font-semibold">Token Math: 90% de Economia</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-5-11.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.add('hidden');
+      });
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

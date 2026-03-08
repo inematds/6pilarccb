@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 6.4 - MCP #2: GitHub | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6</a>
+      <span>/</span>
+      <span class="text-rose-400">Modulo 6.4</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 6.4
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🐙 MCP #2: GitHub</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Conecte o Claude diretamente ao GitHub para gerenciar issues, PRs, reviews e repositorios. Transforme o Claude de editor de codigo em membro ativo da sua equipe de desenvolvimento.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">12</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🐙 O que o GitHub MCP Faz</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Acesso Direto ao GitHub
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O GitHub MCP conecta o Claude a API do GitHub via protocolo MCP. Ele pode listar e ler issues, criar e gerenciar pull requests, verificar status de CI/CD, buscar em repositorios e ler conteudo de arquivos remotos. Tudo sem sair do terminal.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>list_issues / get_issue:</strong> Acessa issues com filtros (label, state, assignee)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>create_pull_request:</strong> Cria PRs com title, body e branch</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>get_pull_request_reviews:</strong> Le feedback de reviewers</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>search_repositories:</strong> Busca repos por nome, topico ou linguagem</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Claude Como Membro da Equipe
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Com GitHub MCP, o Claude entende o CONTEXTO do projeto: quem pediu o que, quais issues estao abertas</li>
+          <li>Workflow completo: leia issue -> implemente -> crie PR -> sem copy-paste</li>
+          <li>Reviews automatizados com contexto real do PR, nao suposicoes</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          O workflow mais poderoso com GitHub MCP: 'leia a issue #42, implemente o que foi pedido e crie um PR linkando a issue'. O Claude busca a issue, entende os requisitos, implementa no codigo e cria o PR formatado. Um unico prompt substitui 15 minutos de trabalho manual.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar para integrar issues com implementacao</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Pedir queries especificas com filtros</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Combinar com Skills de review para PRs completos</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Listar todas as issues sem filtro (enche o contexto)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Criar PRs sem revisar o que o Claude gerou</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Deixar conectado durante sessoes de coding puro</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🎯 Por Que Vale a Pena</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Contexto Completo do Projeto
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Sem GitHub MCP, voce precisa copiar e colar issues, comentarios de PR e feedback de reviewers manualmente. Com GitHub MCP, o Claude busca tudo sozinho e trabalha com o contexto completo do que esta acontecendo no repositorio.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Sem MCP: copy-paste de issue -> prompt -> code -> manual PR = 15-20 min</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Com MCP: 'implemente issue #42 e crie PR' = 2-5 min</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Economia: 75%+ do tempo em workflows issue-to-PR</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Impacto na Produtividade
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Issues como input direto: o Claude le a issue e traduz em codigo</li>
+          <li>Reviews como feedback: le comentarios e ajusta codigo automaticamente</li>
+          <li>CI/CD como validacao: verifica se checks passaram e corrige se nao</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Para maximizar valor do GitHub MCP, estruture suas issues com clareza. Uma issue bem escrita com criterios de aceitacao se torna um prompt perfeito para o Claude implementar. Issue clara + GitHub MCP = implementacao quase automatica.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Escrever issues claras com criterios de aceitacao</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar GitHub MCP para fechar o loop issue->code->PR</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Verificar CI/CD status apos criar PRs</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Esperar que o Claude implemente issues vagas corretamente</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar feedback de reviewers acessivel via MCP</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar para tarefas que nao envolvem GitHub</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">⚙️ Instalacao + Token</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Setup com Autenticacao
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          A instalacao requer dois passos: configurar o Personal Access Token (PAT) do GitHub como variavel de ambiente e executar o comando de adicao do MCP. O token define quais permissoes o Claude tera no GitHub.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Passo 1:</strong> Crie um PAT em github.com → Settings → Developer settings → Personal access tokens → Fine-grained</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Passo 2:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>export GITHUB_TOKEN=github_pat_xxxxx</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Passo 3:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp add github -- npx -y @anthropic/mcp-github</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Passo 4:</strong> Verifique com <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>/status</code></span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Seguranca do Token
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Use Fine-grained PAT (nao classic) para controle preciso</li>
+          <li>Escopos minimos: Contents (read), Issues (read/write), PRs (read/write)</li>
+          <li>Adicione GITHUB_TOKEN ao seu .bashrc ou .zshrc para persistencia</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Nunca use um token com permissao de admin no GitHub MCP. Crie um token Fine-grained com escopos minimos: acesso somente aos repos que voce trabalha, permissoes de leitura para a maioria e escrita apenas para issues e PRs. Revise e rotacione o token a cada 90 dias.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar Fine-grained PAT com escopos minimos</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Adicionar GITHUB_TOKEN ao shell profile</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Rotacionar token a cada 90 dias</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar classic token com full access</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Compartilhar token com outras pessoas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Commitar token em arquivos do projeto</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">💼 Casos de Uso</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Workflows Praticos
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O GitHub MCP habilita workflows que integram gerenciamento de projeto (issues, PRs) com implementacao (codigo). Os casos mais valiosos sao aqueles que eliminam alternancia entre browser e terminal.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Issue-driven:</strong> 'leia issue #42 e implemente' → Claude busca, implementa e pode criar PR</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Review-driven:</strong> 'leia reviews do PR #15 e ajuste o codigo' → Claude le feedback e aplica correções</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Triage:</strong> 'liste issues com label bug criadas esta semana' → Claude filtra e resumo</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>CI-fix:</strong> 'verifique por que o CI falhou no ultimo commit e corrija' → Claude diagnostica e corrige</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> ROI Por Caso de Uso
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Issue-driven: salva 10-15 min por issue (sem copy-paste)</li>
+          <li>Review-driven: salva 5-10 min por ciclo de review</li>
+          <li>Triage: salva 15-30 min por sessao de triagem</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          O caso de uso com melhor ROI e issue-driven development: mantenha suas issues bem estruturadas e peca ao Claude 'leia a issue #X, implemente e crie PR'. Para issues complexas, quebre em sub-tarefas na issue e peca ao Claude implementar uma por uma.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar issue-driven development como workflow padrao</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Combinar com Skills de review para PRs mais completos</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Filtrar queries para minimizar dados retornados</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Pedir listas enormes sem filtro</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Criar PRs sem revisar o diff gerado</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar para repos que voce nao tem permissao</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🟡 Token Impact: Moderate (~2.000 tokens)</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Custo-Beneficio Equilibrado
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O GitHub MCP tem overhead moderado: ~2.000 tokens por mensagem. Isso o coloca no meio-termo - mais caro que Filesystem mas muito mais barato que Browser. O custo e justificavel quando voce esta ativamente trabalhando com issues e PRs.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>~2.000 tokens/msg = 1% da janela de 200k</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Em 50 mensagens: 100k tokens de overhead (significativo)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Justificavel quando: trabalhando ativamente com issues/PRs/reviews</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Quando Conectar vs Desconectar
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Conectar: inicio de sprint, triagem de issues, ciclo de PR</li>
+          <li>Desconectar: coding puro sem referencia a issues, refactoring interno</li>
+          <li>Regra: se nao vai interagir com GitHub nas proximas 10 msgs, desconecte</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Uma estrategia eficiente: conecte GitHub MCP no inicio da sessao para ler issues e entender o que implementar. Depois desconecte e code com apenas Filesystem. No final, reconecte para criar o PR. Isso economiza ~2.000 tokens x mensagens de coding puro.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Conectar quando trabalhando com issues/PRs</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Desconectar durante coding puro</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar a estrategia conecta-desconecta-reconecta</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Manter sempre ligado 'por conveniencia'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar o overhead de 2.000 tokens em sessoes longas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Conectar para tarefas que nao envolvem GitHub</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🎯 Queries Especificas</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Otimize Seus Pedidos
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          A chave para usar GitHub MCP eficientemente e ser especifico nos pedidos. Queries amplas retornam muitos dados que enchem o contexto. Queries focadas retornam so o necessario.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-red-400'>Ruim:</strong> 'liste todas as issues do repo' → pode retornar centenas de issues</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-emerald-400'>Bom:</strong> 'liste issues com label bug criadas esta semana' → retorna 3-5 issues</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-red-400'>Ruim:</strong> 'mostre o PR #42 completo com diff' → diff enorme no contexto</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-emerald-400'>Bom:</strong> 'mostre titulo, descricao e comments do PR #42' → dados focados</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Impacto no Contexto
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Query ampla: pode injetar 10k-50k tokens de dados no contexto</li>
+          <li>Query focada: injeta 500-2.000 tokens de dados relevantes</li>
+          <li>A diferenca pode ser 10-25x menos tokens gastos</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Sempre filtre por: label, state (open/closed), assignee, created date. Peca campos especificos em vez de 'tudo'. Para PRs, peca 'titulo e descricao' antes de pedir 'diff completo'. Avalie se realmente precisa do diff no contexto ou se o codigo local ja e suficiente.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Filtrar por label, state, date, assignee</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Pedir campos especificos em vez de objetos completos</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Avaliar necessidade antes de pedir diffs grandes</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Listar 'todas as issues' sem filtro</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Pedir diffs completos de PRs grandes</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Buscar em repos inteiros sem especificar filtros</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">O que o GitHub MCP Faz</strong>
+              <span class="text-neutral-400"> - O GitHub MCP conecta o Claude a API do GitHub via protocolo MCP. Ele pode listar...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Por Que Vale a Pena</strong>
+              <span class="text-neutral-400"> - Sem GitHub MCP, voce precisa copiar e colar issues, comentarios de PR e feedback...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Instalacao + Token</strong>
+              <span class="text-neutral-400"> - A instalacao requer dois passos: configurar o Personal Access Token (PAT) do Git...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Casos de Uso</strong>
+              <span class="text-neutral-400"> - O GitHub MCP habilita workflows que integram gerenciamento de projeto (issues, P...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Token Impact: Moderate (~2.000 tokens)</strong>
+              <span class="text-neutral-400"> - O GitHub MCP tem overhead moderado: ~2.000 tokens por mensagem. Isso o coloca no...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Queries Especificas</strong>
+              <span class="text-neutral-400"> - A chave para usar GitHub MCP eficientemente e ser especifico nos pedidos. Querie...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Proximo:</h3>
+          <p class="text-neutral-300">6.5 - MCP #3: Browser/Chrome</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-6-3.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-6-5.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

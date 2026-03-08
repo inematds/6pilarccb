@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 6.2 - Framework de Decisao: Skill vs MCP | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6</a>
+      <span>/</span>
+      <span class="text-rose-400">Modulo 6.2</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 6.2
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧭 Framework de Decisao: Skill vs MCP</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Aprenda a decidir rapidamente quando usar uma Skill e quando usar um MCP. Com a tabela de decisao e exemplos praticos, voce nunca mais escolhera errado entre os dois.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">12</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Framework</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔁 Repeatable = Skill</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O Principio da Repetibilidade
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Se uma tarefa segue um padrao repetitivo e previsivel - como code review, criacao de componentes, geracao de testes - ela e candidata perfeita para Skill. Skills sao instrucoes em Markdown que custam ZERO em token tax porque sao carregadas uma vez e nao adicionam overhead fixo por mensagem.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Code review com checklist padrao -> Skill (/review)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Criar componente React com padrao da equipe -> Skill (/create-component)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Gerar testes unitarios seguindo convencao -> Skill (/generate-tests)</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Por Que Skill e Melhor Para Padroes
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Zero token tax: Skills sao carregadas sob demanda, nao em toda mensagem</li>
+          <li>Mais rapido: nao depende de servidor externo ou API</li>
+          <li>Mais confiavel: sem problemas de conexao, timeout ou autenticacao</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Antes de criar um MCP, pergunte: 'essa tarefa usa dados que ja estao no meu projeto?' Se sim, e Skill. O Claude ja tem acesso aos arquivos locais via suas tools nativas (Read, Write, Bash). MCP so e necessario quando os dados estao FORA do projeto.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar Skills para tarefas repetitivas com padrao fixo</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Converter prompts longos que voce redigita em Skills</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Preferir Skills quando possivel por custar zero tokens</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Criar MCPs para tarefas que Skills resolvem</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar Skills porque 'MCPs parecem mais poderosos'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Redigitar os mesmos prompts complexos em vez de criar uma Skill</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">📡 Live Data = MCP</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> O Principio dos Dados ao Vivo
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Se uma tarefa precisa de dados em tempo real de um servico externo - consultar banco de dados, ler issues do GitHub, acessar planilha atualizada, navegar website - ela EXIGE MCP. Skills nao acessam APIs e o Claude fabricara dados se voce pedir sem um MCP conectado.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Consultar tabela de usuarios no banco -> MCP Database</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Ler issue #42 do GitHub com comentarios -> MCP GitHub</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Verificar se o deploy esta visual correto -> MCP Browser</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> O Perigo de Nao Usar MCP Quando Precisa
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Sem MCP, o Claude INVENTA dados - parece confiante mas esta alucinando</li>
+          <li>Dados fabricados podem levar a implementacoes incorretas baseadas em suposicoes</li>
+          <li>O Claude nao vai avisar que nao tem acesso - ele simplesmente gera algo plausivel</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Se voce pediu dados e o Claude respondeu sem usar nenhuma tool de MCP, DESCONFIE. Verifique se o MCP esta conectado com /status. Se o Claude esta 'inventando' dados do banco ou issues que nao existem, e porque o MCP nao esta ativo e ele esta alucinando.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar MCP sempre que precisar de dados externos ao vivo</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Verificar com /status que o MCP esta conectado antes de pedir dados</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Desconfiar de dados que o Claude 'sabe' sem usar tools de MCP</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Pedir dados de banco sem Database MCP conectado</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Confiar em 'issues do GitHub' sem GitHub MCP ativo</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Assumir que o Claude tem acesso a internet sem Browser MCP</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🎨 Formatting = Skill</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Padronizacao e Templates
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Tarefas que envolvem formatacao, padronizacao, geracao de boilerplate ou aplicacao de templates sao 100% dominio de Skills. Sao instrucoes que moldam o OUTPUT do Claude, nao que buscam dados. Nenhum MCP e necessario para definir como o codigo deve ser formatado.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Padrao de commit message da equipe -> Skill</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Template de componente React/Vue/Svelte -> Skill</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Formato de PR description com checklist -> Skill</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Skills Sao Perfeitas Para Formatacao
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Templates sao puro texto - perfeito para Markdown (formato das Skills)</li>
+          <li>Zero dependencia externa - funciona offline, sem API, sem token</li>
+          <li>Facilmente versionavel - commit no Git junto com o codigo</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Crie uma pasta .claude/commands/templates/ com skills de formatacao: commit.md, pr.md, component.md, test.md. Isso padroniza o output de toda a equipe e custa zero tokens extras. E o investimento com maior ROI no ecossistema Claude Code.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Criar Skills para cada padrao de formatacao da equipe</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Versionar Skills no Git para toda equipe usar</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar Skills para enforcar code style e convencoes</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Criar MCPs para gerar templates (overkill total)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Redigitar padroes de formatacao em cada sessao</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar prompts longos quando uma Skill de 10 linhas resolve</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🕷️ Scraping = MCP</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Coleta de Dados Externos
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Web scraping, coleta de dados de sites, verificacao de URLs, extracao de informacoes de paginas - tudo isso exige Browser MCP. O Claude nao tem acesso nativo a internet. Sem MCP, ele simplesmente nao consegue acessar nenhum site.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Extrair precos de um e-commerce -> Browser MCP</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Coletar nomes de um diretorio empresarial -> Browser MCP</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Verificar se seu deploy renderizou corretamente -> Browser MCP</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Browser MCP e Insubstituivel Para Scraping
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Unico MCP que da 'olhos' ao Claude - ele ve a pagina como usuario real</li>
+          <li>Navega JavaScript-rendered pages (SPA, React apps) corretamente</li>
+          <li>Pode clicar, preencher formularios e interagir como humano</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Para scraping eficiente, sempre diga ao Claude exatamente o que extrair: 'navegue para url.com, extraia nome da empresa e email de contato da pagina'. Pedidos vagos como 'veja o que tem nesse site' resultam em screenshots enormes que consomem milhares de tokens sem valor proporcional.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar Browser MCP para qualquer acesso a web</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Ser especifico sobre quais dados extrair</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Desconectar Browser apos concluir scraping</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Tentar scraping sem Browser MCP (Claude inventara dados)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Pedir 'veja tudo' em vez de dados especificos</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Deixar Browser MCP ligado apos a tarefa de scraping</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">⚡ Eficiencia = Skill</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Quando Tokens Importam
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Em sessoes longas, planos com limite de uso ou tarefas que exigem muitas iteracoes, cada token economizado se multiplica. Skills custam ZERO em overhead fixo enquanto MCPs custam centenas a milhares por mensagem. Quando eficiencia e prioridade, prefira Skills.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>Skill em 50 mensagens: 0 tokens extras = 0 overhead total</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>MCP com 2.000 tokens overhead em 50 mensagens: 100.000 tokens extras</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span>A diferenca (100k tokens) e contexto disponivel para codigo e instrucoes de qualidade</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> O Efeito Multiplicador
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Token tax e POR MENSAGEM - multiplica pelo total de mensagens da sessao</li>
+          <li>Uma sessao media tem 30-50 mensagens - overhead de 2k vira 60k-100k tokens</li>
+          <li>Em planos com limite mensal, isso pode representar 5-10% do budget inteiro</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Antes de conectar um MCP, pergunte: 'quantas mensagens essa sessao vai ter?' Se e uma sessao rapida (5-10 msgs), o overhead de MCPs e toleravel. Se e uma sessao longa (30-50+ msgs), avalie se vale o custo cumulativo. Muitas vezes, copiar dados manualmente para a sessao e mais eficiente que manter um MCP ligado.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Calcular overhead total: tokens_por_msg x mensagens_estimadas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Preferir Skills para sessoes longas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Desconectar MCPs quando entrar em fase de coding puro</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar o efeito multiplicador em sessoes longas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Manter MCPs 'por precaucao' em sessoes de 50+ mensagens</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Subestimar o impacto de 2.000 tokens por mensagem</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📋 Tabela de Decisao Completa</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Referencia Rapida: Skill vs MCP
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Esta tabela cobre os cenarios mais comuns. A regra geral e simples: se precisa de dados externos ao vivo, e MCP. Se e instrucao, padrao ou template, e Skill. Na duvida, comece com Skill - voce sempre pode adicionar MCP depois se necessario.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Code review</strong> → Skill | <strong class='text-white'>Ler issues GitHub</strong> → MCP</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Gerar componente</strong> → Skill | <strong class='text-white'>Consultar banco</strong> → MCP</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Formatar commit</strong> → Skill | <strong class='text-white'>Navegar website</strong> → MCP</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Template de PR</strong> → Skill | <strong class='text-white'>Ler planilha</strong> → MCP</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Checklist de deploy</strong> → Skill | <strong class='text-white'>Verificar deploy visualmente</strong> → MCP</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> A Pergunta Definitiva
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Pergunte: 'precisa de dados externos ao vivo?' SIM = MCP, NAO = Skill</li>
+          <li>Essa unica pergunta resolve 90% dos casos de decisao</li>
+          <li>Os 10% restantes sao hibridos: use Skill para instrucao + MCP para dados</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Salve esta tabela no seu CLAUDE.md como referencia permanente. Quando surgir duvida, consulte a tabela. Com o tempo, a decisao se torna automatica e voce para de pensar 'Skill ou MCP?' - simplesmente sabe. Isso e a marca de um operador experiente.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Salvar tabela de decisao no CLAUDE.md</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Seguir a regra 'dados ao vivo = MCP, resto = Skill'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Comecar com Skill e escalar para MCP se necessario</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Complicar a decisao mais do que o necessario</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar MCP quando Skill resolve</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Esquecer que Skills sao sempre mais eficientes em tokens</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Repeatable = Skill</strong>
+              <span class="text-neutral-400"> - Se uma tarefa segue um padrao repetitivo e previsivel - como code review, criaca...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Live Data = MCP</strong>
+              <span class="text-neutral-400"> - Se uma tarefa precisa de dados em tempo real de um servico externo - consultar b...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Formatting = Skill</strong>
+              <span class="text-neutral-400"> - Tarefas que envolvem formatacao, padronizacao, geracao de boilerplate ou aplicac...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Scraping = MCP</strong>
+              <span class="text-neutral-400"> - Web scraping, coleta de dados de sites, verificacao de URLs, extracao de informa...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Eficiencia = Skill</strong>
+              <span class="text-neutral-400"> - Em sessoes longas, planos com limite de uso ou tarefas que exigem muitas iteraco...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Tabela de Decisao Completa</strong>
+              <span class="text-neutral-400"> - Esta tabela cobre os cenarios mais comuns. A regra geral e simples: se precisa d...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Proximo:</h3>
+          <p class="text-neutral-300">6.3 - MCP #1: Filesystem</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-6-1.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="modulo-6-3.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

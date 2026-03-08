@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 6 - Conectando o Claude (MCPs) | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 6
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🌍 Conectando o Claude (MCPs)</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Domine o Model Context Protocol: conecte o Claude Code a sistemas externos como GitHub, bancos de dados, navegadores e planilhas. Aprenda a gerenciar token tax, escolher entre Skills e MCPs, e rotacionar conexoes como um operador profissional.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">10</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">60</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">~2h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- NAVEGACAO RAPIDA -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <a href="#mod-6-1" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.1</span>
+        <h3 class="font-semibold mt-1">💰 Token Tax e Custo de Contexto</h3>
+      </a>
+      <a href="#mod-6-2" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.2</span>
+        <h3 class="font-semibold mt-1">🧭 Framework de Decisao: Skill vs MCP</h3>
+      </a>
+      <a href="#mod-6-3" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.3</span>
+        <h3 class="font-semibold mt-1">📂 MCP #1: Filesystem</h3>
+      </a>
+      <a href="#mod-6-4" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.4</span>
+        <h3 class="font-semibold mt-1">🐙 MCP #2: GitHub</h3>
+      </a>
+      <a href="#mod-6-5" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.5</span>
+        <h3 class="font-semibold mt-1">🌐 MCP #3: Browser/Chrome</h3>
+      </a>
+      <a href="#mod-6-6" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.6</span>
+        <h3 class="font-semibold mt-1">🗄️ MCP #4: Database/Supabase</h3>
+      </a>
+      <a href="#mod-6-7" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.7</span>
+        <h3 class="font-semibold mt-1">📊 MCP #5: Google Sheets</h3>
+      </a>
+      <a href="#mod-6-8" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.8</span>
+        <h3 class="font-semibold mt-1">🔧 Gerenciando MCPs</h3>
+      </a>
+      <a href="#mod-6-9" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.9</span>
+        <h3 class="font-semibold mt-1">🔄 Estrategia de Rotacao Ativa</h3>
+      </a>
+      <a href="#mod-6-10" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-rose-500/50 p-4 transition-all">
+        <span class="text-rose-400 font-bold text-sm">6.10</span>
+        <h3 class="font-semibold mt-1">🛠️ Troubleshooting</h3>
+      </a>
+    </div>
+
+    <!-- DIVISOR -->
+    <div class="flex items-center space-x-4 mb-8">
+      <div class="flex-1 h-px bg-dark-600"></div>
+      <span class="text-neutral-500 text-sm font-medium">Conteudo Detalhado</span>
+      <div class="flex-1 h-px bg-dark-600"></div>
+    </div>
+
+    <!-- ===== MODULO 6.1 ===== -->
+    <div id="mod-6-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.1</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">💰 Token Tax e Custo de Contexto</h3>
+        <p class="text-neutral-400 text-sm">Entenda o que e token tax, como MCPs consomem contexto, e por que monitorar /cost e essencial para operadores que conectam servicos externos.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏷️</span>
+            <div>
+              <span class="font-medium">O que e Token Tax</span>
+              <span class="text-neutral-500 text-sm ml-2">- O custo invisivel de cada MCP</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Token tax e o custo em tokens que cada MCP conectado adiciona a TODA interacao, mesmo quando voce nao esta usando aquele MCP. O schema das tools e injetado no contexto automaticamente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conectar 5 MCPs ao mesmo tempo pode consumir 30-50% do seu contexto so com schemas. Sem entender token tax, voce perde qualidade de resposta sem saber por que.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cada MCP expoe tools com descricoes e parametros. Essas definicoes sao enviadas como tokens de entrada em cada mensagem. Mais MCPs = mais tokens fixos = menos espaco para seu codigo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Tabela de Overhead por MCP</span>
+              <span class="text-neutral-500 text-sm ml-2">- Quanto cada MCP custa em tokens</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Filesystem: ~500 tokens (Low). GitHub: ~2.000 tokens (Moderate). Browser: ~5.000+ tokens (HIGH). Supabase: ~1.500 tokens (Moderate). Google Sheets: ~800 tokens (Low-Moderate).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Com a tabela de overhead, voce planeja quais MCPs manter conectados e quais ativar sob demanda. E a base da estrategia de rotacao ativa (modulo 6.9).</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">MCPs com muitas tools (Browser tem 10+) custam mais. MCPs simples (Filesystem tem 3-4 tools) custam pouco. O overhead e FIXO por mensagem, nao por uso.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🫁</span>
+            <div>
+              <span class="font-medium">Contexto como Oxigenio</span>
+              <span class="text-neutral-500 text-sm ml-2">- A metafora que muda tudo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pense no contexto como oxigenio dentro de um capacete de astronauta. Quanto mais MCPs voce conecta, mais tubos compartilham o mesmo tanque. Com menos oxigenio, o Claude pensa pior.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A metafora torna tangivel algo abstrato. Operadores que entendem isso naturalmente evitam conectar MCPs desnecessarios e priorizam espaco para codigo e instrucoes.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Janela de contexto = tanque de oxigenio (200k tokens). MCPs = equipamentos que consomem oxigenio. Codigo + conversa = o que precisa do oxigenio para funcionar bem.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📏</span>
+            <div>
+              <span class="font-medium">Regra de Ouro</span>
+              <span class="text-neutral-500 text-sm ml-2">- Maximo de MCPs simultaneos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Regra de ouro: mantenha no maximo 2-3 MCPs conectados simultaneamente. Mais que isso e voce comeca a sacrificar qualidade de resposta por conveniencia.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ter um limite mental evita o acumulo gradual de MCPs que corroi a performance sem voce perceber. E a base da disciplina operacional com MCPs.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">2-3 MCPs = sweet spot. 4-5 MCPs = degradacao perceptivel. 6+ MCPs = desperdicio significativo. Sempre desconecte o que nao esta usando ativamente.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📈</span>
+            <div>
+              <span class="font-medium">Monitoramento com /cost</span>
+              <span class="text-neutral-500 text-sm ml-2">- Medindo o impacto real</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Use /cost antes e depois de conectar MCPs para ver o impacto real no consumo de tokens. A diferenca entre sessoes com e sem MCPs revela o token tax na pratica.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Teoria sem medicao e achismo. O /cost transforma token tax de conceito abstrato em numero concreto que voce pode otimizar.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Compare: sessao sem MCPs vs com MCPs fazendo a mesma tarefa. A diferenca no /cost e o token tax real. Use isso para justificar quais MCPs valem a pena.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Impacto na Qualidade</span>
+              <span class="text-neutral-500 text-sm ml-2">- Como token tax degrada respostas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Com muitos MCPs, o Claude recebe menos espaco para "pensar" sobre seu codigo. Respostas ficam mais curtas, menos detalhadas e com mais erros. O contexto competido degrada a inteligencia efetiva.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitos operadores culpam o modelo quando a qualidade cai, mas o problema real e contexto saturado. Entender isso evita frustracoes e otimiza resultados.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Contexto < 50% usado = respostas otimas. 50-70% = respostas boas. 70-90% = degradacao visivel. 90%+ = erros frequentes e respostas truncadas. MCPs aceleram essa curva.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-1.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.2 ===== -->
+    <div id="mod-6-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.2</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🧭 Framework de Decisao: Skill vs MCP</h3>
+        <p class="text-neutral-400 text-sm">Aprenda quando usar uma Skill e quando usar um MCP. Tabela de decisao pratica para nunca mais escolher errado.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔁</span>
+            <div>
+              <span class="font-medium">Repeatable = Skill</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tarefas com padrao fixo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Se a tarefa segue um padrao previsivel e repetitivo (code review, criar componente, gerar testes), ela e candidata perfeita para Skill. Skills sao instrucoes em Markdown, zero overhead de tokens.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Usar MCP para algo que uma Skill resolve e desperdicar tokens. Skills custam zero em token tax, MCPs custam centenas a milhares por mensagem.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Skill = prompt reutilizavel (zero infra). Exemplos: /review, /create-component, /generate-tests. Se a tarefa nao precisa de dados externos ao vivo, e Skill.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📡</span>
+            <div>
+              <span class="font-medium">Live Data = MCP</span>
+              <span class="text-neutral-500 text-sm ml-2">- Dados em tempo real de servicos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Se a tarefa precisa de dados ao vivo de um servico externo (consultar banco, ler issues do GitHub, acessar planilha), ela exige MCP. Skills nao acessam APIs.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Tentar fazer com Skill o que exige dados ao vivo resulta em invencoes e alucinacoes. O Claude fabricara dados em vez de admitir que nao tem acesso.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">MCP = ponte para servicos vivos. Exemplos: consultar DB production, ler issues abertas, acessar dados de planilha. Se precisa de dados fresh, e MCP.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🎨</span>
+            <div>
+              <span class="font-medium">Formatting = Skill</span>
+              <span class="text-neutral-500 text-sm ml-2">- Padronizacao e templates</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tarefas de formatacao, padronizacao de codigo, geracao de boilerplate, criacao de templates - tudo isso e dominio de Skills. Sao instrucoes que moldam output, nao que buscam dados.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitos operadores criam MCPs complexos para tarefas que uma Skill de 20 linhas resolve. O resultado e overhead desnecessario e mais pontos de falha.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Skill para: code style, commit messages, PR templates, component boilerplate, documentation format. Se e sobre COMO formatar, e Skill.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🕷️</span>
+            <div>
+              <span class="font-medium">Scraping = MCP</span>
+              <span class="text-neutral-500 text-sm ml-2">- Coleta de dados da web</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Coletar dados de websites, acessar paginas, extrair informacoes de URLs - tudo isso exige um MCP de browser ou fetch. O Claude nao tem acesso nativo a internet.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Web scraping e um dos casos de uso mais poderosos de MCPs. Com o Browser MCP, o Claude le paginas reais e extrai dados estruturados.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Browser MCP para: ler paginas web, extrair precos, coletar leads de LinkedIn, verificar sites concorrentes. Alto custo de tokens mas alto valor de output.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⚡</span>
+            <div>
+              <span class="font-medium">Eficiencia = Skill</span>
+              <span class="text-neutral-500 text-sm ml-2">- Quando tokens importam</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quando eficiencia de tokens e prioridade (sessoes longas, planos com limite), prefira Skills sempre que possivel. Skills consomem zero overhead fixo.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Em sessoes longas com compactacoes frequentes, cada token economizado se multiplica. Uma Skill que substitui um MCP pode economizar milhares de tokens por sessao.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Skills = 0 token tax. MCPs = 500-5000+ tokens fixos. Em 50 mensagens, um MCP de 2000 tokens custa 100k tokens extras. Prefira Skill quando possivel.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Tabela de Decisao Completa</span>
+              <span class="text-neutral-500 text-sm ml-2">- Referencia rapida Skill vs MCP</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tabela: Code review -> Skill. Consultar DB -> MCP. Gerar componente -> Skill. Ler issues GitHub -> MCP. Formatar commit -> Skill. Navegar website -> MCP.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Uma referencia rapida elimina hesitacao. Cole na parede ou no CLAUDE.md e consulte sempre que surgir duvida sobre Skill vs MCP.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Regra geral: se a resposta para "precisa de dados externos ao vivo?" for SIM = MCP, NAO = Skill. Simples, eficaz, e cobre 90% dos casos.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-2.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.3 ===== -->
+    <div id="mod-6-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.3</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📂 MCP #1: Filesystem</h3>
+        <p class="text-neutral-400 text-sm">O MCP mais leve e de maior valor. Acesse arquivos fora do diretorio do projeto, gerencie multiplos repositorios e navegue pelo sistema de arquivos completo.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">O que o Filesystem MCP faz</span>
+              <span class="text-neutral-500 text-sm ml-2">- Acesso expandido a arquivos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Filesystem MCP expande o acesso do Claude para alem do diretorio atual. Com ele, o Claude le e escreve arquivos em qualquer caminho do seu sistema que voce autorizar.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem este MCP, o Claude so acessa o diretorio onde foi iniciado. Com ele, voce pode copiar configs entre projetos, acessar templates globais e gerenciar multiplos repos.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Expoe tools: read_file, write_file, list_directory, search_files. Funciona via caminhos absolutos com permissoes que voce define na instalacao.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🏆</span>
+            <div>
+              <span class="font-medium">Por que e High-Value</span>
+              <span class="text-neutral-500 text-sm ml-2">- Maximo beneficio, minimo custo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Filesystem e o MCP com melhor relacao custo-beneficio: ~500 tokens de overhead para acesso completo ao sistema de arquivos. E o unico MCP que muitos operadores mantem sempre conectado.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber que o Filesystem e "sempre ligado" simplifica decisoes. Enquanto outros MCPs sao rotativos, este e fixo no seu setup.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">~500 tokens overhead (menos que uma mensagem curta). Habilita workflows cross-repo. ROI altissimo para qualquer tipo de projeto.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Comando de Instalacao</span>
+              <span class="text-neutral-500 text-sm ml-2">- claude mcp add filesystem</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Instale com: claude mcp add filesystem -- npx -y @anthropic/mcp-filesystem /caminho/permitido. Substitua /caminho/permitido pelo diretorio que deseja expor.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O comando e simples mas a configuracao de caminhos e critica para seguranca. Expor / (raiz) e perigoso. Prefira caminhos especificos como ~/projetos.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">claude mcp add filesystem -- npx -y @anthropic/mcp-filesystem ~/projetos. Pode adicionar multiplos caminhos separados por espaco. Caminhos sao whitelist, nao blacklist.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💼</span>
+            <div>
+              <span class="font-medium">Casos de Uso</span>
+              <span class="text-neutral-500 text-sm ml-2">- Cross-repo, configs, templates</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Casos: copiar componentes entre projetos, acessar configs globais (~/.config), ler templates de outro repo, comparar implementacoes entre projetos diferentes.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Operadores avancados trabalham em multiplos projetos simultaneamente. O Filesystem MCP e o que permite esse workflow multi-repo fluido.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cross-repo: copie patterns de um projeto para outro. Global configs: leia .bashrc, .gitconfig, etc. Templates: acesse boilerplate de qualquer lugar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🟢</span>
+            <div>
+              <span class="font-medium">Token Impact: Low</span>
+              <span class="text-neutral-500 text-sm ml-2">- ~500 tokens de overhead</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Filesystem MCP tem o menor token tax entre os MCPs populares: ~500 tokens por mensagem. Isso e menos que um paragrafo de texto e praticamente insignificante.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber que e Low impact justifica mante-lo sempre conectado. Nao faz sentido desconectar algo que custa tao pouco e entrega tanto valor.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">~500 tokens = 0.25% do contexto de 200k. Pode manter ligado o tempo todo. Unico MCP onde "always on" e recomendado para todos.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">✅</span>
+            <div>
+              <span class="font-medium">Best Practices</span>
+              <span class="text-neutral-500 text-sm ml-2">- Seguranca e organizacao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Melhores praticas: nunca exponha / (raiz). Use caminhos especificos. Nao exponha ~/.ssh ou ~/.aws. Prefira ~/projetos ou ~/dev. Revise permissoes periodicamente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Seguranca com Filesystem MCP e critica. Um caminho mal configurado pode expor chaves SSH, credenciais AWS e outros segredos ao contexto do Claude.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Whitelist > blacklist. Minimo privilegio: exponha so o necessario. Nunca exponha diretorios com credenciais. Revise com claude mcp list periodicamente.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-3.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.4 ===== -->
+    <div id="mod-6-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.4</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐙 MCP #2: GitHub</h3>
+        <p class="text-neutral-400 text-sm">Conecte o Claude diretamente ao GitHub para gerenciar issues, PRs, reviews e repositorios sem sair do terminal.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🐙</span>
+            <div>
+              <span class="font-medium">O que o GitHub MCP faz</span>
+              <span class="text-neutral-500 text-sm ml-2">- Issues, PRs, repos via API</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O GitHub MCP conecta o Claude a API do GitHub. O Claude pode listar issues, criar PRs, ler reviews, verificar checks de CI/CD e gerenciar repositorios programaticamente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">GitHub e o hub central de desenvolvimento. Com este MCP, o Claude entende o contexto completo do seu projeto: issues abertas, PRs pendentes, feedback de reviewers.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tools: list_issues, create_pull_request, get_pull_request_reviews, search_repositories, get_file_contents. Acesso direto via GitHub API com autenticacao por token.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Por que Vale a Pena</span>
+              <span class="text-neutral-500 text-sm ml-2">- Contexto completo do projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Com GitHub MCP, o Claude sabe quais issues estao abertas, quem pediu o que, qual o feedback dos reviewers. Isso transforma o Claude de "editor de codigo" em "membro da equipe".</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem GitHub MCP, voce precisa copiar/colar issues e comentarios manualmente. Com ele, o Claude busca e processa tudo sozinho, economizando seu tempo.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Workflow: "leia a issue #42 e implemente" - o Claude busca a issue, entende os requisitos e implementa. Zero copy-paste, 100% contexto automatico.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Instalacao + Token</span>
+              <span class="text-neutral-500 text-sm ml-2">- Setup com autenticacao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Instale com: claude mcp add github -- npx -y @anthropic/mcp-github. Configure GITHUB_TOKEN como variavel de ambiente com um Personal Access Token (PAT) do GitHub.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A instalacao e simples mas a configuracao do token requer atencao: defina escopos minimos (repo, read:org) e nunca use tokens com permissoes de admin.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">1. Crie um PAT em github.com/settings/tokens. 2. export GITHUB_TOKEN=ghp_xxx. 3. claude mcp add github -- npx -y @anthropic/mcp-github. 4. Verifique com /status.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💼</span>
+            <div>
+              <span class="font-medium">Casos de Uso</span>
+              <span class="text-neutral-500 text-sm ml-2">- Issues, PRs, CI/CD, reviews</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Casos: "leia a issue #42 e implemente", "crie um PR com essas mudancas", "liste issues com label bug", "verifique se o CI passou no ultimo commit".</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Cada caso de uso representa horas economizadas. O Claude pode triagiar issues, criar PRs formatados e ate responder reviews - tudo via MCP.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Issue-driven: leia issue -> implemente -> crie PR -> linkei issue. Review-driven: leia comments -> ajuste codigo -> responda review. CI-driven: verifique falhas -> corrija.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🟡</span>
+            <div>
+              <span class="font-medium">Token Impact: Moderate</span>
+              <span class="text-neutral-500 text-sm ml-2">- ~2.000 tokens de overhead</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O GitHub MCP tem impacto moderado: ~2.000 tokens por mensagem. Justificavel quando voce esta trabalhando ativamente com issues e PRs, mas desnecessario em tarefas puramente de codigo.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber que e Moderate ajuda na decisao de quando conectar/desconectar. Use quando precisar interagir com GitHub, desconecte quando estiver so codando.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">~2.000 tokens = 1% do contexto. Conecte quando: trabalhando com issues/PRs. Desconecte quando: codando features sem referencia a issues. Rotacao inteligente.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Queries Especificas</span>
+              <span class="text-neutral-500 text-sm ml-2">- Otimize o que voce pede</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Em vez de "liste todas as issues", peca "liste issues com label bug criadas essa semana". Queries especificas retornam menos dados e consomem menos tokens de resposta.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Queries amplas retornam centenas de issues que enchem o contexto. Queries focadas retornam so o necessario, mantendo o contexto limpo para codigo.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Filtre por: label, assignee, state, created date. Peca campos especificos. Evite listar repos inteiros. Quanto mais preciso o pedido, menor o custo em tokens.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-4.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.5 ===== -->
+    <div id="mod-6-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.5</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🌐 MCP #3: Browser/Chrome</h3>
+        <p class="text-neutral-400 text-sm">O MCP mais poderoso e mais caro. De ao Claude olhos para navegar a web, extrair dados e verificar UI em tempo real.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🌐</span>
+            <div><span class="font-medium">O que o Browser MCP faz</span><span class="text-neutral-500 text-sm ml-2">- Navegacao web programatica</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Browser MCP da ao Claude a capacidade de abrir paginas web, clicar em elementos, preencher formularios, tirar screenshots e extrair conteudo de qualquer site.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Com Browser MCP, o Claude se torna um agente web completo. Ele pode verificar se seu deploy funcionou, scrape dados de concorrentes, ou testar UI automaticamente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tools: navigate, click, fill, screenshot, get_text, evaluate_js. Usa Puppeteer/Playwright por tras. O Claude ve e interage com a web como um usuario real.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">👑</span>
+            <div><span class="font-medium">Por que e Elite</span><span class="text-neutral-500 text-sm ml-2">- Poder unico, custo alto</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Browser e o unico MCP que da "olhos" ao Claude. Nenhum outro MCP permite verificar UI visualmente, scrape dados ao vivo ou testar flows de usuario. E insubstituivel para certas tarefas.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Operadores que dominam Browser MCP conseguem automatizar workflows que antes exigiam intervencao manual: QA visual, lead scraping, competitive analysis.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Elite porque: unico com capacidade visual. Caro porque: screenshots consomem muitos tokens. Estrategia: use pontualmente, nunca "always on".</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚙️</span>
+            <div><span class="font-medium">Instalacao</span><span class="text-neutral-500 text-sm ml-2">- Setup com Puppeteer</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Instale com: claude mcp add browser -- npx -y @anthropic/mcp-puppeteer. Requer Chrome/Chromium instalado no sistema. Funciona em headless mode por padrao.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A instalacao pode falhar se Chrome nao estiver disponivel. Saber os pre-requisitos evita troubleshooting desnecessario.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pre-req: Chrome/Chromium. Comando: claude mcp add browser -- npx -y @anthropic/mcp-puppeteer. Teste: peca ao Claude para navegar a um site e tirar screenshot.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💼</span>
+            <div><span class="font-medium">Casos de Uso</span><span class="text-neutral-500 text-sm ml-2">- Scraping, QA, leads</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Casos: verificar visualmente se um deploy esta correto, extrair dados de paginas web, coletar leads do LinkedIn, testar flows de checkout, monitorar precos de concorrentes.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Browser MCP transforma o Claude em um assistente de QA visual e um web scraper inteligente. Tarefas que levavam horas manualmente agora levam minutos.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">QA: "navegue para localhost:3000 e verifique se o header esta correto". Scraping: "extraia precos de produto.com". Leads: "colete nomes e emails de diretorio.com".</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔴</span>
+            <div><span class="font-medium">Token Impact: HIGH</span><span class="text-neutral-500 text-sm ml-2">- ~5.000+ tokens de overhead</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Browser e o MCP mais caro: ~5.000+ tokens de overhead fixo por mensagem, e screenshots adicionam milhares de tokens extras. Uma unica screenshot pode custar 10.000+ tokens.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem esse conhecimento, operadores deixam Browser conectado durante sessoes de coding puro, desperdicando 5.000+ tokens por mensagem sem beneficio algum.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">~5.000 tokens overhead fixo + tokens por screenshot/pagina. Em 20 mensagens = 100k+ tokens desperdicados se nao estiver usando. SEMPRE desconecte quando nao precisar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔌</span>
+            <div><span class="font-medium">Desconecte Quando Nao For UI</span><span class="text-neutral-500 text-sm ml-2">- Disciplina operacional</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Regra de ouro do Browser MCP: conecte APENAS quando precisar de acesso visual. Backend puro? Desconecte. Refatorando API? Desconecte. So precisa de UI check? Conecte, use, desconecte.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A disciplina de conectar/desconectar Browser e o que separa operadores eficientes de operadores desperdicadores. E a regra #1 de rotacao ativa.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Workflow: claude mcp add browser (quando precisar) -> use -> claude mcp remove browser (quando terminar). Nunca deixe ligado "por conveniencia".</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-5')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-5.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.6 ===== -->
+    <div id="mod-6-6" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.6</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🗄️ MCP #4: Database/Supabase</h3>
+        <p class="text-neutral-400 text-sm">Conecte o Claude diretamente ao seu banco de dados PostgreSQL ou Supabase. Queries, migrations e analise de dados sem sair do terminal.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🗄️</span>
+            <div><span class="font-medium">O que o Database MCP faz</span><span class="text-neutral-500 text-sm ml-2">- SQL direto no Claude</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Database MCP conecta o Claude a bancos PostgreSQL. O Claude pode executar queries SQL, explorar schemas, analisar dados e ate sugerir migrations baseadas no estado atual do banco.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Com acesso direto ao banco, o Claude pode debugar issues de dados, validar migrations antes de aplicar, e escrever queries otimizadas baseadas no schema real.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tools: execute_query, list_tables, describe_table, get_schema. O Claude ve a estrutura real do banco e escreve SQL baseado nela, nao em suposicoes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🐘</span>
+            <div><span class="font-medium">Instalacao PostgreSQL</span><span class="text-neutral-500 text-sm ml-2">- Conexao direta ao Postgres</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Para PostgreSQL generico: claude mcp add postgres -- npx -y @anthropic/mcp-postgres "postgresql://user:pass@host:5432/dbname". A connection string e passada como argumento.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">PostgreSQL e o banco mais popular para apps modernos. Saber conectar diretamente permite debug rapido e exploracao de dados sem tools externas.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Connection string: postgresql://user:pass@host:5432/db. Para local: localhost. Para cloud: use o hostname do provider. NUNCA commite a connection string.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">Instalacao Supabase</span><span class="text-neutral-500 text-sm ml-2">- Setup especifico para Supabase</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Para Supabase: claude mcp add supabase -- npx -y @supabase/mcp-server-supabase --supabase-url https://xxx.supabase.co --supabase-key sua-service-role-key.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Supabase adiciona funcionalidades alem do SQL puro: auth, storage, realtime. O MCP especifico do Supabase expoe essas APIs diretamente ao Claude.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use service_role key (nao anon key) para acesso completo. Encontre URL e key em supabase.com/dashboard. O MCP do Supabase inclui tools para auth, storage e database.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💼</span>
+            <div><span class="font-medium">Casos de Uso</span><span class="text-neutral-500 text-sm ml-2">- Debug, migrations, analise</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Casos: "mostre as ultimas 10 orders com status failed", "sugira um indice para essa query lenta", "crie uma migration para adicionar coluna email_verified", "analise distribuicao de usuarios por plano".</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Debug de dados ao vivo no terminal e extremamente produtivo. Em vez de abrir pgAdmin ou Supabase Dashboard, peca direto ao Claude.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Debug: queries com WHERE e LIMIT. Migrations: baseadas no schema real. Analise: GROUP BY, COUNT, AVG. Performance: EXPLAIN ANALYZE via Claude.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🟡</span>
+            <div><span class="font-medium">Token Impact: Moderate</span><span class="text-neutral-500 text-sm ml-2">- ~1.500 tokens de overhead</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Database MCP tem impacto moderado: ~1.500 tokens de overhead. Resultados de queries grandes podem adicionar muitos tokens extras, entao use LIMIT e seja especifico.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O overhead fixo e moderado, mas queries sem LIMIT podem explodir o contexto. Um SELECT * sem LIMIT em tabela grande pode consumir toda a janela de contexto.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Overhead fixo: ~1.500 tokens. Cuidado com: queries sem LIMIT, tabelas grandes, JOINs multiplos. Sempre use LIMIT e selecione colunas especificas.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🛡️</span>
+            <div><span class="font-medium">Seguranca em Production</span><span class="text-neutral-500 text-sm ml-2">- Regras para banco de producao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">NUNCA conecte ao banco de producao com usuario admin. Crie um usuario read-only para exploracao. Use staging/dev para mutations. Producao = somente leitura, SEMPRE.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um DELETE sem WHERE executado pelo Claude em producao pode destruir dados de clientes. Seguranca com banco via MCP e inegociavel.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Producao: usuario read-only. Staging: usuario com write. Dev: pode ser admin. Nunca exponha credenciais em arquivos commitados. Use variaveis de ambiente.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-6')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-6.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.7 ===== -->
+    <div id="mod-6-7" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.7</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📊 MCP #5: Google Sheets</h3>
+        <p class="text-neutral-400 text-sm">Conecte o Claude ao Google Sheets para ler, escrever e analisar dados de planilhas diretamente do terminal.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📊</span>
+            <div><span class="font-medium">O que o Google Sheets MCP faz</span><span class="text-neutral-500 text-sm ml-2">- Planilhas como banco de dados</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Google Sheets MCP permite ao Claude ler e escrever em planilhas Google. Ele pode consultar ranges, atualizar celulas, criar novas abas e processar dados tabulares.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitas equipes usam Google Sheets como fonte de verdade para dados nao-tecnicas: listas de leads, planos de projeto, inventario. Conectar ao Claude automatiza a interacao.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Tools: read_spreadsheet, write_spreadsheet, get_sheets, create_sheet. Acessa via Google Sheets API com credenciais de service account.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚙️</span>
+            <div><span class="font-medium">Instalacao</span><span class="text-neutral-500 text-sm ml-2">- Setup do MCP</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Instale com: claude mcp add google-sheets -- npx -y @anthropic/mcp-google-sheets. Requer configuracao de credenciais Google (service account ou OAuth).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A instalacao do MCP e simples, mas a configuracao de credenciais Google e a parte mais trabalhosa. Prepare-se para criar um projeto no Google Cloud Console.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">1. Crie projeto no Google Cloud Console. 2. Habilite Sheets API. 3. Crie service account. 4. Baixe credentials.json. 5. Configure path na env var.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔑</span>
+            <div><span class="font-medium">Credenciais de API</span><span class="text-neutral-500 text-sm ml-2">- Service account e permissoes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Voce precisa de um service account com acesso as planilhas. Compartilhe a planilha com o email do service account. export GOOGLE_APPLICATION_CREDENTIALS=/path/to/credentials.json.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem credenciais corretas, o MCP conecta mas nao acessa nada. O erro mais comum e esquecer de compartilhar a planilha com o service account.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Service account email: xxx@projeto.iam.gserviceaccount.com. Compartilhe planilha com esse email. Permissao: Editor para read/write, Viewer para read-only.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">💼</span>
+            <div><span class="font-medium">Casos de Uso</span><span class="text-neutral-500 text-sm ml-2">- Leads, reports, dados</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Casos: "leia a aba Leads e filtre empresas de SP", "atualize o status das tarefas concluidas", "crie um resumo semanal a partir dos dados da planilha", "popule a planilha com dados do banco".</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Planilhas sao a interface universal de dados. Conectar Claude ao Sheets permite bridge entre dados tecnicos (banco, API) e dados de negocio (planilhas, reports).</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Read: extraia e analise dados existentes. Write: popule com resultados de processamento. Bridge: mova dados entre banco e planilha via Claude.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🟢</span>
+            <div><span class="font-medium">Token Impact: Low-Moderate</span><span class="text-neutral-500 text-sm ml-2">- ~800 tokens de overhead</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Google Sheets MCP tem overhead baixo-moderado: ~800 tokens. O custo real vem dos dados retornados - planilhas grandes podem injetar milhares de tokens no contexto.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O overhead fixo e aceitavel, mas lembre-se de usar ranges especificos em vez de ler planilhas inteiras. "A1:D50" e muito melhor que "toda a aba".</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">~800 tokens overhead fixo. Dados retornados variam. Use ranges: Sheet1!A1:D50 em vez de Sheet1. Limite colunas e linhas ao minimo necessario.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div><span class="font-medium">Otimize com Query Ranges</span><span class="text-neutral-500 text-sm ml-2">- Leia so o necessario</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Sempre especifique ranges ao consultar planilhas. Em vez de "leia toda a planilha", peca "leia Leads!A1:E100". Isso controla quantos tokens os dados consomem.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Uma planilha com 10.000 linhas pode consumir toda a janela de contexto. Ranges especificos mantem o uso previsivel e controlavel.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sintaxe: NomeAba!ColunaLinha:ColunaLinha. Exemplo: Leads!A1:E100. Peca primeiro as colunas/headers para entender a estrutura, depois consulte dados especificos.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-7')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-7.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.8 ===== -->
+    <div id="mod-6-8" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.8</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔧 Gerenciando MCPs</h3>
+        <p class="text-neutral-400 text-sm">Domine os comandos de gerenciamento: listar, adicionar, remover MCPs. Saiba quais instalar imediatamente e quais deixar para quando precisar.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">claude mcp list</span><span class="text-neutral-500 text-sm ml-2">- Veja todos os MCPs ativos</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O comando claude mcp list mostra todos os MCPs configurados, seu status (conectado/desconectado) e as tools que cada um expoe. E o /status especifico para MCPs.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Antes de adicionar um novo MCP, verifique o que ja esta ativo. Antes de debugar, confirme que o MCP esta conectado. E o primeiro passo de qualquer operacao com MCPs.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Rode regularmente para manter consciencia do que esta consumindo tokens. MCPs desconectados aparecem como "disconnected" e nao consomem tokens.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🗑️</span>
+            <div><span class="font-medium">claude mcp remove</span><span class="text-neutral-500 text-sm ml-2">- Desconecte MCPs desnecessarios</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">claude mcp remove nome-do-mcp desconecta e remove um MCP da configuracao. O MCP para de consumir tokens imediatamente. Voce pode re-adicionar a qualquer momento.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Remover MCPs que nao esta usando e a acao mais direta para economizar tokens. E o "desligar a luz quando sair da sala" do mundo MCP.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sintaxe: claude mcp remove browser. Efeito imediato: para de enviar schemas. Pode re-adicionar: claude mcp add browser -- [comando]. Sem perda de dados.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">➕</span>
+            <div><span class="font-medium">claude mcp add</span><span class="text-neutral-500 text-sm ml-2">- Adicione novos MCPs</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">claude mcp add nome -- comando-do-server adiciona um novo MCP. O nome e seu identificador, e o comando apos -- e o que inicia o server MCP.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber a sintaxe exata de add evita erros de configuracao. O -- (double dash) separa o nome do MCP do comando do server - esquecer isso e o erro mais comum.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Formato: claude mcp add [nome] -- [comando]. Exemplo: claude mcp add filesystem -- npx -y @anthropic/mcp-filesystem ~/projetos. O nome pode ser qualquer string valida.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">⭐</span>
+            <div><span class="font-medium">Essencial vs Opcional</span><span class="text-neutral-500 text-sm ml-2">- Classificacao por necessidade</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Essenciais (always on): Filesystem. Opcionais (sob demanda): GitHub, Browser, Database, Sheets. Classificar MCPs por necessidade guia decisoes de rotacao.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem classificacao, operadores tratam todos os MCPs como essenciais e acumulam overhead. Com classificacao, voce mantem o minimo e ativa sob demanda.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Essencial: beneficio constante, custo baixo (Filesystem). Opcional: beneficio pontual, custo variavel (Browser, GitHub). Nunca trate opcional como essencial.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🚀</span>
+            <div><span class="font-medium">Instale Imediatamente</span><span class="text-neutral-500 text-sm ml-2">- MCPs para configurar agora</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Instale agora: Filesystem (essencial, sempre ligado) e GitHub (se trabalha com repos). Esses dois cobrem 80% dos casos de uso e tem custo aceitavel combinado (~2.500 tokens).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ter os MCPs essenciais configurados antes de precisar evita interrupcoes no fluxo de trabalho. Configure uma vez, use sempre.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Filesystem: claude mcp add filesystem -- npx -y @anthropic/mcp-filesystem ~/projetos. GitHub: claude mcp add github -- npx -y @anthropic/mcp-github (requer GITHUB_TOKEN).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">⏰</span>
+            <div><span class="font-medium">Instale Quando Precisar</span><span class="text-neutral-500 text-sm ml-2">- MCPs sob demanda</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Instale quando precisar: Browser (so para UI/scraping), Database (so quando trabalhando com dados), Google Sheets (so quando interagindo com planilhas). Tenha os comandos salvos.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ter os comandos de instalacao prontos num arquivo de referencia permite adicionar MCPs em segundos quando necessario. Prepare-se para velocidade.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Salve os comandos no CLAUDE.md ou num cheatsheet. Quando precisar: cole, execute, use, remova. Ciclo completo em menos de 30 segundos.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-8')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-8.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.9 ===== -->
+    <div id="mod-6-9" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.9</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔄 Estrategia de Rotacao Ativa</h3>
+        <p class="text-neutral-400 text-sm">Aprenda a rotacionar MCPs conforme a fase do trabalho: building, UI, backend, scraping e code review. A mentalidade do operador.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏗️</span>
+            <div><span class="font-medium">Building Features</span><span class="text-neutral-500 text-sm ml-2">- Filesystem + GitHub</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quando construindo features: mantenha Filesystem (sempre) + GitHub (para issues). Desconecte Browser e Database. Foco maximo no codigo com minimo overhead.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Building e a fase onde voce mais precisa de contexto para codigo. Cada token economizado em MCPs desnecessarios vai direto para melhor qualidade de implementacao.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">MCPs ativos: Filesystem + GitHub. Overhead: ~2.500 tokens. Contexto livre: ~197.500 tokens para codigo. Workflow: leia issue -> implemente -> crie PR.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎨</span>
+            <div><span class="font-medium">UI/Design</span><span class="text-neutral-500 text-sm ml-2">- Filesystem + Browser</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quando trabalhando em UI: mantenha Filesystem (sempre) + Browser (para verificar visualmente). Desconecte GitHub e Database. O Claude precisa ver o resultado.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">UI sem verificacao visual e coding as cegas. O Browser MCP permite que o Claude veja o que voce ve, identifique problemas visuais e sugira ajustes.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">MCPs ativos: Filesystem + Browser. Overhead: ~5.500 tokens (alto, mas necessario). Workflow: code -> screenshot -> adjust -> screenshot -> approve.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">⚙️</span>
+            <div><span class="font-medium">Backend/Data</span><span class="text-neutral-500 text-sm ml-2">- Filesystem + Database</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quando trabalhando com backend/dados: mantenha Filesystem (sempre) + Database (para queries e schema). Desconecte Browser e GitHub. Foco em logica e dados.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Backend com acesso ao banco real permite que o Claude escreva queries validadas, crie migrations baseadas no schema atual e debugue problemas de dados diretamente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">MCPs ativos: Filesystem + Database. Overhead: ~2.000 tokens. Workflow: explore schema -> escreva query -> valide resultado -> implemente no codigo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🕷️</span>
+            <div><span class="font-medium">Lead Scraping</span><span class="text-neutral-500 text-sm ml-2">- Browser + Sheets</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Para lead scraping: Browser (navegar e extrair) + Google Sheets (salvar resultados). Desconecte GitHub e Database. Workflow otimizado para coleta de dados da web.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Lead scraping e um dos workflows mais valiosos com MCPs. Browser coleta, Sheets armazena. O Claude faz em minutos o que levaria horas manualmente.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">MCPs ativos: Browser + Sheets (+ Filesystem). Overhead: ~6.300 tokens (alto). Workflow: navegar diretorio -> extrair dados -> salvar na planilha. Batch processing.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">Code Review</span><span class="text-neutral-500 text-sm ml-2">- Filesystem + GitHub</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Para code review: Filesystem (ler codigo) + GitHub (ler PRs e comments). O Claude le o diff, entende o contexto do PR e gera review comments estruturados.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Code review com contexto completo (codigo local + PR remoto) resulta em reviews mais precisos e uteis. O Claude ve o que mudou E o que ja existia.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">MCPs ativos: Filesystem + GitHub. Overhead: ~2.500 tokens. Workflow: leia PR -> leia arquivos afetados -> gere review -> poste comments. Skill de review complementa.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧠</span>
+            <div><span class="font-medium">Mentalidade de Operador</span><span class="text-neutral-500 text-sm ml-2">- Pense em fases, nao em MCPs</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Nao pense "quais MCPs eu tenho". Pense "qual fase do trabalho estou e quais MCPs essa fase precisa". A fase dita a configuracao, nao o contrario.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A mentalidade de operador transforma MCP management de chato em automatico. Voce nao "gerencia MCPs", voce "entra em modo UI" ou "entra em modo backend".</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Modos: Building (FS+GH), UI (FS+Browser), Backend (FS+DB), Scraping (Browser+Sheets), Review (FS+GH). Troque de modo, nao de MCPs individuais.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-9')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-9.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 6.10 ===== -->
+    <div id="mod-6-10" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-rose-400 font-bold">6.10</span>
+          <span class="text-xs text-neutral-500">~12 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🛠️ Troubleshooting</h3>
+        <p class="text-neutral-400 text-sm">Resolva os problemas mais comuns com MCPs: conexao, permissoes, token alto, lentidao e erros de servidor.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔌</span>
+            <div><span class="font-medium">MCP Nao Conecta</span><span class="text-neutral-500 text-sm ml-2">- Diagnostico de conexao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">MCP aparece como "disconnected" no /status. Causa mais comum: o comando do server esta errado ou o pacote nao esta instalado. Verifique com npx -y [pacote] --help.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Conexao falhada e o problema #1 com MCPs. Saber diagnosticar rapidamente evita perder tempo achando que o MCP nao funciona quando e so configuracao.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">1. claude mcp list (confirme status). 2. claude mcp remove nome. 3. Re-adicione com comando correto. 4. Verifique dependencias (Node.js, npx). 5. Rode /status.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🚫</span>
+            <div><span class="font-medium">Permission Denied</span><span class="text-neutral-500 text-sm ml-2">- Erros de permissao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O MCP conecta mas retorna "permission denied" ao tentar usar tools. Causa: token/credencial sem as permissoes necessarias ou caminho nao autorizado (Filesystem).</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Permission denied e frustrante porque parece que tudo esta configurado. O problema geralmente esta no escopo do token ou nas permissoes do arquivo de credenciais.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">GitHub: verifique escopos do PAT. Filesystem: verifique caminhos permitidos. Database: verifique permissoes do usuario SQL. Sheets: verifique compartilhamento com service account.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📈</span>
+            <div><span class="font-medium">Token Usage Alto</span><span class="text-neutral-500 text-sm ml-2">- Consumo excessivo de contexto</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">/cost mostra consumo muito acima do esperado. Causas: muitos MCPs conectados, queries que retornam dados grandes, screenshots frequentes do Browser MCP.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Token usage alto degrada qualidade e custa dinheiro. Identificar a causa rapidamente permite corrigir antes que afete toda a sessao.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fix: 1. claude mcp list (veja quantos MCPs). 2. Remova os nao essenciais. 3. Use queries com LIMIT. 4. Evite screenshots desnecessarios. 5. /compact se necessario.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🐌</span>
+            <div><span class="font-medium">Respostas Lentas</span><span class="text-neutral-500 text-sm ml-2">- Latencia elevada</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Respostas demoram muito mais que o normal. Causas: MCP server lento (Browser com paginas pesadas), contexto muito cheio, ou servidor MCP com timeout.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Lentidao pode ser do MCP, do contexto ou da rede. Diagnosticar a causa correta evita "fixes" que nao resolvem nada.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Diagnostico: 1. /cost (contexto cheio?). 2. Teste sem MCPs (mais rapido?). 3. Teste MCP individual (qual e lento?). 4. /compact se contexto > 70%. 5. Reinicie o MCP lento.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">❌</span>
+            <div><span class="font-medium">Server Not Found</span><span class="text-neutral-500 text-sm ml-2">- MCP server nao encontrado</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Erro ao adicionar MCP: "server not found" ou "command not found". Causa: pacote npm nao existe, nome errado, ou npx nao esta no PATH.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Nomes de pacotes MCP mudam conforme o ecossistema evolui. Saber verificar o pacote correto e essencial para evitar frustracoes.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fix: 1. Verifique nome do pacote no npm (npm info @anthropic/mcp-xxx). 2. Confirme Node.js instalado (node --version). 3. Confirme npx disponivel. 4. Tente npx -y [pacote] --help isolado.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📜</span>
+            <div><span class="font-medium">Regras do Operador</span><span class="text-neutral-500 text-sm ml-2">- Checklist de troubleshooting</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-rose-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Checklist universal: 1. /status (MCP conectado?). 2. claude mcp list (config correta?). 3. Remove + re-add (reseta conexao). 4. /doctor (diagnostico geral). 5. Reinicie a sessao.</p></div>
+              <div><span class="text-rose-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ter um checklist padronizado de troubleshooting elimina tentativa e erro. Siga os passos em ordem e resolva 95% dos problemas com MCPs.</p></div>
+              <div><span class="text-rose-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Regra #1: Sempre comece pelo /status. Regra #2: Remove + re-add resolve 80% dos problemas. Regra #3: Se nada funcionar, reinicie a sessao do Claude Code completamente.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-6-10')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-6-10.html" class="px-4 py-2 text-sm bg-rose-600 hover:bg-rose-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODALS -->
+  <div id="modal-6-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.1</span><span class="font-semibold">Token Tax e Custo de Contexto</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.2</span><span class="font-semibold">Framework de Decisao: Skill vs MCP</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.3</span><span class="font-semibold">MCP #1: Filesystem</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.4</span><span class="font-semibold">MCP #2: GitHub</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-5" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.5</span><span class="font-semibold">MCP #3: Browser/Chrome</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-5.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-6" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.6</span><span class="font-semibold">MCP #4: Database/Supabase</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-6.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-7" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.7</span><span class="font-semibold">MCP #5: Google Sheets</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-7.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-8" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.8</span><span class="font-semibold">Gerenciando MCPs</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-8.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-9" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.9</span><span class="font-semibold">Estrategia de Rotacao Ativa</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-9.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-6-10" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-rose-400 font-bold">6.10</span><span class="font-semibold">Troubleshooting</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-6-10.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.add('hidden');
+      });
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

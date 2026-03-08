@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 6.10 - Troubleshooting | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-rose-400 bg-rose-500/10">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-rose-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-rose-400">Trilha 6</a>
+      <span>/</span>
+      <span class="text-rose-400">Modulo 6.10</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-rose-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-rose-500/20 text-rose-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 6.10
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🛠️ Troubleshooting</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Resolva os problemas mais comuns com MCPs rapidamente: conexao falha, permissoes negadas, tokens altos, lentidao e erros de servidor. O checklist do operador para diagnostico rapido.
+      </p>
+
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">12</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Avancado</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-rose-400">Referencia</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔌 MCP Nao Conecta</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Diagnostico de Conexao
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O problema mais comum com MCPs: voce adiciona mas o status mostra 'disconnected'. As causas mais frequentes sao: comando do server errado, pacote npm nao encontrado, ou dependencia faltando (Node.js, Chrome).
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Passo 1:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp list</code> - confirme o status</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Passo 2:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp remove nome</code> - remova o MCP problematico</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Passo 3:</strong> Teste o comando isolado: <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>npx -y @anthropic/mcp-xxx --help</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Passo 4:</strong> Re-adicione com o comando correto e verifique com /status</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Causas Mais Comuns
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Nome do pacote errado: confira no npm registry</li>
+          <li>Node.js nao instalado: verifique com 'node --version'</li>
+          <li>npx nao disponivel: 'npm install -g npx'</li>
+          <li>Sem internet: npx precisa baixar o pacote na primeira vez</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          O fix que resolve 80% dos problemas de conexao: remove + re-add. Se o MCP estava funcionando antes e parou, um simples 'claude mcp remove nome' seguido de 'claude mcp add nome -- comando' reseta tudo. E o equivalente de 'desligar e ligar de novo' para MCPs.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Testar o comando do server isoladamente primeiro</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar remove + re-add como primeiro fix</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Verificar dependencias (Node.js, Chrome)</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Assumir que o problema e do MCP sem diagnosticar</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Tentar usar tools de MCP disconnected</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar erros de instalacao</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🚫 Permission Denied</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Erros de Permissao
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O MCP conecta com sucesso mas retorna 'permission denied' ou 'access denied' ao usar tools. Isso geralmente indica que o token/credencial nao tem os escopos necessarios ou o caminho nao esta autorizado.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>GitHub:</strong> Verifique escopos do PAT (precisa de repo, read:org)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Filesystem:</strong> Verifique se o caminho requisitado esta nos caminhos autorizados</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Database:</strong> Verifique permissoes do usuario SQL (GRANT SELECT)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Sheets:</strong> Verifique se a planilha foi compartilhada com o service account</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Diagnostico Por MCP
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>GitHub: github.com → Settings → Developer settings → verifique escopos do token</li>
+          <li>Filesystem: claude mcp remove + re-add com caminhos corretos</li>
+          <li>Database: conecte manualmente e teste permissoes do usuario</li>
+          <li>Sheets: abra a planilha e verifique compartilhamento</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Para cada MCP, crie um teste de permissao simples: GitHub → 'liste 1 issue do repo'. Filesystem → 'liste arquivos em ~/projetos'. Database → 'SELECT 1'. Sheets → 'leia celula A1 da planilha'. Se o teste passa, a permissao esta OK. Se falha, o problema e de credencial.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Criar testes de permissao simples para cada MCP</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Verificar escopos de tokens e permissoes</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Resolver permissao ANTES de tentar usar o MCP</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Assumir que conexao = permissao (sao coisas diferentes)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar tokens com permissoes excessivas para 'resolver'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar erros de permissao e tentar de novo</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📈 Token Usage Alto</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Consumo Excessivo de Contexto
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          O /cost mostra consumo muito acima do esperado. As causas mais comuns sao: muitos MCPs conectados simultaneamente, queries que retornam grandes volumes de dados, ou screenshots frequentes do Browser MCP.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Diagnostico 1:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp list</code> - quantos MCPs estao ativos?</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Diagnostico 2:</strong> Some os overheads: Filesystem(500) + GitHub(2000) + Browser(5000) = 7500/msg</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Fix 1:</strong> Remova MCPs nao essenciais para a tarefa atual</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Fix 2:</strong> Use LIMIT em queries e evite screenshots desnecessarios</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Tabela de Diagnostico Rapido
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>1 MCP ativo mas token alto → dados retornados grandes (use LIMIT)</li>
+          <li>3+ MCPs ativos → overhead acumulado (remova nao essenciais)</li>
+          <li>Browser ativo + screenshots → cada screenshot custa 5k-15k tokens</li>
+          <li>Tudo normal mas token alto → sessao longa, rode /compact</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Workflow de diagnostico em 30 segundos: 1) /cost - veja o numero. 2) claude mcp list - conte MCPs ativos. 3) Calcule overhead teorico. 4) Se overhead > 30% do contexto usado, remova MCPs. 5) Se overhead e baixo mas token alto, e a sessao que esta longa - rode /compact.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Diagnosticar causa antes de agir</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Remover MCPs nao essenciais como primeiro fix</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar /compact para sessoes longas</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Culpar o modelo quando token esta alto</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar o overhead cumulativo de MCPs</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Continuar usando sem investigar a causa</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🐌 Respostas Lentas</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Diagnosticando Latencia
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Respostas demoram muito mais que o normal. Pode ser causado por: MCP server lento, contexto muito cheio, ou servidor externo com timeout.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Diagnostico 1:</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>/cost</code> - contexto esta cheio? (>80% = lento)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Diagnostico 2:</strong> Teste sem MCPs - ainda lento? E do modelo/rede</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Diagnostico 3:</strong> Teste cada MCP individual - qual e lento?</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Fix:</strong> /compact se contexto alto, reinicie MCP se e do server, aguarde se e da rede</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Causas Por Prioridade
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Mais provavel: contexto cheio (>80%) → Fix: /compact</li>
+          <li>Segundo: MCP server travado → Fix: remove + re-add</li>
+          <li>Terceiro: rede lenta → Fix: aguarde ou troque de rede</li>
+          <li>Quarto: servidor externo (GitHub API, DB) lento → Fix: tente novamente depois</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Teste rapido para isolar a causa: desconecte todos os MCPs e envie uma mensagem simples. Se responde rapido, o problema e um dos MCPs. Reconecte um por um ate encontrar o lento. Se continua lento sem MCPs, rode /cost - provavelmente e contexto cheio.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Isolar a causa: contexto vs MCP vs rede</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Testar sem MCPs para baseline</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Usar /compact como primeiro fix para contexto cheio</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Assumir que e 'o Claude que esta lento'</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Enviar mais mensagens enquanto esta lento</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar e esperar resolver sozinho</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">❌ Server Not Found</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> MCP Server Nao Encontrado
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Erro ao adicionar MCP: 'server not found', 'command not found' ou 'module not found'. Isso indica que o pacote npm nao existe, o nome esta errado, ou o ambiente Node.js nao esta configurado.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Fix 1:</strong> Verifique nome do pacote: <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>npm info @anthropic/mcp-xxx</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Fix 2:</strong> Confirme Node.js: <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>node --version</code> (precisa v18+)</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Fix 3:</strong> Confirme npx: <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>npx --version</code></span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>Fix 4:</strong> Teste isolado: <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>npx -y @anthropic/mcp-xxx --help</code></span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Causas Comuns
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Nome do pacote mudou (ecossistema MCP evolui rapido)</li>
+          <li>Node.js desatualizado (precisa v18+ para a maioria dos MCPs)</li>
+          <li>npx nao instalado ou nao no PATH</li>
+          <li>Firewall/proxy bloqueando download do pacote npm</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Se o pacote nao e encontrado, pode ser que o nome mudou. Busque no npm: npx -y npm search @anthropic/mcp para ver todos os pacotes MCP oficiais da Anthropic. Para MCPs de terceiros, verifique a documentacao oficial do MCP no GitHub.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Verificar nome exato do pacote no npm</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Manter Node.js atualizado (v18+)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Testar npx isolado antes de adicionar ao Claude</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Inventar nomes de pacotes</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Usar Node.js < v18</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Ignorar erros de npx</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📜 Checklist do Operador</h2>
+      </div>
+
+      <!-- Conceito Principal -->
+      <div class="bg-gradient-to-br from-rose-900/30 to-dark-800 rounded-xl border border-rose-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-rose-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Troubleshooting Universal
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Quando algo nao funciona com MCPs, siga este checklist em ordem. Ele resolve 95% dos problemas sem necessidade de pesquisa externa.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>1.</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>/status</code> - MCP aparece? Esta connected?</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>2.</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp list</code> - Config esta correta?</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>3.</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>claude mcp remove nome + re-add</code> - Reseta conexao</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>4.</strong> <code class='bg-dark-700 px-2 py-1 rounded text-rose-400'>/doctor</code> - Diagnostico geral do Claude Code</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>5.</strong> Reinicie a sessao do Claude Code completamente</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-rose-400 mt-1">•</span>
+            <span><strong class='text-white'>6.</strong> Verifique dependencias (Node.js, Chrome, credenciais)</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Por Que Importa -->
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> As Tres Regras de Ouro
+        </h3>
+        <ul class="space-y-2 text-neutral-300">
+          <li>Regra #1: Sempre comece pelo /status - 50% dos problemas sao vistos aqui</li>
+          <li>Regra #2: Remove + re-add resolve 80% dos problemas remanescentes</li>
+          <li>Regra #3: Se nada funcionar, reinicie a sessao completamente</li>
+        </ul>
+      </div>
+
+      <!-- Dica Pratica -->
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Salve este checklist como alias no shell: alias mcp-fix='echo "1. /status" && echo "2. claude mcp list" && echo "3. claude mcp remove NAME + re-add" && echo "4. /doctor" && echo "5. Reinicie sessao" && echo "6. Check deps"'. Quando algo quebrar, rode 'mcp-fix' para lembrar os passos na ordem certa.
+        </p>
+      </div>
+
+      <!-- Fazer vs Evitar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+          <h4 class="font-bold text-emerald-400 mb-4">✓ O que FAZER</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Seguir o checklist NA ORDEM apresentada</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Parar quando o problema for resolvido (nao execute todos se o 1o resolve)</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-emerald-400">✓</span>
+              <span>Documentar problemas recorrentes e suas solucoes</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+          <h4 class="font-bold text-red-400 mb-4">✗ O que NAO fazer</h4>
+          <ul class="space-y-3 text-neutral-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Pular direto para solucoes avancadas</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Tentar fixes aleatorios sem diagnosticar</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-400">✗</span>
+              <span>Reinstalar Claude Code como primeiro recurso</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-rose-900/40 via-dark-800 to-dark-800 rounded-xl border border-rose-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">MCP Nao Conecta</strong>
+              <span class="text-neutral-400"> - O problema mais comum com MCPs: voce adiciona mas o status mostra 'disconnected'...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Permission Denied</strong>
+              <span class="text-neutral-400"> - O MCP conecta com sucesso mas retorna 'permission denied' ou 'access denied' ao ...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Token Usage Alto</strong>
+              <span class="text-neutral-400"> - O /cost mostra consumo muito acima do esperado. As causas mais comuns sao: muito...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Respostas Lentas</strong>
+              <span class="text-neutral-400"> - Respostas demoram muito mais que o normal. Pode ser causado por: MCP server lent...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Server Not Found</strong>
+              <span class="text-neutral-400"> - Erro ao adicionar MCP: 'server not found', 'command not found' ou 'module not fo...</span>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-rose-400 mt-1">✓</span>
+            <div>
+              <strong class="text-white">Checklist do Operador</strong>
+              <span class="text-neutral-400"> - Quando algo nao funciona com MCPs, siga este checklist em ordem. Ele resolve 95%...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-rose-400 mb-2">Proximo:</h3>
+          <p class="text-neutral-300">Trilha 6 - Conectando o Claude (MCPs)</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-6-9.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Modulo Anterior
+          </a>
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-500 transition-colors">
+            Voltar para Trilha →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

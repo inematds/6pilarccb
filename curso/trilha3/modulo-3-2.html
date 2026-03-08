@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.2 - Construir Feature Nova | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; } .dark body { background-color: #111827; }
+    .topic-explanation { display: none; } .topic-explanation.active { display: block; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; } html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; } html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; } html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; } html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; } html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">6P Resumido</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-purple-400">Inicio</a><span>/</span>
+      <a href="index.html" class="hover:text-purple-400">Trilha 3</a><span>/</span>
+      <span class="text-purple-400">Modulo 3.2</span>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULO 3.2</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">👾 Construir Feature Nova</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Como usar o Plan Mode para planejar, implementar e polir uma feature nova do zero com o Claude Code.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Topicos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">25</div><div class="text-xs text-neutral-400">Minutos</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Inter.</div><div class="text-xs text-neutral-400">Nivel</div></div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Pratico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📋 Plan Mode - Planejamento</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Antes de escrever codigo, ative o <strong class="text-purple-400">Plan Mode</strong> para que o Claude crie um plano detalhado da feature. Isso evita retrabalho e garante uma arquitetura solida.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O Plan Mode faz o Claude pensar antes de agir:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Pressione <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">Shift+Tab</code> para alternar para Plan Mode (ou use <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">Tab</code> para trocar entre Plan/Act)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Preciso de um sistema de notificacoes por email. Planeje a arquitetura"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>O Claude vai listar arquivos a criar, dependencias, fluxo de dados e possíveis edge cases</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Inclua requisitos especificos no prompt: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Planeje um CRUD de produtos com: validacao, paginacao, filtros por categoria, e testes unitarios"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔍 Revisar o Plano</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-purple-400">Revise e ajuste o plano</strong> antes de implementar. E mais barato mudar um plano do que refatorar codigo pronto.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Faca perguntas e peca ajustes ao plano:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Use Redis para cache ao inves de in-memory"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Adicione rate limiting no plano"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Verifique se o plano segue os padroes do seu projeto existente</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Peca ao Claude: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Antes de implementar, analise o codebase existente e garanta que o plano segue os mesmos padroes de arquitetura"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🛠️ Implementar</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Com o plano aprovado, mude para <strong class="text-purple-400">Act Mode e implemente</strong>. O Claude vai criar arquivos, escrever codigo e configurar dependencias seguindo o plano.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">A implementacao segue o plano passo a passo:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Pressione <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">Tab</code> para voltar ao Act Mode e diga: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Implemente o plano"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>O Claude cria arquivos, instala pacotes e configura tudo automaticamente</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Revise cada arquivo criado - aceite com <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">y</code> ou peca mudancas</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Para features grandes, implemente em etapas: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Implemente primeiro o modelo e a migration. Depois faremos o controller"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🧪 Testar</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Peca ao Claude para <strong class="text-purple-400">escrever e rodar testes</strong> para a feature nova. Testes sao parte essencial de qualquer feature.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Testes garantem que a feature funciona e nao quebra nada existente:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Escreva testes unitarios para o NotificationService"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Rode npm test e corrija qualquer falha"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Peca testes para edge cases: inputs invalidos, permissoes, limites</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Use: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Escreva testes cobrindo: caso feliz, input invalido, usuario sem permissao, e limite de paginacao"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">✨ Polir</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Antes do commit final, peca ao Claude para <strong class="text-purple-400">polir o codigo</strong>: melhorar nomes, adicionar comentarios, limpar imports e garantir consistencia.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O polimento transforma codigo funcional em codigo profissional:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Revise o codigo que criamos. Melhore nomes de variaveis, adicione JSDoc e remova code smells"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Rode o linter e corrija qualquer warning"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Verifique se ha tratamento de erros adequado em todos os pontos</span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Peca uma revisao final: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Faca uma ultima revisao de todos os arquivos que criamos. Tem algo que podemos melhorar?"</code></p>
+      </div>
+    </section>
+
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">📦 Commit e Finalizacao</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Finalize com um <strong class="text-purple-400">commit bem estruturado</strong> que documenta a nova feature para o historico do projeto.</p>
+      <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Commits bem feitos facilitam o code review e o historico:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Use <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">/commit</code> para gerar a mensagem automaticamente</span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Para features grandes, considere commits atomicos: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">"Faca commits separados: um para o modelo, um para o controller e um para os testes"</code></span></li>
+          <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>O Claude gera mensagens como: <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">feat: add email notification system with queue support</code></span></li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Para features que precisam de PR, use <code class="bg-dark-700 px-2 py-0.5 rounded text-sm">/pr</code> logo depois do commit. O Claude cria o Pull Request com descricao completa da feature.</p>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Plan Mode</strong><span class="text-neutral-400"> - Planeje antes de codar com Shift+Tab</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Revisao</strong><span class="text-neutral-400"> - Ajuste o plano antes de implementar</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Implementacao</strong><span class="text-neutral-400"> - Execute o plano no Act Mode</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Testes</strong><span class="text-neutral-400"> - Escreva e rode testes automaticamente</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Polimento</strong><span class="text-neutral-400"> - Melhore nomes, docs e code quality</span></div></div>
+          <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Commit</strong><span class="text-neutral-400"> - Use /commit para finalizar com mensagem profissional</span></div></div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-purple-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">3.3 - Refatorar Codigo</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-3-1.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar</a>
+          <a href="modulo-3-3.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) { const t=button.closest('.topic-item'); const e=t.querySelector('.topic-explanation'); const m=button.closest('.bg-dark-800'); m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')}); e.classList.toggle('active'); }
+    const themeToggle=document.getElementById('theme-toggle'); const themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'); const themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'); const html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

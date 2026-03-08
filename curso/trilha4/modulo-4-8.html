@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 4.8 - Estrategia de Uso | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300"><span class="text-2xl">🧠</span><span class="font-bold text-lg hidden sm:inline">6P Resumido</span></a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-amber-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-amber-400">Trilha 4</a>
+      <span>/</span>
+      <span class="text-amber-400">Modulo 4.8</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULO 4.8</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧑‍💻 Estrategia de Uso</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Como mapear os prompts do painel para o seu workflow diario. Qual prompt usar em qual momento, como combinar estrategicamente, quando limpar contexto e como maximizar o retorno de cada sessao com o Claude Code.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">25</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Essencial</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-amber-400">Estrateg.</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1: Daily Workflow Mapping -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🗓️ Mapeamento do Workflow Diario</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-amber-400">mapeamento do workflow diario</strong> define qual prompt usar em cada fase do seu dia de trabalho. Em vez de escolher prompts aleatoriamente, voce segue um fluxo previsivel que maximiza produtividade e qualidade.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Workflow Diario Ideal
+        </h3>
+        <div class="space-y-4 text-neutral-300">
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">08:00 - Inicio do Dia</div>
+            <div>Abra o Claude Code → <strong class="text-white">95% Confidence</strong> → Estude o que vai trabalhar hoje</div>
+          </div>
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">08:30 - Planejamento</div>
+            <div><strong class="text-white">Plan Mode Blueprint</strong> → Gere o blueprint da tarefa principal do dia</div>
+          </div>
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">09:00-12:00 - Construcao</div>
+            <div><strong class="text-white">Feature Blueprint + Build With Tests</strong> → Implemente passo a passo</div>
+          </div>
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">12:00 - Meio do Dia</div>
+            <div><strong class="text-white">/compact</strong> → Compacte o contexto se a sessao esta longa</div>
+          </div>
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">14:00-17:00 - Continuacao + Debug</div>
+            <div><strong class="text-white">Structured Bug Report</strong> quando encontrar bugs → Continue building</div>
+          </div>
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">17:00 - Final do Dia</div>
+            <div><strong class="text-white">Brutal Audit</strong> → Revise tudo antes do commit final</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Adapte os horarios ao seu ritmo. O importante nao e a hora, e a sequencia: Estudar → Planejar → Construir → Debugar → Revisar. Essa progressao garante que voce sempre comeca informado e termina com qualidade.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2: 95% Confidence para Complexo -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🎯 95% Confidence para Tarefas Complexas</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-amber-400">95% Confidence</strong> e obrigatorio para tarefas complexas: mudancas em multiplos arquivos, alteracoes em areas criticas (auth, pagamentos, dados), ou entrada em projetos desconhecidos. Pular esse passo em tarefas complexas e a causa #1 de retrabalho.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Quando Usar (e Quando Nao)
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-neutral-300">
+          <div class="bg-emerald-900/20 rounded-lg p-4 border border-emerald-500/20">
+            <h4 class="font-bold text-emerald-400 mb-2">USAR 95% Confidence</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tarefa toca 3+ arquivos</span></li>
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Area critica (auth, pagamento, dados)</span></li>
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Projeto novo ou desconhecido</span></li>
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Mudanca arquitetural</span></li>
+              <li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Bug complexo/intermitente</span></li>
+            </ul>
+          </div>
+          <div class="bg-red-900/20 rounded-lg p-4 border border-red-500/20">
+            <h4 class="font-bold text-red-400 mb-2">NAO precisa de 95%</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Renomear variavel</span></li>
+              <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ajustar texto/CSS</span></li>
+              <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Adicionar log/comentario</span></li>
+              <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Bug obvio em 1 arquivo</span></li>
+              <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Tarefa repetitiva ja conhecida</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Na duvida, use. O custo de 5 minutos de estudo e insignificante comparado com o custo de 2 horas de retrabalho por ter comecado sem entender o contexto.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3: Plan Mode para Building -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📋 Plan Mode para Building</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-amber-400">Plan Mode</strong> e seu melhor amigo durante a fase de construcao. Ele garante que voce tem um mapa antes de comecar a navegar. Sem plano, voce constroi no escuro e descobre problemas tarde demais.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Estrategia de Plan Mode
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 mb-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <pre class="whitespace-pre-wrap">FLUXO: Plan Mode → Approve → Implement Step 1 → Review → Implement Step 2 → ...
+
+Comandos chave durante building:
+1. "Use ultrathink para planejar isso" → Ativa planejamento profundo
+2. "Implemente apenas o passo 1" → Execucao incremental
+3. "PARE. Me mostre o que fez antes de continuar" → Gate de controle
+4. "Isso mudou o comportamento? Nao deveria." → Guardrail
+5. "Rode os testes antes de prosseguir" → Verificacao continua
+
+Nunca diga: "Faz tudo de uma vez"
+Sempre diga: "Faz o proximo passo e para"</pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Se o plano tem mais de 5 passos, decomponha em sub-planos. Um plano com 15 passos e tao util quanto nenhum plano. Mantenha cada plano entre 3-5 passos actionaveis.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 4: Brutal Audit para Encerramento -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">🔍 Brutal Audit para Encerramento</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-amber-400">Brutal Audit</strong> e o ultimo prompt antes de encerrar uma sessao ou fazer um commit importante. Ele e seu gate de qualidade final - nada vai para producao sem passar por ele.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Ritual de Encerramento
+        </h3>
+        <div class="bg-dark-900 rounded-lg p-4 mb-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <pre class="whitespace-pre-wrap">Antes de encerrar esta sessao, faca:
+
+1. Brutal Audit de tudo que foi construido/modificado hoje
+2. Liste todos os arquivos modificados (git diff --name-only)
+3. Para cada arquivo: ha algo que me preocupa?
+4. Testes: todos passam? Ha testes novos necessarios?
+5. Documentacao: CLAUDE.md precisa ser atualizado?
+6. TODO list: o que ficou pendente para a proxima sessao?
+
+Classifique o status geral:
+- PRONTO PARA COMMIT: Tudo limpo, pode ir
+- PRECISA AJUSTE: Pequenas correcoes antes de commitar
+- NAO COMMITAVEL: Problemas serios, nao commite assim</pre>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          O item "TODO list para proxima sessao" e crucial. Ao iniciar a sessao seguinte, voce sabe exatamente onde parou e o que precisa fazer. Salve esse TODO no CLAUDE.md ou em um arquivo de sessao.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5: Teach Me para Aprendizado -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">📚 Teach Me para Aprendizado Continuo</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        O <strong class="text-amber-400">Teach Me</strong> nao e apenas para momentos de duvida - e uma estrategia de aprendizado continuo. Use-o sistematicamente para aprofundar seu conhecimento enquanto trabalha, transformando cada sessao em uma oportunidade de crescimento.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Momentos Ideais para Teach Me
+        </h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <span><strong class="text-white">O Claude usou um padrao que voce nao conhece</strong> - "Me ensine o padrao [X] que voce acabou de aplicar"</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <span><strong class="text-white">Uma decisao arquitetural nao e obvia</strong> - "Por que essa abordagem e melhor que [alternativa]?"</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <span><strong class="text-white">Um bug revelou um conceito que voce nao domina</strong> - "Me ensine [conceito] para que eu evite esse tipo de bug"</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-amber-400 mt-1">•</span>
+            <span><strong class="text-white">Final da sessao com tempo livre</strong> - "Me ensine algo interessante sobre o codigo que trabalhamos hoje"</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Mantenha um "diario de aprendizado" no projeto. Cada vez que o Teach Me revelar algo valioso, anote brevemente no CLAUDE.md ou em um arquivo separado. Em 3 meses, voce tera um acervo de conhecimento contextualizado.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6: Context Clearing Strategy -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🧹 Estrategia de Limpeza de Contexto</h2>
+      </div>
+
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A <strong class="text-amber-400">limpeza de contexto</strong> e tao importante quanto os prompts em si. Uma sessao com contexto poluido produz resultados piores. Saber quando compactar, quando iniciar sessao nova e quando limpar e essencial para manter a qualidade.
+      </p>
+
+      <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Regras de Limpeza
+        </h3>
+        <div class="space-y-4 text-neutral-300">
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">Regra 1: /compact a 70% de contexto</div>
+            <div>Quando sentir que as respostas estao ficando genericas ou o Claude comecar a esquecer instrucoes, compacte. Use <code class="bg-dark-700 px-1 rounded text-amber-400">/cost</code> para monitorar o uso de contexto.</div>
+          </div>
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">Regra 2: Nova sessao para nova tarefa</div>
+            <div>Se voce vai mudar completamente de tarefa (ex: de building para debugging em outro modulo), inicie uma sessao nova. Contexto residual de outra tarefa confunde.</div>
+          </div>
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">Regra 3: /clear para foco visual</div>
+            <div>Use <code class="bg-dark-700 px-1 rounded text-amber-400">/clear</code> quando a tela esta poluida mas voce quer manter o contexto. Limpa a tela, mantem a memoria.</div>
+          </div>
+          <div class="bg-dark-900/50 rounded-lg p-4 border border-dark-700">
+            <div class="text-amber-400 font-bold mb-1">Regra 4: Compact com instrucao customizada</div>
+            <div>Use <code class="bg-dark-700 px-1 rounded text-amber-400">/compact "Mantenha foco em [tarefa X] e descarte discussoes sobre [Y]"</code> para direcionar o que preservar.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center">
+          <span class="mr-2">📊</span> Mapa Completo de Prompts por Situacao
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-neutral-300">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-2 pr-4 text-amber-400">Situacao</th>
+                <th class="text-left py-2 text-amber-400">Prompt Recomendado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-dark-700"><td class="py-2 pr-4">Inicio de sessao complexa</td><td>95% Confidence</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 pr-4">Planejar feature nova</td><td>Plan Mode Blueprint + Feature Blueprint</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 pr-4">Construir com qualidade</td><td>Build With Tests + Approval Workflow</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 pr-4">Bug encontrado</td><td>Structured Bug Report + Root Cause</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 pr-4">Antes do commit</td><td>Brutal Audit + Code Review</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 pr-4">Refatoracao</td><td>Refactor Guardrails + No-Behavior-Change</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 pr-4">Decisao arquitetural</td><td>ADR + Comparacao de Opcoes</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 pr-4">Preparar deploy</td><td>Deployment Prep + Security Checks</td></tr>
+              <tr><td class="py-2 pr-4">Aprender conceito novo</td><td>Teach Me</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Final
+        </h3>
+        <p class="text-neutral-300">
+          Imprima o mapa de prompts por situacao e cole ao lado do seu monitor. Com o tempo, a escolha se torna automatica. O objetivo e que selecionar o prompt certo seja tao natural quanto escolher a ferramenta certa para o trabalho.
+        </p>
+      </div>
+    </section>
+
+    <!-- RESUMO FINAL -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Workflow diario</strong><span class="text-neutral-400"> - Estudar → Planejar → Construir → Debugar → Revisar → Aprender</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">95% Confidence para complexo</strong><span class="text-neutral-400"> - Obrigatorio para 3+ arquivos, areas criticas, projetos novos</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Plan Mode para building</strong><span class="text-neutral-400"> - Plano primeiro, implementacao incremental passo a passo</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Brutal Audit para encerrar</strong><span class="text-neutral-400"> - Ultimo prompt antes do commit, gate final de qualidade</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Teach Me para crescer</strong><span class="text-neutral-400"> - Aprendizado continuo durante o trabalho, diario de conhecimento</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-amber-400 mt-1">✓</span>
+            <div><strong class="text-white">Limpeza de contexto</strong><span class="text-neutral-400"> - /compact a 70%, nova sessao para nova tarefa, /clear para foco</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-amber-400 mb-2">Trilha 4 Completa!</h3>
+          <p class="text-neutral-300">Voce agora domina o Painel de Prompts do Claude Code. Cada situacao tem um prompt ideal - use o mapa de referencia ate que a escolha se torne automatica.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-4-7.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Modulo Anterior</a>
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors">Voltar para Trilha →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+    function toggleTopic(id) { const el = document.getElementById(id); if (el) el.classList.toggle('active'); }
+  </script>
+
+</body>
+</html>

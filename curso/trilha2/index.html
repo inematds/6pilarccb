@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 2 - Pacote Inicial (Starter Pack) | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 2
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🎬 Pacote Inicial (Starter Pack)</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Domine o CLAUDE.md, o arquivo de memoria que torna o Claude 10x mais inteligente no seu projeto. Aprenda a criar, estruturar e posicionar esse arquivo para que o Claude entenda sua stack, convencoes e regras desde o primeiro segundo.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">36</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">~2h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Basico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- NAVEGACAO RAPIDA -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <a href="#mod-2-1" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/50 p-4 transition-all">
+        <span class="text-blue-400 font-bold text-sm">2.1</span>
+        <h3 class="font-semibold mt-1">📄 O que e o CLAUDE.md</h3>
+      </a>
+      <a href="#mod-2-2" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/50 p-4 transition-all">
+        <span class="text-blue-400 font-bold text-sm">2.2</span>
+        <h3 class="font-semibold mt-1">🏗️ Anatomia do CLAUDE.md Perfeito</h3>
+      </a>
+      <a href="#mod-2-3" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/50 p-4 transition-all">
+        <span class="text-blue-400 font-bold text-sm">2.3</span>
+        <h3 class="font-semibold mt-1">📂 Escopos: Projeto, Subdiretorio e Global</h3>
+      </a>
+      <a href="#mod-2-4" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/50 p-4 transition-all">
+        <span class="text-blue-400 font-bold text-sm">2.4</span>
+        <h3 class="font-semibold mt-1">🚀 Exemplo Real: Next.js SaaS App</h3>
+      </a>
+      <a href="#mod-2-5" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/50 p-4 transition-all">
+        <span class="text-blue-400 font-bold text-sm">2.5</span>
+        <h3 class="font-semibold mt-1">🐍 Exemplo Real: Python FastAPI Backend</h3>
+      </a>
+      <a href="#mod-2-6" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/50 p-4 transition-all">
+        <span class="text-blue-400 font-bold text-sm">2.6</span>
+        <h3 class="font-semibold mt-1">⚡ O Comando /init</h3>
+      </a>
+    </div>
+
+    <!-- DIVISOR -->
+    <div class="flex items-center space-x-4 mb-8">
+      <div class="flex-1 h-px bg-dark-600"></div>
+      <span class="text-neutral-500 text-sm font-medium">Conteudo Detalhado</span>
+      <div class="flex-1 h-px bg-dark-600"></div>
+    </div>
+
+    <!-- ===== MODULO 2.1 ===== -->
+    <div id="mod-2-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.1</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📄 O que e o CLAUDE.md</h3>
+        <p class="text-neutral-400 text-sm">O arquivo de memoria do projeto que transforma o Claude de um assistente generico em um parceiro que conhece sua stack, regras e convencoes.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🧠</span>
+            <div>
+              <span class="font-medium">O Conceito de Memoria de Projeto</span>
+              <span class="text-neutral-500 text-sm ml-2">- Por que o Claude precisa de contexto persistente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">CLAUDE.md e um arquivo Markdown que vive no seu repositorio e funciona como memoria persistente do projeto. Toda vez que voce inicia uma sessao do Claude Code, ele le esse arquivo primeiro, ganhando contexto instantaneo sobre o que e o projeto, como funciona e quais sao as regras.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem CLAUDE.md, voce precisa re-explicar seu projeto a cada sessao: qual framework usa, como rodar testes, quais convencoes seguir. Com ele, o Claude ja sabe tudo isso antes de voce digitar a primeira palavra.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pense no CLAUDE.md como um documento de onboarding para seu parceiro de codigo IA. Assim como voce onboarda um dev novo na equipe, voce onboarda o Claude com informacoes sobre stack, estrutura e padroes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Por que o CLAUDE.md Existe</span>
+              <span class="text-neutral-500 text-sm ml-2">- O problema que ele resolve</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O CLAUDE.md resolve o problema de amnesia entre sessoes. Modelos de IA nao tem memoria entre conversas - cada sessao comeca do zero. O CLAUDE.md injeta contexto critico automaticamente, eliminando esse gap.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">A diferenca entre um dev que usa Claude sem CLAUDE.md e um que usa com e brutal. O primeiro gasta 10-15 minutos por sessao explicando contexto. O segundo comeca a produzir em 10 segundos.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O CLAUDE.md nao e documentacao generica do projeto. E um documento especificamente escrito para o Claude entender. Foco em informacoes que ele precisa para gerar codigo correto: convencoes, comandos, restricoes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">💾</span>
+            <div>
+              <span class="font-medium">Como Funciona a Leitura Automatica</span>
+              <span class="text-neutral-500 text-sm ml-2">- Quando e como o Claude le o arquivo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Ao iniciar uma sessao, o Claude Code automaticamente busca e le todos os arquivos CLAUDE.md relevantes: o do diretorio raiz do projeto, os de subdiretorios onde voce esta trabalhando, e o global do seu sistema.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender quando o arquivo e lido ajuda voce a escrever conteudo mais eficaz. O CLAUDE.md e injetado como instrucoes de sistema, ou seja, tem prioridade alta na atencao do Claude.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">A leitura e automatica e silenciosa. Voce nao precisa pedir. O conteudo e tratado como instrucoes persistentes que sobrevivem ate mesmo a compactacao de contexto com /compact.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Diferenca de Documentacao Comum</span>
+              <span class="text-neutral-500 text-sm ml-2">- CLAUDE.md vs README.md vs docs/</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O CLAUDE.md nao e um README para humanos, nem documentacao de API. E um arquivo escrito especificamente para o Claude interpretar. O publico-alvo e a IA, nao desenvolvedores humanos.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muitas pessoas cometem o erro de copiar o README.md para o CLAUDE.md. Isso gera um arquivo cheio de badges, links e informacoes irrelevantes para o Claude, desperdicando tokens preciosos.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">README.md: apresentacao para humanos. CLAUDE.md: instrucoes para a IA. O CLAUDE.md deve ser conciso, diretivo e focado em informacoes que impactam a geracao de codigo: stack, convencoes, comandos, restricoes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Persistencia Apos /compact</span>
+              <span class="text-neutral-500 text-sm ml-2">- Como o CLAUDE.md sobrevive a compactacao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Quando voce roda /compact, o historico de chat e resumido. Mas as instrucoes do CLAUDE.md sao recarregadas integralmente, pois sao tratadas como instrucoes de sistema, nao como historico.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Isso significa que suas regras e convencoes nunca se perdem, mesmo em sessoes muito longas. E a garantia de consistencia: o Claude pode esquecer o que voce disse no chat, mas nunca esquece o CLAUDE.md.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Instrucoes criticas devem ir no CLAUDE.md, nao no chat. Se voce disser "nunca use any" no chat, isso pode ser perdido apos compactacao. Se estiver no CLAUDE.md, persiste para sempre.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🏆</span>
+            <div>
+              <span class="font-medium">Beneficios Praticos</span>
+              <span class="text-neutral-500 text-sm ml-2">- O impacto real no dia a dia</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Com um CLAUDE.md bem escrito, o Claude gera codigo que segue seus padroes automaticamente: imports corretos, naming conventions da equipe, patterns preferidos, e evita armadilhas conhecidas do projeto.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O retorno sobre investimento e absurdo: 15 minutos escrevendo um CLAUDE.md economizam horas de correcoes e re-explicacoes ao longo de semanas. E o maior multiplicador de produtividade do Claude Code.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Principais beneficios: codigo consistente desde a primeira geracao, menos reviews de estilo, onboarding instantaneo em cada sessao, regras que nunca sao esquecidas, e compartilhamento de contexto entre membros da equipe.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-2-1.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 2.2 ===== -->
+    <div id="mod-2-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.2</span>
+          <span class="text-xs text-neutral-500">~25 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏗️ Anatomia do CLAUDE.md Perfeito</h3>
+        <p class="text-neutral-400 text-sm">As 6 secoes essenciais que todo CLAUDE.md deve ter: Project Overview, Tech Stack, Commands, Code Conventions, Things To Avoid e Additional Context.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Project Overview</span>
+              <span class="text-neutral-500 text-sm ml-2">- Descricao concisa do projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A primeira secao do CLAUDE.md. Em 2-3 linhas, diz o que o projeto faz e com o que foi construido. Exemplo: "SaaSify e uma plataforma B2B de gestao de assinaturas. Construido com Next.js 14, TypeScript e Supabase."</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Claude precisa de contexto de alto nivel para tomar decisoes arquiteturais corretas. Saber que e um SaaS B2B vs um app mobile muda completamente como ele aborda problemas de autenticacao, permissoes e estrutura.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Mantenha curto e objetivo. Nome do projeto, tipo (SaaS, API, CLI, etc.), e tecnologias principais. Nao escreva um paragrafo longo - o Claude precisa de fatos, nao narrativa.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Tech Stack</span>
+              <span class="text-neutral-500 text-sm ml-2">- Linguagens, frameworks e ferramentas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Lista explicita de todas as tecnologias do projeto: linguagem, framework, banco de dados, ORM, CSS, testes e package manager. Cada item em uma linha com versoes quando relevante.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem essa secao, o Claude pode sugerir Express quando voce usa Fastify, ou npm quando voce usa pnpm. A stack define o vocabulario que o Claude deve usar no seu projeto.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Seja especifico: nao diga "React", diga "Next.js 14 com App Router". Nao diga "banco de dados", diga "PostgreSQL via Supabase". Quanto mais preciso, menos correcoes voce fara.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🖥️</span>
+            <div>
+              <span class="font-medium">Commands</span>
+              <span class="text-neutral-500 text-sm ml-2">- Como rodar, testar e buildar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Lista dos comandos essenciais do projeto: dev server, build, testes, lint, type check, migracoes. Cada comando com sua sintaxe exata. Exemplo: "Dev: pnpm dev", "Test: pnpm test", "Lint: pnpm lint".</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Esta e a secao mais util do CLAUDE.md. Quando o Claude precisa verificar se seu codigo funciona, ele usa esses comandos. Sem eles, ele pode tentar "npm test" quando voce usa "uv run pytest".</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Inclua todos os comandos que voce usa no dia a dia. Dev server, build, testes unitarios, testes e2e, lint, format, type check, migracoes de banco. O Claude usa exatamente o que voce colocar aqui.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📐</span>
+            <div>
+              <span class="font-medium">Code Conventions</span>
+              <span class="text-neutral-500 text-sm ml-2">- Padroes e regras de codigo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Regras de estilo e padroes do projeto: named exports vs default, file naming (kebab-case vs PascalCase), aspas simples vs duplas, uso de Server Components vs Client Components, validacao com Zod, etc.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem convencoes explicitas, o Claude usa seus padroes default que podem conflitar com os do seu projeto. Se voce prefere named exports e o Claude gera default exports, voce precisa corrigir toda vez.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Documente o que e unico no seu projeto. Nao diga "use TypeScript" (ele ja sabe). Diga "use Server Components por padrao, Client Components somente com 'use client' quando necessario". Foque no especifico.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🚫</span>
+            <div>
+              <span class="font-medium">Things To Avoid</span>
+              <span class="text-neutral-500 text-sm ml-2">- O que nunca fazer no projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Lista explicita de anti-patterns e proibicoes. Exemplos: "Nunca use any - use unknown e narrow", "Nao use Pages Router - apenas App Router", "Nunca commite .env files", "Nao instale dependencias sem discutir primeiro".</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Prevenir erros e tao poderoso quanto guiar comportamento. Uma linha "nunca use any" no CLAUDE.md evita dezenas de correcoes ao longo do projeto. Restricoes claras geram codigo mais consistente.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Inclua erros que voce ja cometeu ou que o Claude ja fez no seu projeto. Se ele sempre sugere uma biblioteca que voce nao quer, adicione "Nao use X, prefira Y". Construa essa lista iterativamente.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📎</span>
+            <div>
+              <span class="font-medium">Additional Context</span>
+              <span class="text-neutral-500 text-sm ml-2">- Informacoes extras e links</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Secao para informacoes que nao se encaixam nas anteriores: links para docs relevantes, quirks conhecidos, processo de deploy, variaveis de ambiente necessarias, dependencias externas.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Projetos reais tem nuances que nao cabem em categorias fixas. Um bug conhecido no ORM, uma API externa com rate limit, um processo de deploy que requer passos especificos. Esse contexto evita surpresas.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use com moderacao. O CLAUDE.md e lido a cada sessao e consome tokens. Coloque apenas informacoes que o Claude realmente precisa para gerar codigo melhor. Se e informacao que so humanos consultam, deixe no README.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-2-2.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 2.3 ===== -->
+    <div id="mod-2-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.3</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">📂 Escopos: Projeto, Subdiretorio e Global</h3>
+        <p class="text-neutral-400 text-sm">Voce pode ter multiplos CLAUDE.md em diferentes locais. Aprenda como a hierarquia funciona e quando usar cada escopo.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📁</span>
+            <div>
+              <span class="font-medium">CLAUDE.md na Raiz do Projeto</span>
+              <span class="text-neutral-500 text-sm ml-2">- Escopo principal</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O CLAUDE.md na raiz (project-root/CLAUDE.md) e o arquivo principal. Aplica-se a todo o projeto, independentemente de qual diretorio voce esta trabalhando. E o que a maioria dos projetos precisa.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Este e o ponto de partida. 90% dos projetos so precisam desse unico arquivo. Ele define stack, convencoes e comandos que valem para todo o codebase.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Coloque na mesma pasta do package.json, pyproject.toml ou Cargo.toml. O Claude detecta automaticamente. Inclua informacoes globais do projeto: stack, comandos, convencoes universais.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">📂</span>
+            <div>
+              <span class="font-medium">CLAUDE.md em Subdiretorios</span>
+              <span class="text-neutral-500 text-sm ml-2">- Regras especificas por area</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Um CLAUDE.md dentro de um subdiretorio (ex: src/CLAUDE.md ou tests/CLAUDE.md) se aplica somente quando o Claude esta trabalhando naquele diretorio. Permite regras especificas por area do projeto.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Monorepos e projetos grandes tem areas com regras diferentes. O diretorio de testes pode ter convencoes diferentes do codigo de producao. Subdiretorios permitem essa granularidade.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exemplo: src/components/CLAUDE.md com "Todos os componentes devem usar forwardRef e ser exportados com displayName". So se aplica quando o Claude trabalha em src/components/. O CLAUDE.md da raiz continua valendo tambem.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🌐</span>
+            <div>
+              <span class="font-medium">CLAUDE.md Global (~/.claude/)</span>
+              <span class="text-neutral-500 text-sm ml-2">- Preferencias pessoais em todos os projetos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O arquivo em ~/.claude/CLAUDE.md se aplica a TODOS os projetos no seu sistema. E sua configuracao pessoal global: preferencias de idioma, estilo de comunicacao, padroes que voce usa em todo lugar.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Se voce sempre prefere respostas em portugues, ou sempre usa Conventional Commits, ou sempre quer type hints em Python, coloque no global em vez de repetir em cada projeto.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ideal para: idioma preferido, estilo de commit, preferencias de editor, padroes pessoais. Nao coloque informacoes de projeto especifico aqui. O global e para o que vale em qualquer repositorio.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Hierarquia e Precedencia</span>
+              <span class="text-neutral-500 text-sm ml-2">- Como os escopos se combinam</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O Claude le todos os CLAUDE.md relevantes e combina suas instrucoes. A ordem e: global primeiro, depois raiz do projeto, depois subdiretorios. Instrucoes mais especificas complementam (nao substituem) as mais gerais.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender a precedencia evita conflitos. Se o global diz "use aspas duplas" e o projeto diz "use aspas simples", o Claude segue o mais especifico (projeto). Saber disso evita confusao quando regras parecem ser ignoradas.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Todos os arquivos sao lidos e combinados. Nao ha "substituicao" - e acumulativo. Se houver conflito, o mais especifico tende a prevalecer. Mantenha os escopos complementares, nao conflitantes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🗂️</span>
+            <div>
+              <span class="font-medium">Estrategia com Multiplos Arquivos</span>
+              <span class="text-neutral-500 text-sm ml-2">- Organizando um projeto grande</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Em projetos grandes ou monorepos, voce pode ter uma estrategia com multiplos CLAUDE.md: raiz com convencoes globais, packages/ com regras por pacote, tests/ com padroes de teste especificos.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Projetos que crescem precisam de regras granulares. O frontend pode ter convencoes de CSS diferentes das regras de API do backend. Multiplos arquivos permitem essa separacao sem poluir o CLAUDE.md raiz.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Estrategia recomendada: CLAUDE.md raiz com stack e comandos gerais. Subdiretorios so quando as regras realmente diferem. Nao crie CLAUDE.md em todo diretorio - cada arquivo consome tokens. Use com intencao.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Quando Usar Cada Escopo</span>
+              <span class="text-neutral-500 text-sm ml-2">- Guia pratico de decisao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Regra pratica: Global para preferencias pessoais universais. Raiz para tudo especifico do projeto. Subdiretorio somente quando uma area tem regras que conflitam ou complementam significativamente as da raiz.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Muita gente erra por exagero (CLAUDE.md em todo diretorio) ou por falta (nenhum CLAUDE.md). O equilibrio certo e ter cobertura sem desperdicio de tokens e sem confusao de regras.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Comece so com o da raiz. Adicione global quando perceber que repete instrucoes entre projetos. Adicione subdiretorios quando uma area consistentemente precisa de instrucoes diferentes. Evolua organicamente.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-2-3.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 2.4 ===== -->
+    <div id="mod-2-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.4</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Exemplo Real: Next.js SaaS App</h3>
+        <p class="text-neutral-400 text-sm">Um CLAUDE.md completo e comentado para uma aplicacao SaaS construida com Next.js 14, TypeScript, Supabase e Tailwind CSS.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Project Overview do SaaS</span>
+              <span class="text-neutral-500 text-sm ml-2">- Definindo o contexto do negocio</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Exemplo real: "SaaSify e uma plataforma B2B de gestao de assinaturas. Construido com Next.js 14 (App Router), TypeScript e Supabase." Duas linhas que dao ao Claude todo o contexto de alto nivel.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Ao saber que e um SaaS B2B, o Claude automaticamente pensa em multi-tenancy, permissoes por empresa, planos de assinatura e billing. Esse contexto muda completamente as sugestoes de arquitetura.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Inclua o tipo de negocio (B2B, B2C, marketplace), a proposta principal e a stack core. Nao detalhe features - o Claude descobre isso lendo o codigo. Foque no que ele nao consegue inferir sozinho.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Tech Stack: TypeScript + Next.js</span>
+              <span class="text-neutral-500 text-sm ml-2">- Detalhando cada tecnologia</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Stack detalhada: "TypeScript (strict mode), Next.js 14 com App Router, Supabase (PostgreSQL), Tailwind CSS + shadcn/ui, Vitest + Playwright, pnpm". Cada tecnologia com versao e variante.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">"strict mode" muda como o Claude trata tipos. "App Router" vs "Pages Router" muda toda a estrutura de arquivos. "shadcn/ui" diz que componentes ja existem prontos. Cada detalhe importa.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Especifique o package manager (pnpm, nao npm). Especifique o test runner (Vitest, nao Jest). Especifique o CSS approach (Tailwind + shadcn, nao styled-components). O Claude adapta todo codigo gerado a essas escolhas.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🖥️</span>
+            <div>
+              <span class="font-medium">Commands: pnpm dev/test/lint</span>
+              <span class="text-neutral-500 text-sm ml-2">- Comandos exatos do projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Comandos reais: "Dev: pnpm dev", "Build: pnpm build", "Test: pnpm test", "E2E: pnpm test:e2e", "Lint: pnpm lint". Exatamente como voce digita no terminal.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Claude usa esses comandos para verificar se o codigo que ele gerou funciona. Se voce diz "pnpm test" e ele tenta "npm test", o comando falha e ele perde tempo debugando um falso problema.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Inclua comandos de teste unitario E e2e separados. Inclua lint E format separados. Se tem type check separado (npx tsc --noEmit), inclua tambem. Cada comando que voce usa no dia a dia deve estar listado.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📐</span>
+            <div>
+              <span class="font-medium">Convencoes Next.js Especificas</span>
+              <span class="text-neutral-500 text-sm ml-2">- Server vs Client, exports, naming</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Convencoes reais: "Server Components por padrao, Client Components so quando necessario", "Named exports para todos os componentes", "kebab-case para arquivos, PascalCase para componentes", "Zod para validacao".</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Essas convencoes eliminam 90% das correcoes de estilo. Sem elas, voce vai constantemente dizer "nao, use named export" ou "nao, esse componente deve ser Server Component". O CLAUDE.md automatiza essa correcao.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">"Colocate testes junto ao codigo como *.test.ts" e uma regra que muda onde o Claude cria arquivos de teste. "Zod para input validation" faz ele usar Zod em vez de validacao manual. Cada regra tem impacto direto.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🚫</span>
+            <div>
+              <span class="font-medium">Things To Avoid no Next.js</span>
+              <span class="text-neutral-500 text-sm ml-2">- Anti-patterns e proibicoes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Restricoes do projeto: "Nunca use any - use unknown e narrow", "Nao use Pages Router - apenas App Router", "Nunca commite .env", "Nao instale dependencias sem discutir primeiro".</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">"Nao instale dependencias sem discutir primeiro" e poderoso porque o Claude tende a sugerir npm install para resolver problemas. Essa regra forca ele a usar o que ja existe antes de adicionar pacotes novos.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Construa essa lista iterativamente. Cada vez que o Claude faz algo que voce nao quer, adicione ao CLAUDE.md. Com o tempo, essa secao vira seu escudo contra erros recorrentes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🧪</span>
+            <div>
+              <span class="font-medium">Testando o CLAUDE.md</span>
+              <span class="text-neutral-500 text-sm ml-2">- Validando se funciona na pratica</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Apos criar o CLAUDE.md, teste-o pedindo ao Claude para gerar codigo e verifique se ele segue as convencoes. Peca um componente e veja se usa named export, Server Component por padrao e Zod.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um CLAUDE.md que nao e testado pode ter instrucoes ambiguas ou faltantes. O teste revela gaps: "ele usou default export, preciso ser mais claro na secao de convencoes".</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Teste com 3-4 pedidos diferentes: criar componente, escrever teste, criar rota de API, refatorar codigo. Se em todos os casos ele segue as convencoes, seu CLAUDE.md esta funcionando. Ajuste iterativamente.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-2-4.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 2.5 ===== -->
+    <div id="mod-2-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.5</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐍 Exemplo Real: Python FastAPI Backend</h3>
+        <p class="text-neutral-400 text-sm">Um CLAUDE.md completo para um backend Python com FastAPI, SQLAlchemy, uv e boas praticas de API async.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Overview para Backend Python</span>
+              <span class="text-neutral-500 text-sm ml-2">- Contexto de uma API real</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Exemplo: "FastAPI backend para um dashboard de analytics em tempo real." Uma linha que define o dominio (analytics), a natureza (real-time) e o framework (FastAPI). O Claude ja sabe que vai lidar com WebSockets, filas e performance.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O contexto de dominio muda as decisoes do Claude. "Analytics em tempo real" implica queries otimizadas, caching agressivo e endpoints async. Um "blog simples" teria abordagem completamente diferente.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Para backends, mencione se e REST, GraphQL ou gRPC. Mencione se tem processamento async, filas ou workers. O Claude adapta patterns de acordo: async handlers, background tasks, connection pooling.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Stack: FastAPI + SQLAlchemy + uv</span>
+              <span class="text-neutral-500 text-sm ml-2">- Ecossistema Python moderno</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Stack detalhada: "Python 3.12, FastAPI, PostgreSQL com SQLAlchemy, uv como package manager." Especificar uv (nao pip) e fundamental porque muda todos os comandos de instalacao e execucao.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Claude por padrao sugere pip e venv. Se voce usa uv, ele precisa saber para gerar "uv run pytest" em vez de "python -m pytest". A diferenca entre uv e pip muda como dependencias sao gerenciadas.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Especifique a versao do Python (3.12 tem features diferentes de 3.9). Especifique o ORM (SQLAlchemy vs Tortoise vs SQLModel). Especifique o package manager (uv vs pip vs poetry). Cada escolha impacta o codigo gerado.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🖥️</span>
+            <div>
+              <span class="font-medium">Commands com uv</span>
+              <span class="text-neutral-500 text-sm ml-2">- Dev, test, lint, migrate</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Comandos com uv: "Dev: uv run uvicorn app.main:app --reload", "Test: uv run pytest", "Lint: uv run ruff check .", "Format: uv run ruff format .", "Migrate: uv run alembic upgrade head".</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O padrao "uv run" antes de cada comando e o que faz o Claude executar tudo no ambiente virtual correto. Sem isso, ele pode tentar rodar pytest diretamente e falhar por falta de dependencias.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Note que lint e format sao separados (ruff check vs ruff format). Note que migracoes usam Alembic. Cada detalhe que voce especifica e um erro a menos que o Claude vai cometer.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📐</span>
+            <div>
+              <span class="font-medium">Convencoes Python</span>
+              <span class="text-neutral-500 text-sm ml-2">- Type hints, Pydantic, async</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Convencoes: "Type hints em todas as funcoes", "Pydantic models para request/response", "Dependency injection para database sessions", "Async handlers para todos os endpoints".</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">"Async handlers para todos os endpoints" forca o Claude a usar async def em vez de def. "Pydantic models para request/response" forca validacao automatica em vez de dicts soltos. Cada regra torna o codigo mais robusto.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Convencoes Python sao diferentes de JavaScript. Foque em: type hints (obrigatorios vs opcionais), async vs sync, ORM patterns (Unit of Work, Repository), validacao (Pydantic vs manual), e testes (fixtures, factories).</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🚫</span>
+            <div>
+              <span class="font-medium">Things To Avoid em Python</span>
+              <span class="text-neutral-500 text-sm ml-2">- Anti-patterns Python especificos</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Restricoes Python: "Nunca use raw SQL - use SQLAlchemy ORM", "Nao use chamadas sync de DB em handlers async", "Nunca exponha IDs internos - use UUIDs". Anti-patterns que destroem performance e seguranca.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">"Nao use chamadas sync de DB em handlers async" e critico: uma query sync bloqueia o event loop inteiro do FastAPI, derrubando performance. O Claude precisa saber disso para nao gerar codigo que funciona mas escala mal.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Anti-patterns Python comuns: raw SQL com string formatting (SQL injection), sync DB em async (blocking), expor IDs sequenciais (enumeration attack), importar models circulares. Cada um pode virar um incidente de producao.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">Comparando Next.js vs FastAPI</span>
+              <span class="text-neutral-500 text-sm ml-2">- Diferencas na abordagem</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Comparacao das duas abordagens: Next.js foca em Server/Client Components e UI patterns. FastAPI foca em async handlers, dependency injection e ORM patterns. O CLAUDE.md reflete essas diferencas fundamentais.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Comparar ajuda voce a abstrair o principio: o CLAUDE.md nao e um template fixo. E um documento que se adapta a sua stack. As secoes sao as mesmas, mas o conteudo muda radicalmente entre frontend e backend.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O principio e universal: diga ao Claude o que voce usa (stack), como voce usa (convencoes), como verificar (comandos) e o que evitar (restricoes). O conteudo especifico muda, mas a estrutura e a mesma.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-5')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-2-5.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 2.6 ===== -->
+    <div id="mod-2-6" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-400 font-bold">2.6</span>
+          <span class="text-xs text-neutral-500">~15 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">⚡ O Comando /init</h3>
+        <p class="text-neutral-400 text-sm">O atalho para criar um CLAUDE.md automaticamente. Quando usar, o que ele gera, suas limitacoes e como combinar com edicao manual.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏗️</span>
+            <div>
+              <span class="font-medium">O que o /init Faz</span>
+              <span class="text-neutral-500 text-sm ml-2">- Geracao automatica do CLAUDE.md</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O /init e um slash command que faz o Claude explorar seu repositorio (estrutura de pastas, package.json/pyproject.toml, configs) e gerar automaticamente um CLAUDE.md com overview, stack, comandos e convencoes detectadas.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">E o atalho para quem nao quer escrever um CLAUDE.md do zero. Em vez de gastar 15 minutos digitando, voce roda /init e tem uma base solida em 30 segundos que so precisa de ajustes.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O Claude le package.json, tsconfig.json, pyproject.toml, Cargo.toml e outros configs. Detecta linguagem, framework, dependencias, scripts de build e test. Gera um CLAUDE.md estruturado com essas informacoes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⏰</span>
+            <div>
+              <span class="font-medium">Quando Usar o /init</span>
+              <span class="text-neutral-500 text-sm ml-2">- O momento certo de rodar</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O /init e ideal para: projetos novos que ainda nao tem CLAUDE.md, projetos existentes onde voce quer um ponto de partida rapido, e quando voce esta entrando num repo desconhecido e quer que o Claude mapeie a estrutura.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber quando usar evita desperdicios. Rodar /init num projeto que ja tem um CLAUDE.md maduro pode sobrescrever regras refinadas. Use no momento certo: inicio do projeto ou primeiro contato com um repo.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Momentos ideais: setup inicial do projeto, clonando um repo open source pela primeira vez, migrando de outro editor/IA para Claude Code. Nao use para atualizar um CLAUDE.md existente - edite manualmente.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📄</span>
+            <div>
+              <span class="font-medium">O que Ele Gera</span>
+              <span class="text-neutral-500 text-sm ml-2">- Estrutura do output</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O /init gera um CLAUDE.md com as secoes padrao: Project Overview (baseado no repo), Tech Stack (detectada dos configs), Commands (extraidos de scripts no package.json), Code Conventions (inferidas do codigo existente).</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber o que ele gera ajuda voce a avaliar a qualidade do output. Se o /init detectou "npm" mas voce usa "pnpm", voce sabe exatamente o que corrigir. Se faltou a secao de "Things To Avoid", voce sabe que precisa adicionar.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O output tipico cobre: nome e descricao do projeto, linguagem e framework, scripts de build/test/lint, estrutura de diretorios, e convencoes detectadas no codigo. A qualidade depende de quao bem estruturado e o repo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">✏️</span>
+            <div>
+              <span class="font-medium">Customizando o Output</span>
+              <span class="text-neutral-500 text-sm ml-2">- Refinando o que foi gerado</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Apos rodar /init, voce deve sempre revisar e customizar o CLAUDE.md gerado. Adicione convencoes que o Claude nao detectou, corrija informacoes erradas, e adicione a secao "Things To Avoid" que normalmente nao e gerada automaticamente.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O /init gera um bom ponto de partida, mas nunca um CLAUDE.md perfeito. As regras mais valiosas sao as que voce adiciona manualmente: preferencias de estilo, anti-patterns, e decisoes arquiteturais que nao estao no codigo.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Checklist pos-/init: verificar stack esta correta, adicionar "Things To Avoid", ajustar comandos (especialmente package manager), adicionar convencoes de naming e estilo, remover informacoes redundantes que consomem tokens.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">⚠️</span>
+            <div>
+              <span class="font-medium">Limitacoes do /init</span>
+              <span class="text-neutral-500 text-sm ml-2">- O que ele nao consegue fazer</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O /init nao detecta: convencoes implicitas da equipe, decisoes arquiteturais nao documentadas, preferencias pessoais de estilo, anti-patterns especificos do projeto, e regras de negocio que impactam o codigo.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Confiar cegamente no /init cria um CLAUDE.md incompleto. As informacoes mais valiosas sao justamente as que ele nao consegue inferir: "nunca use any", "preferimos composition over inheritance", "deploy e feito via Vercel CLI".</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Limitacoes praticas: pode confundir o package manager, nao detecta convencoes de naming consistentemente, nao cria secao "Things To Avoid", pode incluir informacoes redundantes, e a qualidade varia conforme a estrutura do repo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Fluxo Ideal: /init + Edicao Manual</span>
+              <span class="text-neutral-500 text-sm ml-2">- A combinacao perfeita</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-blue-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O fluxo recomendado: rode /init para ter a base, revise e corrija a stack/comandos, adicione suas convencoes manualmente, crie a secao "Things To Avoid", teste com pedidos reais e itere. O melhor dos dois mundos.</p></div>
+              <div><span class="text-blue-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Esse fluxo combina velocidade (automacao do /init) com qualidade (refinamento manual). Voce nao perde 15 minutos escrevendo do zero nem fica com um CLAUDE.md generico. Em 5 minutos voce tem um arquivo robusto.</p></div>
+              <div><span class="text-blue-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pipeline: /init > revisar stack > corrigir comandos > adicionar convencoes > adicionar restricoes > testar com 3 pedidos > ajustar conforme resultados. Repita o ciclo "testar e ajustar" nas primeiras sessoes ate o CLAUDE.md estar maduro.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-2-6')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-2-6.html" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO INFERIOR -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../trilha1/index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Trilha Anterior: Atalhos
+      </a>
+      <a href="../trilha3/index.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">
+        Proxima Trilha: Workflows →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-2-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-blue-400 font-bold">2.1</span>
+          <span class="font-semibold">O que e o CLAUDE.md</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-2-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-2-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-blue-400 font-bold">2.2</span>
+          <span class="font-semibold">Anatomia do CLAUDE.md Perfeito</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-2-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-2-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-blue-400 font-bold">2.3</span>
+          <span class="font-semibold">Escopos: Projeto, Subdiretorio e Global</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-2-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-2-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-blue-400 font-bold">2.4</span>
+          <span class="font-semibold">Exemplo Real: Next.js SaaS App</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-2-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-2-5" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-blue-400 font-bold">2.5</span>
+          <span class="font-semibold">Exemplo Real: Python FastAPI Backend</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-2-5.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-2-6" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <span class="text-blue-400 font-bold">2.6</span>
+          <span class="font-semibold">O Comando /init</span>
+        </div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-2-6.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.add('hidden');
+      });
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

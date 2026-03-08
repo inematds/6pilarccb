@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 5.1 - Skills vs MCPs vs Plugins | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Inter',sans-serif}.dark body{background-color:#111827}
+    .topic-explanation{display:none}.topic-explanation.active{display:block}
+    html:not(.dark) body{background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#f1f5f9 100%)}
+    html:not(.dark) .bg-dark-900{background-color:#fff}html:not(.dark) .bg-dark-800{background-color:#f9fafb}
+    html:not(.dark) .bg-dark-700{background-color:#f3f4f6}html:not(.dark) .bg-dark-600{background-color:#e5e7eb}
+    html:not(.dark) .text-neutral-100{color:#111827}html:not(.dark) .text-neutral-300{color:#4b5563}
+    html:not(.dark) .text-neutral-400{color:#6b7280}html:not(.dark) .text-neutral-500{color:#9ca3af}
+    html:not(.dark) .border-dark-600{border-color:#d1d5db}html:not(.dark) .border-dark-700{border-color:#e5e7eb}
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-teal-400 bg-teal-500/10">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-teal-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-teal-400">Trilha 5</a>
+      <span>/</span>
+      <span class="text-teal-400">Modulo 5.1</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-teal-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 text-xs font-semibold rounded-full mb-4">
+        MODULO 5.1
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">💙 Skills vs MCPs vs Plugins</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Entenda as tres formas de estender o Claude Code: Skills (instrucoes em Markdown), MCPs (ferramentas externas via protocolo) e Plugins (pacotes instaláveis). Cada uma tem seu lugar, e confundir elas e o erro mais comum de quem esta comecando.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">20</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Basico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-teal-400">Teoria</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- TOPICO 1 -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">📝 O que sao Skills</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Skills sao <strong class="text-teal-400">instrucoes em Markdown</strong> que voce salva na pasta <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">.claude/commands/</code> do seu projeto. Elas funcionam como slash commands customizados: voce digita <code class="bg-dark-700 px-2 py-1 rounded text-teal-400">/project:nome-da-skill</code> e o Claude segue as instrucoes passo a passo. Nao e codigo, nao e API, nao e plugin. E texto puro que guia o comportamento do agente.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Conceito Principal
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Uma Skill e um <strong class="text-white">prompt estruturado e reutilizavel</strong>. Em vez de digitar as mesmas instrucoes toda vez que precisa de um code review, voce cria uma skill que define exatamente o que checar, em que ordem, e como formatar a saida. O Claude le o Markdown e executa como se voce tivesse digitado tudo manualmente.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Formato:</strong> Arquivo .md com instrucoes em linguagem natural</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Ativacao:</strong> Via slash command /project:nome ou /user:nome</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Custo:</strong> Zero instalacao, zero dependencias, zero configuracao</span>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Pense em Skills como "receitas de bolo" para o Claude. Cada skill tem ingredientes (inputs), passos (instrucoes) e resultado esperado (output). A beleza e que qualquer pessoa no time pode usar a mesma skill e obter resultados consistentes, independente de quao bem ela sabe promptar.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 2 -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">🔌 O que sao MCPs</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        MCPs (Model Context Protocol) sao <strong class="text-teal-400">servidores externos</strong> que dao ao Claude acesso a ferramentas que ele nao tem nativamente: bancos de dados, APIs, sistemas de arquivos remotos, navegadores, etc. Diferente de Skills, MCPs envolvem codigo rodando, processos em background e comunicacao via protocolo padronizado.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Conceito Principal
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Um MCP e um <strong class="text-white">servidor que expoe ferramentas</strong> para o Claude usar. Quando voce configura o MCP do Supabase, por exemplo, o Claude ganha acesso a ferramentas como "query_database", "create_table", "insert_row". Ele chama essas ferramentas durante a conversa como se fossem nativas.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Formato:</strong> Servidor Node/Python que implementa o protocolo MCP</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Ativacao:</strong> Configurado em .claude/settings.json ou via claude mcp add</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Custo:</strong> Requer instalacao, configuracao e manutencao do servidor</span>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          MCPs sao para quando o Claude precisa <strong class="text-white">interagir com o mundo externo</strong>. Se a tarefa pode ser resolvida apenas com instrucoes de texto (code review, refatoracao, analise), use uma Skill. Se precisa conectar com Slack, banco de dados, ou API externa, ai sim voce precisa de um MCP.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 3 -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📦 O que sao Plugins</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Plugins sao <strong class="text-teal-400">pacotes instaláveis</strong> que combinam Skills, configuracoes e possivelmente MCPs em um unico bundle. Pense neles como "apps" para o Claude Code: voce instala uma vez e ganha um conjunto completo de funcionalidades. Plugins podem vir de um marketplace ou serem criados por voce.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Conceito Principal
+        </h3>
+        <p class="text-neutral-300 mb-4">
+          Um Plugin empacota multiplas Skills (e opcionalmente MCPs) em algo que pode ser <strong class="text-white">instalado, atualizado e compartilhado</strong> com um unico comando. E a evolucao natural: voce comeca com uma skill avulsa, ela cresce, voce adiciona mais, e eventualmente empacota tudo como um plugin.
+        </p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Formato:</strong> Repositorio ou pacote com estrutura padronizada</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Ativacao:</strong> Instalado via marketplace ou manualmente via git clone</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Custo:</strong> Mais complexo de criar, mais facil de distribuir</span>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Nao comece por plugins. Comece criando Skills simples, valide que funcionam, e so empacote como plugin quando quiser compartilhar com o time ou a comunidade. A maioria dos workflows pode ser resolvida com 2-3 Skills individuais sem precisar de um plugin completo.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 4 -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📊 Tabela Comparativa</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A diferenca entre Skills, MCPs e Plugins nao e sobre qual e "melhor" - e sobre <strong class="text-teal-400">qual resolver seu problema especifico</strong>. Aqui esta a comparacao direta para voce nunca mais confundir.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Conceito Principal
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-neutral-300">
+            <thead>
+              <tr class="border-b border-dark-600">
+                <th class="text-left py-3 px-2 text-white">Criterio</th>
+                <th class="text-left py-3 px-2 text-teal-400">Skill</th>
+                <th class="text-left py-3 px-2 text-blue-400">MCP</th>
+                <th class="text-left py-3 px-2 text-purple-400">Plugin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-dark-700"><td class="py-2 px-2">Formato</td><td class="py-2 px-2">Markdown .md</td><td class="py-2 px-2">Servidor (Node/Python)</td><td class="py-2 px-2">Bundle (Skills + config)</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 px-2">Instalacao</td><td class="py-2 px-2">Copiar arquivo</td><td class="py-2 px-2">npm/pip + config</td><td class="py-2 px-2">Marketplace / git</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 px-2">Complexidade</td><td class="py-2 px-2">Baixa</td><td class="py-2 px-2">Alta</td><td class="py-2 px-2">Media</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 px-2">Acesso externo</td><td class="py-2 px-2">Nao</td><td class="py-2 px-2">Sim</td><td class="py-2 px-2">Depende</td></tr>
+              <tr class="border-b border-dark-700"><td class="py-2 px-2">Compartilhavel</td><td class="py-2 px-2">Copiar arquivo</td><td class="py-2 px-2">Publicar pacote</td><td class="py-2 px-2">Marketplace</td></tr>
+              <tr><td class="py-2 px-2">Manutencao</td><td class="py-2 px-2">Minima</td><td class="py-2 px-2">Constante</td><td class="py-2 px-2">Moderada</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Imprima essa tabela ou salve como referencia. Quando alguem perguntar "preciso de um MCP pra isso?", consulte a coluna "Acesso externo". Se a resposta for "nao precisa acessar nada externo", uma Skill resolve. Voce vai economizar horas de configuracao desnecessaria.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 5 -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🤔 Quando Usar Cada Um</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        A regra de ouro e simples: <strong class="text-teal-400">comece sempre pela Skill</strong>. So escale para MCP ou Plugin quando a Skill nao resolver. A maioria das pessoas pula direto para MCPs quando uma skill de 20 linhas resolveria o problema.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Conceito Principal
+        </h3>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Use Skill quando:</strong> A tarefa e sobre analisar, gerar, formatar ou transformar texto/codigo. Ex: code review, gerar testes, refatorar, criar documentacao.</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Use MCP quando:</strong> O Claude precisa acessar algo fora do sistema de arquivos local. Ex: consultar banco de dados, enviar mensagem no Slack, acessar API do GitHub.</span>
+          </li>
+          <li class="flex items-start space-x-2">
+            <span class="text-teal-400 mt-1">•</span>
+            <span><strong class="text-white">Use Plugin quando:</strong> Voce tem um conjunto de Skills + configs que quer distribuir como pacote. Ex: "plugin de DevOps" com skills de deploy, monitoring e incident response.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          Faca o "teste do Markdown": se voce consegue descrever a tarefa inteira em um arquivo .md com instrucoes claras, e uma Skill. Se em algum momento voce pensa "mas ele precisa acessar X pra pegar Y", ai voce precisa de um MCP. E se voce tem 5+ Skills que sempre andam juntas, considere empacotar como Plugin.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPICO 6 -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-teal-500/20 text-teal-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🧭 Framework de Decisao</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">
+        Use este fluxograma mental toda vez que precisar automatizar algo no Claude Code. Em menos de 30 segundos voce sabe exatamente qual caminho seguir, sem perder tempo com abordagens erradas.
+      </p>
+      <div class="bg-gradient-to-br from-teal-900/30 to-dark-800 rounded-xl border border-teal-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-teal-400 mb-4 flex items-center">
+          <span class="mr-2">🎯</span> Conceito Principal
+        </h3>
+        <div class="space-y-4 text-neutral-300">
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="font-semibold text-white mb-2">Pergunta 1: Precisa acessar servico externo?</p>
+            <p>SIM → MCP (ou Plugin com MCP embutido)</p>
+            <p>NAO → Vai para Pergunta 2</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="font-semibold text-white mb-2">Pergunta 2: E uma unica tarefa ou um conjunto de tarefas?</p>
+            <p>UNICA → Skill simples (.md)</p>
+            <p>CONJUNTO → Vai para Pergunta 3</p>
+          </div>
+          <div class="bg-dark-700/50 rounded-lg p-4">
+            <p class="font-semibold text-white mb-2">Pergunta 3: Precisa compartilhar com time/comunidade?</p>
+            <p>SIM → Plugin (empacota tudo)</p>
+            <p>NAO → Multiplas Skills na pasta .claude/commands/</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+          <span class="mr-2">💡</span> Dica Pratica
+        </h3>
+        <p class="text-neutral-300">
+          80% das vezes a resposta e "Skill". Isso nao e exagero - a maioria das tarefas de desenvolvimento sao sobre manipular texto e codigo, que e exatamente o que Skills fazem. Guarde MCPs e Plugins para os 20% que realmente precisam de integracao externa ou distribuicao.
+        </p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-teal-900/40 via-dark-800 to-dark-800 rounded-xl border border-teal-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="mr-3">📋</span> Resumo do Modulo
+        </h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Skills sao instrucoes em Markdown</strong><span class="text-neutral-400"> - Zero codigo, zero dependencia, maximo reuso</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">MCPs sao servidores de ferramentas externas</strong><span class="text-neutral-400"> - Para quando o Claude precisa acessar banco, API ou servicos</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Plugins empacotam Skills + configs</strong><span class="text-neutral-400"> - Para distribuir e compartilhar conjuntos de funcionalidades</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Comece sempre pela Skill</strong><span class="text-neutral-400"> - 80% das automacoes nao precisam de MCP</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Use o framework de 3 perguntas</strong><span class="text-neutral-400"> - Acesso externo? Unica tarefa? Compartilhar? Decisao em 30s</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-teal-400 mt-1">✓</span>
+            <div><strong class="text-white">Nao confunda complexidade com qualidade</strong><span class="text-neutral-400"> - A solucao mais simples que funciona e a melhor</span></div>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+            ← Voltar para Trilha
+          </a>
+          <a href="modulo-5-2.html" class="flex-1 text-center px-6 py-3 bg-teal-600 text-white rounded-lg font-semibold hover:bg-teal-500 transition-colors">
+            Proximo Modulo →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const m=button.closest('.bg-dark-800');m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')});e.classList.toggle('active');}
+    const themeToggle=document.getElementById('theme-toggle');const themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon');const themeToggleLightIcon=document.getElementById('theme-toggle-light-icon');const html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

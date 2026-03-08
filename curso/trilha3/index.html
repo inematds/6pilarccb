@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 3 - 9 Workflows do Claude Code | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+    }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+            <span class="sm:hidden">T1</span>
+            <span class="hidden sm:inline">Atalhos</span>
+          </a>
+          <a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+            <span class="sm:hidden">T2</span>
+            <span class="hidden sm:inline">Starter Pack</span>
+          </a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10">
+            <span class="sm:hidden">T3</span>
+            <span class="hidden sm:inline">Workflows</span>
+          </a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+            <span class="sm:hidden">T4</span>
+            <span class="hidden sm:inline">Prompts</span>
+          </a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors">
+            <span class="sm:hidden">T5</span>
+            <span class="hidden sm:inline">Skills</span>
+          </a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors">
+            <span class="sm:hidden">T6</span>
+            <span class="hidden sm:inline">MCPs</span>
+          </a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">
+        TRILHA 3
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">👾 9 Workflows do Claude Code</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">
+        Os 9 fluxos de trabalho mais comuns no dia a dia com Claude Code. De corrigir bugs a criar PRs, cada workflow e um passo a passo completo que voce pode seguir imediatamente.
+      </p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">9</div>
+          <div class="text-xs text-neutral-400">Modulos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">54</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">~3h</div>
+          <div class="text-xs text-neutral-400">Duracao</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-purple-400">Intermediario</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- NAVEGACAO RAPIDA -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+      <a href="#mod-3-1" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.1</span>
+        <h3 class="font-semibold mt-1">🐛 Corrigir um Bug</h3>
+      </a>
+      <a href="#mod-3-2" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.2</span>
+        <h3 class="font-semibold mt-1">🏗️ Construir Feature Nova</h3>
+      </a>
+      <a href="#mod-3-3" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.3</span>
+        <h3 class="font-semibold mt-1">♻️ Refatorar Codigo</h3>
+      </a>
+      <a href="#mod-3-4" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.4</span>
+        <h3 class="font-semibold mt-1">🗺️ Entender um Codebase Novo</h3>
+      </a>
+      <a href="#mod-3-5" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.5</span>
+        <h3 class="font-semibold mt-1">🧪 Escrever Testes</h3>
+      </a>
+      <a href="#mod-3-6" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.6</span>
+        <h3 class="font-semibold mt-1">🔍 Code Review</h3>
+      </a>
+      <a href="#mod-3-7" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.7</span>
+        <h3 class="font-semibold mt-1">🚀 Criar Pull Request</h3>
+      </a>
+      <a href="#mod-3-8" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.8</span>
+        <h3 class="font-semibold mt-1">🪵 Debug com Logs e Erros</h3>
+      </a>
+      <a href="#mod-3-9" class="bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/50 p-4 transition-all">
+        <span class="text-purple-400 font-bold text-sm">3.9</span>
+        <h3 class="font-semibold mt-1">🔀 Refatoracao Multi-arquivo</h3>
+      </a>
+    </div>
+
+    <!-- DIVISOR -->
+    <div class="flex items-center space-x-4 mb-8">
+      <div class="flex-1 h-px bg-dark-600"></div>
+      <span class="text-neutral-500 text-sm font-medium">Conteudo Detalhado</span>
+      <div class="flex-1 h-px bg-dark-600"></div>
+    </div>
+
+    <!-- ===== MODULO 3.1 ===== -->
+    <div id="mod-3-1" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.1</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🐛 Corrigir um Bug</h3>
+        <p class="text-neutral-400 text-sm">O workflow completo para encontrar, diagnosticar e corrigir bugs usando o Claude Code. Do contexto inicial ao commit final.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Context Setup</span>
+              <span class="text-neutral-500 text-sm ml-2">- Preparando o contexto do bug</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O primeiro passo do workflow de bug fix: dar ao Claude Code todo o contexto necessario. Inclua a mensagem de erro, o comportamento esperado vs atual, e os arquivos relevantes.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem contexto adequado, o Claude vai chutar solucoes genericas. Com contexto rico - stack trace, logs, arquivo onde o bug acontece - ele investiga de forma cirurgica e acerta de primeira.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cole o erro completo (stack trace, mensagem, codigo de status). Descreva: "esperava X, recebi Y". Mencione arquivos relevantes. Exemplo: "O endpoint /api/users retorna 500. Stack trace: [cole aqui]. O handler esta em src/routes/users.ts".</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔬</span>
+            <div>
+              <span class="font-medium">Force Investigation</span>
+              <span class="text-neutral-500 text-sm ml-2">- Forcando a investigacao antes do fix</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir explicitamente ao Claude para investigar a causa raiz antes de propor qualquer solucao. Use frases como "investigue primeiro, nao corrija ainda" ou "me explique a causa raiz antes de mudar codigo".</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O instinto do Claude e resolver rapido. Mas bugs complexos precisam de diagnostico correto primeiro. Forcar investigacao evita que ele aplique band-aids que mascaram o problema real.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Investigue este bug sem aplicar nenhuma correcao. Leia os arquivos relevantes, trace o fluxo de dados e me diga qual e a causa raiz." O Claude vai ler codigo, seguir imports e mapear o problema.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🩺</span>
+            <div>
+              <span class="font-medium">Review Diagnosis</span>
+              <span class="text-neutral-500 text-sm ml-2">- Revisando o diagnostico</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Avaliar a analise que o Claude apresentou antes de seguir para a correcao. Confirme se a causa raiz identificada faz sentido e se ele entendeu o fluxo corretamente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Claude pode errar no diagnostico. Revisar antes de aplicar a correcao evita que voce introduza novas regressoes. E o checkpoint de seguranca entre investigacao e acao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pergunte: "Voce tem certeza que a causa e X e nao Y?". Valide se ele leu os arquivos certos. Se o diagnostico nao convence, peca para investigar mais a fundo antes de continuar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔧</span>
+            <div>
+              <span class="font-medium">Apply Fix</span>
+              <span class="text-neutral-500 text-sm ml-2">- Aplicando a correcao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Agora sim, pedir ao Claude para aplicar a correcao baseada no diagnostico validado. Ele vai editar os arquivos necessarios e fazer as mudancas minimas para resolver o problema.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Depois de investigar e validar, a correcao tende a ser cirurgica. Voce evita mudancas desnecessarias e mantem o diff pequeno, facilitando code review e reduzindo risco de regressao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Agora aplique a correcao. Faca a mudanca minima necessaria." Revise o diff com git diff. Rode os testes. Se algo nao funcionar, volte ao passo de investigacao.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Commit</span>
+              <span class="text-neutral-500 text-sm ml-2">- Commitando a correcao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar o Claude para gerar o commit da correcao com mensagem descritiva. O /commit analisa o diff e cria uma mensagem que explica o que foi corrigido e por que.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um bom commit de bug fix documenta o problema e a solucao. Quando alguem faz git blame meses depois, a mensagem de commit explica o contexto completo da correcao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use /commit ou peca: "faca o commit desta correcao com mensagem descritiva". O Claude gera algo como "fix: resolve null pointer in user auth by adding null check before token validation".</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💡</span>
+            <div>
+              <span class="font-medium">Pro Tips para Bug Fixing</span>
+              <span class="text-neutral-500 text-sm ml-2">- Dicas avancadas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tecnicas avancadas para bug fixing com Claude: usar git bisect com Claude, pedir testes de regressao junto com o fix, e patterns para bugs recorrentes.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Operadores experientes nao so corrigem bugs - eles previnem reincidencia. Pedir teste de regressao junto com o fix garante que o mesmo bug nunca mais volta.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Sempre peca: "alem do fix, escreva um teste que falha sem a correcao e passa com ela". Use git bisect + Claude para rastrear quando o bug foi introduzido. Documente patterns de bugs recorrentes no CLAUDE.md.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-1')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-1.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 3.2 ===== -->
+    <div id="mod-3-2" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.2</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🏗️ Construir Feature Nova</h3>
+        <p class="text-neutral-400 text-sm">O workflow completo para planejar, implementar e entregar uma nova funcionalidade do zero usando plan mode e execucao incremental.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📐</span>
+            <div>
+              <span class="font-medium">Start in Plan Mode</span>
+              <span class="text-neutral-500 text-sm ml-2">- Comecando pelo planejamento</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Iniciar o desenvolvimento de uma feature usando Shift+Tab para ativar plan mode. O Claude analisa o codebase e cria um plano detalhado sem escrever nenhum codigo ainda.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Features construidas sem planejamento resultam em codigo desorganizado e refatoracoes constantes. Plan mode forca uma arquitetura pensada antes da implementacao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Ative plan mode com Shift+Tab. Descreva a feature: requisitos, comportamento esperado, restricoes. O Claude vai mapear arquivos afetados, interfaces necessarias e ordem de implementacao.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔎</span>
+            <div>
+              <span class="font-medium">Review the Plan</span>
+              <span class="text-neutral-500 text-sm ml-2">- Revisando o plano</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Revisar criticamente o plano gerado pelo Claude antes de implementar. Verificar se ele considerou edge cases, se a arquitetura faz sentido e se nao falta nenhum componente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O plano e sua ultima chance de fazer correcoes de curso baratas. Mudar um plano custa zero. Mudar codigo implementado custa horas. Revise agora, economize depois.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pergunte: "E se o usuario fizer X?", "Voce considerou autenticacao/validacao?", "Qual o impacto em performance?". Ajuste o plano ate ficar satisfeito antes de prosseguir.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔨</span>
+            <div>
+              <span class="font-medium">Implement Step by Step</span>
+              <span class="text-neutral-500 text-sm ml-2">- Implementando incrementalmente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Executar o plano passo a passo, pedindo ao Claude para implementar um componente por vez. Nao tente implementar tudo de uma vez - va incrementalmente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Implementacao incremental permite validar cada parte antes de seguir. Se algo der errado, voce sabe exatamente onde o problema esta. O diff fica pequeno e facil de revisar.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Implemente o passo 1 do plano: criar o modelo de dados." Revise. "Agora o passo 2: criar o endpoint." Revise. Cada passo e um checkpoint validado antes do proximo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🧪</span>
+            <div>
+              <span class="font-medium">Test Everything</span>
+              <span class="text-neutral-500 text-sm ml-2">- Testando tudo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir ao Claude para rodar todos os testes existentes e escrever novos testes para a feature implementada. Verificar que nada quebrou e que a feature funciona como esperado.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Feature sem teste e bomba-relogio. O Claude pode escrever testes unitarios, de integracao e edge cases em segundos. Nao ha desculpa para entregar codigo sem cobertura.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Rode os testes existentes e escreva testes para a nova feature cobrindo happy path e edge cases." O Claude roda npm test / pytest, analisa falhas e cria testes complementares.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">✨</span>
+            <div>
+              <span class="font-medium">Polish and Review</span>
+              <span class="text-neutral-500 text-sm ml-2">- Polindo e revisando</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir ao Claude para revisar todo o codigo da feature, limpar TODOs, melhorar nomes de variaveis, adicionar comentarios onde necessario e garantir que segue os padroes do projeto.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Codigo funcional nao e suficiente. Codigo limpo, documentado e consistente com o resto do projeto e o que diferencia entrega profissional de prototipo. O polish e o acabamento.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use /review para uma revisao automatica. Peca: "revise todo o codigo novo, verifique naming, documentacao, edge cases nao tratados e conformidade com os padroes do projeto."</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Commit</span>
+              <span class="text-neutral-500 text-sm ml-2">- Commitando a feature</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar /commit para gerar commits atomicos e descritivos para a feature. Se a feature e grande, divida em commits logicos: modelo, endpoint, testes, etc.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Commits atomicos facilitam code review, rollback e entendimento do historico. Um commit gigante com toda a feature e muito mais dificil de revisar e reverter parcialmente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Para features grandes, faca commits incrementais: "feat: add user model", "feat: add user API endpoint", "test: add user endpoint tests". Use /commit em cada etapa ou peca ao Claude para organizar os commits.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-2')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-2.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 3.3 ===== -->
+    <div id="mod-3-3" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.3</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">♻️ Refatorar Codigo</h3>
+        <p class="text-neutral-400 text-sm">O workflow para melhorar a estrutura do codigo existente sem alterar comportamento. Refatoracao segura com Claude como par de programacao.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🏛️</span>
+            <div>
+              <span class="font-medium">Understand Current Architecture</span>
+              <span class="text-neutral-500 text-sm ml-2">- Entendendo a arquitetura atual</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Antes de refatorar, pedir ao Claude para explicar a arquitetura atual do codigo que sera modificado. Entender dependencias, acoplamentos e razoes pelas quais o codigo esta como esta.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Refatorar sem entender o estado atual e receita para desastre. O codigo pode ter complexidades por boas razoes (edge cases, performance, compatibilidade). Entenda antes de mudar.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Analise a arquitetura atual de [modulo]. Explique as dependencias, o fluxo de dados e quaisquer patterns utilizados. Identifique code smells e divida tecnica." O Claude mapeia tudo antes de tocar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🎯</span>
+            <div>
+              <span class="font-medium">Define the Goal</span>
+              <span class="text-neutral-500 text-sm ml-2">- Definindo o objetivo</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Estabelecer um objetivo claro para a refatoracao: extrair funcao, renomear, simplificar logica, remover duplicacao, ou melhorar testabilidade. Refatoracao sem objetivo vira mudanca gratuita.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Objetivos claros mantém o escopo controlado. "Refatorar tudo" e impossivel de revisar. "Extrair a logica de validacao para um modulo separado" e concreto e verificavel.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Seja especifico: "Refatore para extrair a logica de parsing do arquivo X para um modulo separado, mantendo a mesma interface publica." Isso da ao Claude um escopo fechado e objetivo mensuravel.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Review the Diff</span>
+              <span class="text-neutral-500 text-sm ml-2">- Revisando as mudancas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Depois que o Claude aplica a refatoracao, revisar o diff linha por linha. Verificar que o comportamento foi preservado e que apenas mudancas estruturais foram feitas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Refatoracao por definicao nao muda comportamento. Se o diff mostra logica nova ou condicoes alteradas, algo saiu do escopo. O review do diff e seu guardiao de seguranca.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Rode git diff apos a refatoracao. Peca ao Claude: "revise este diff e confirme que nenhum comportamento foi alterado." Qualquer mudanca semantica e red flag e deve ser revertida ou justificada.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🧪</span>
+            <div>
+              <span class="font-medium">Run Tests</span>
+              <span class="text-neutral-500 text-sm ml-2">- Rodando testes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Executar toda a suite de testes apos a refatoracao. Se todos os testes passam, voce tem confianca alta de que o comportamento foi preservado. Se algum falha, a refatoracao introduziu regressao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Testes sao a rede de seguranca da refatoracao. Sem testes passando, voce nao tem como garantir que a refatoracao foi segura. Este passo e inegociavel.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Peca: "rode todos os testes e me diga se algum falhou." Se um teste falha, e regressao: reverta ou corrija. Se nao ha testes, peca ao Claude para escrever testes ANTES de refatorar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">📝</span>
+            <div>
+              <span class="font-medium">Commit</span>
+              <span class="text-neutral-500 text-sm ml-2">- Commitando a refatoracao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Commitar a refatoracao com mensagem clara indicando que e uma mudanca estrutural, sem alteracao de comportamento. Convencao: "refactor: [descricao da mudanca]".</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Commits de refatoracao devem ser separados de commits de feature. Isso permite reverter refatoracoes independentemente e facilita o entendimento do historico do projeto.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Use /commit. O Claude gera algo como "refactor: extract validation logic into separate module". Nunca misture refatoracao com feature no mesmo commit - sao mudancas com propositos diferentes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💡</span>
+            <div>
+              <span class="font-medium">Refactor Best Practices</span>
+              <span class="text-neutral-500 text-sm ml-2">- Melhores praticas</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Principios guia para refatoracao eficaz: a regra do boy scout (deixe o codigo melhor do que encontrou), refatoracao oportunistica, e quando NAO refatorar.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Nem toda refatoracao vale a pena. Codigo que funciona, tem testes e ninguem toca nao precisa ser refatorado. Saber quando parar e tao importante quanto saber quando comecar.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Refatore quando: vai mudar o codigo de qualquer forma, codigo duplicado causa bugs, ou testabilidade esta comprometida. NAO refatore: codigo legado estavel que ninguem toca, ou antes de prazo apertado.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-3')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-3.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 3.4 ===== -->
+    <div id="mod-3-4" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.4</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🗺️ Entender um Codebase Novo</h3>
+        <p class="text-neutral-400 text-sm">O workflow para navegar e compreender um projeto desconhecido usando o Claude como guia. De visao geral a detalhes especificos.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🌍</span>
+            <div>
+              <span class="font-medium">Big Picture Overview</span>
+              <span class="text-neutral-500 text-sm ml-2">- Visao geral do projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir ao Claude para analisar a estrutura geral do projeto: diretorios, tecnologias usadas, arquitetura, entry points e dependencias principais. O mapa de alto nivel.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem visao geral, voce vai se perder nos detalhes. Comece de cima: entenda o que o projeto faz, como esta organizado e quais tecnologias usa. Depois zoom in nos detalhes que importam.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Analise este projeto. Me de uma visao geral: qual o proposito, quais tecnologias usa, como esta organizado, quais sao os entry points principais e as dependencias-chave." O Claude varre o projeto inteiro.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔍</span>
+            <div>
+              <span class="font-medium">Zoom in on Specifics</span>
+              <span class="text-neutral-500 text-sm ml-2">- Aprofundando nos detalhes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Depois da visao geral, fazer drill-down em areas especificas: um modulo, um servico, um fluxo de dados. Perguntar sobre partes especificas que voce precisa entender para sua tarefa.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Voce nao precisa entender o projeto inteiro no primeiro dia. Precisa entender o suficiente para fazer sua tarefa. Zoom in no que importa agora, expanda conforme necessario.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Agora me explique em detalhes como funciona o modulo de autenticacao. Quais arquivos estao envolvidos, qual o fluxo de dados e como os tokens sao gerenciados?" Pergunte o que precisa para sua tarefa.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔗</span>
+            <div>
+              <span class="font-medium">Trace Flow</span>
+              <span class="text-neutral-500 text-sm ml-2">- Tracando o fluxo de execucao</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir ao Claude para tracar o fluxo completo de uma operacao: do input do usuario ate a resposta final. Seguir a cadeia de chamadas entre arquivos e modulos.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender o fluxo revela como os modulos se conectam. E a diferenca entre saber que um arquivo existe e entender como ele e usado no contexto real da aplicacao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Trace o fluxo completo de um request POST /api/orders: do middleware ate o banco de dados e de volta ao response. Me mostre cada arquivo e funcao no caminho." O Claude segue a cadeia inteira.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📋</span>
+            <div>
+              <span class="font-medium">Create Project Memory com /init</span>
+              <span class="text-neutral-500 text-sm ml-2">- Criando memoria do projeto</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar /init para gerar um CLAUDE.md que documenta a arquitetura, convencoes e padroes do projeto. Isso cria uma "memoria persistente" que toda sessao futura vai carregar automaticamente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Sem /init, cada nova sessao comeca do zero. Com o CLAUDE.md gerado, o Claude ja sabe as convencoes do projeto, estrutura de diretorios e padroes de codigo desde a primeira mensagem.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Rode /init apos explorar o projeto. O Claude gera um CLAUDE.md com: arquitetura, stack, convencoes de codigo, comandos de build/test e padroes de nomenclatura. Revise e ajuste conforme necessario.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">❓</span>
+            <div>
+              <span class="font-medium">Ask Why Questions</span>
+              <span class="text-neutral-500 text-sm ml-2">- Perguntando o por que</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Perguntar ao Claude "por que" decisoes de arquitetura foram tomadas, nao apenas "o que" o codigo faz. Entender a intencao por tras do design e tao importante quanto entender a implementacao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Saber que existe um cache nao e suficiente. Saber POR QUE existe um cache (performance do banco, limite de API, etc.) e o que previne voce de remover algo essencial por ignorancia.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Por que este modulo usa event sourcing em vez de CRUD direto?", "Por que existe esta camada de cache aqui?", "Qual problema este workaround resolve?" O Claude analisa o contexto e infere razoes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">🎓</span>
+            <div>
+              <span class="font-medium">Onboarding Strategy</span>
+              <span class="text-neutral-500 text-sm ml-2">- Estrategia de onboarding</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A abordagem sistematica para entrar num projeto novo: visao geral primeiro, depois fluxos criticos, depois detalhes conforme necessario. Nao tente entender tudo de uma vez.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Onboarding eficiente reduz o tempo ate a primeira contribuicao de semanas para horas. Com Claude, voce pode explorar o codebase de forma interativa em vez de ler documentacao estatica.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fluxo recomendado: 1) Big picture com Claude 2) /init para gerar CLAUDE.md 3) Trace dos fluxos criticos 4) Primeira tarefa pequena para validar entendimento 5) Expandir conhecimento conforme necessario.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-4')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-4.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 3.5 ===== -->
+    <div id="mod-3-5" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.5</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🧪 Escrever Testes</h3>
+        <p class="text-neutral-400 text-sm">O workflow completo para identificar gaps de cobertura, gerar testes e adotar praticas de TDD usando Claude Code como co-piloto de testes.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🔎</span>
+            <div>
+              <span class="font-medium">Identify Gaps</span>
+              <span class="text-neutral-500 text-sm ml-2">- Identificando gaps de cobertura</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir ao Claude para analisar o codigo e identificar areas sem cobertura de testes: funcoes nao testadas, branches nao cobertas, edge cases ignorados e cenarios de erro sem teste.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Voce nao pode testar o que nao sabe que falta. O Claude analisa o codigo e os testes existentes para mapear exatamente onde estao os gaps. Isso prioriza o esforco de teste.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Analise os testes existentes e o codigo em [diretorio]. Identifique funcoes sem testes, branches nao cobertos e edge cases nao testados. Priorize por risco." O Claude gera um mapa de gaps.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚙️</span>
+            <div>
+              <span class="font-medium">Generate Tests</span>
+              <span class="text-neutral-500 text-sm ml-2">- Gerando testes automaticamente</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir ao Claude para gerar testes para os gaps identificados. Ele cria testes que seguem os patterns e framework ja usados no projeto (jest, pytest, vitest, etc.).</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Escrever testes manualmente e demorado e repetitivo. O Claude gera testes em segundos, cobrindo happy paths, edge cases e cenarios de erro. Voce revisa e ajusta em vez de escrever do zero.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Escreva testes para [funcao/modulo] cobrindo: happy path, input invalido, edge cases e cenarios de erro. Siga o mesmo framework e patterns dos testes existentes." O Claude analisa testes existentes e replica o estilo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">✅</span>
+            <div>
+              <span class="font-medium">Verify Tests Pass</span>
+              <span class="text-neutral-500 text-sm ml-2">- Verificando que os testes passam</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Rodar os testes gerados pelo Claude e verificar que todos passam. Testes que falham precisam ser corrigidos - o Claude pode ter gerado assertions incorretas ou mocks incompletos.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Testes gerados por IA podem ter erros: mocks incorretos, assertions erradas, setup incompleto. Rodar e verificar e essencial antes de considerar a tarefa completa.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Peca: "rode os testes que voce criou e corrija qualquer falha." O Claude executa, analisa erros e corrige. Repita ate todos os testes passarem. Verifique que testes existentes tambem continuam passando.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">📊</span>
+            <div>
+              <span class="font-medium">Coverage Check</span>
+              <span class="text-neutral-500 text-sm ml-2">- Verificando cobertura</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Rodar o coverage report apos adicionar os novos testes e verificar se a cobertura melhorou. Identificar areas que ainda estao descobertas e decidir se precisam de mais testes.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Coverage quantifica o progresso. Sem metricas, voce nao sabe se os testes novos realmente cobriram o que faltava. O coverage report e seu comprovante de trabalho.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Peca: "rode os testes com coverage e me mostre o relatorio." O Claude executa npm test --coverage / pytest --cov e analisa o resultado. Se a cobertura nao e suficiente, ele sugere mais testes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔄</span>
+            <div>
+              <span class="font-medium">TDD Approach</span>
+              <span class="text-neutral-500 text-sm ml-2">- Abordagem Test-Driven</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar Claude Code para TDD: primeiro escrever o teste que falha, depois implementar o codigo que faz o teste passar, depois refatorar. Red-Green-Refactor com IA.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">TDD com Claude e extremamente eficiente. Voce descreve o comportamento desejado, Claude escreve o teste, voce valida, e entao Claude implementa o codigo. O teste guia a implementacao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Escreva um teste para [funcionalidade]. O teste deve falhar porque a funcao ainda nao existe." Depois: "Agora implemente a funcao para passar o teste." Depois: "Refatore mantendo os testes passando."</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💡</span>
+            <div>
+              <span class="font-medium">Test Best Practices</span>
+              <span class="text-neutral-500 text-sm ml-2">- Melhores praticas de testes</span>
+            </div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Principios para testes de qualidade: testes deterministicos, isolamento, nomes descritivos, arrange-act-assert e quando usar mocks vs dados reais.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Testes ruins sao piores que nenhum teste: dao falsa confianca, quebram por motivos errados e sao dificeis de manter. Bons testes documentam o comportamento e protegem contra regressao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Peca ao Claude: "revise estes testes por boas praticas." Ele verifica: testes deterministicos, sem dependencia de ordem, nomes claros, assertions especificas (nao genericas), e isolamento adequado entre testes.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-5')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-5.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 3.6 ===== -->
+    <div id="mod-3-6" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.6</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔍 Code Review</h3>
+        <p class="text-neutral-400 text-sm">O workflow para usar Claude Code como reviewer. De pedir revisao a enderecar feedback e preparar codigo para merge.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">🙋</span>
+            <div><span class="font-medium">Ask for Review</span><span class="text-neutral-500 text-sm ml-2">- Pedindo uma revisao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir ao Claude para revisar suas mudancas antes de criar um PR. Voce pode ser especifico: "revise por seguranca", "revise por performance", ou pedir uma revisao geral completa.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Todo codigo se beneficia de um segundo par de olhos. O Claude identifica patterns problematicos, vulnerabilidades e inconsistencias que voce nao percebe quando esta imerso no codigo.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Revise minhas mudancas desde o ultimo commit. Foque em: bugs potenciais, seguranca, performance e legibilidade." Quanto mais especifico o foco, melhor a qualidade do review.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">Use /review Command</span><span class="text-neutral-500 text-sm ml-2">- Usando o comando /review</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O slash command /review faz uma revisao automatica do diff atual. Analisa todas as mudancas staged e unstaged procurando problemas de seguranca, bugs, performance e estilo.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">/review e mais rapido que escrever um prompt de revisao. Um unico comando e voce tem uma revisao estruturada. Ideal para usar antes de todo /commit e todo /pr.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Digite /review e o Claude analisa o diff completo. Ele retorna: issues encontradas por categoria (bug, seguranca, performance, estilo), severidade e sugestoes de correcao. Use como pre-commit check.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔧</span>
+            <div><span class="font-medium">Address Feedback</span><span class="text-neutral-500 text-sm ml-2">- Enderecar o feedback</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Resolver os problemas apontados na revisao. Voce pode pedir ao Claude para corrigir automaticamente ou decidir caso a caso quais sugestoes aceitar.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Nem todo feedback precisa ser aceito. Mas cada ponto deve ser avaliado. Aprender a triar - aceitar correcoes criticas, discutir sugestoes de estilo, descartar falsos positivos - e uma skill de review.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Corrija os issues de seguranca e os bugs. Para os problemas de estilo, aplique apenas os que fazem sentido pro padrao deste projeto." Voce direciona quais mudancas aplicar.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔄</span>
+            <div><span class="font-medium">Re-review</span><span class="text-neutral-500 text-sm ml-2">- Revisao apos correcoes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Rodar /review novamente apos aplicar as correcoes. Verificar que os problemas foram resolvidos e que as correcoes nao introduziram novos issues.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Correcoes podem introduzir novos problemas. Re-review e o loop de feedback que garante que voce nao esta jogando whack-a-mole com bugs. So prossiga quando o review esta limpo.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Rode /review de novo. Se limpo, prossiga. Se novos issues, corrija e repita. O ciclo review > fix > re-review garante qualidade antes do commit e elimina problemas iterativamente.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🛡️</span>
+            <div><span class="font-medium">Focus Areas</span><span class="text-neutral-500 text-sm ml-2">- Seguranca e performance</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir revisoes focadas em areas especificas: seguranca (SQL injection, XSS, autenticacao), performance (N+1 queries, memory leaks, algoritmos), ou conformidade (coding standards, patterns).</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Revisoes genericas pegam problemas superficiais. Revisoes focadas pegam problemas profundos. Um review de seguranca focado encontra vulnerabilidades que um review geral nao percebe.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompts: "Revise este codigo APENAS por vulnerabilidades de seguranca. Procure: injection, XSS, autenticacao bypassada, dados sensiveis expostos." Ou: "Revise por performance: N+1 queries, loops desnecessarios, allocations excessivas."</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">Pre-PR Checklist</span><span class="text-neutral-500 text-sm ml-2">- Checklist antes do PR</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Uma checklist mental (e do Claude) para validar antes de abrir um PR: testes passando, review limpo, sem console.logs esquecidos, sem TODOs pendentes, sem secrets commitados.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">PRs que voltam com comentarios sobre erros basicos desperdicam tempo de todos. A pre-PR checklist elimina os erros mais comuns antes de pedir review humano.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Faca uma checklist pre-PR: testes passam? review limpo? console.logs removidos? TODOs resolvidos? secrets no codigo? imports nao usados? tipos corretos?" O Claude verifica cada item automaticamente.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-6')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-6.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 3.7 ===== -->
+    <div id="mod-3-7" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.7</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🚀 Criar Pull Request</h3>
+        <p class="text-neutral-400 text-sm">O workflow para preparar commits, usar /pr e gerar pull requests completas e profissionais com descricao gerada pelo Claude.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">Prepare Commits</span><span class="text-neutral-500 text-sm ml-2">- Preparando os commits</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Antes de criar o PR, organizar os commits: squash se necessario, mensagens claras, commits atomicos. O historico de commits e parte da comunicacao do PR.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um PR com 47 commits "wip" e "fix typo" dificulta review. Commits bem organizados contam a historia da mudanca e permitem review por commit, nao por arquivo.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Peca ao Claude: "revise meu historico de commits e sugira como organizar para o PR." Ele pode sugerir squash de commits WIP, reordenacao logica, ou manter como esta se ja esta bom.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">⚡</span>
+            <div><span class="font-medium">Use /pr Command</span><span class="text-neutral-500 text-sm ml-2">- Usando o comando /pr</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O slash command /pr cria uma pull request automaticamente: analisa todos os commits, gera titulo, descricao detalhada, e abre o PR no GitHub/GitLab diretamente do terminal.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Criar PRs manualmente exige escrever descricoes, listar mudancas, adicionar contexto. O /pr faz tudo isso automaticamente baseado nos commits e diff, economizando minutos em cada PR.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Digite /pr e o Claude: 1) analisa todos os commits na branch, 2) gera titulo descritivo, 3) cria descricao com contexto, mudancas e impacto, 4) abre o PR via gh cli. Tudo em um comando.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📝</span>
+            <div><span class="font-medium">What Claude Generates</span><span class="text-neutral-500 text-sm ml-2">- O que o Claude gera</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">O conteudo que o Claude gera para o PR: titulo conciso, summary das mudancas, motivacao/contexto, lista de arquivos modificados, instrucoes de teste e notas de review.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Entender o que o Claude gera permite ajustar e melhorar. Ele cria uma base excelente, mas voce pode querer adicionar screenshots, links para issues ou contexto que so voce sabe.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">O Claude gera: titulo no padrao do repo, descricao com "What" e "Why", lista de mudancas por arquivo, breaking changes se houver, e instrucoes de como testar. E uma PR description profissional automatica.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔎</span>
+            <div><span class="font-medium">Review Description</span><span class="text-neutral-500 text-sm ml-2">- Revisando a descricao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Revisar a descricao do PR gerada pelo Claude antes de submeter. Verificar que a descricao esta precisa, que o contexto esta correto e que nao falta informacao importante.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Claude nao sabe sobre conversas no Slack, decisoes em reuniao ou contexto de negocio. Voce precisa adicionar esse contexto humano que torna a PR description realmente util para reviewers.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Verifique: o titulo reflete a mudanca? A descricao explica o "por que"? Links para issues estao corretos? Breaking changes estao documentados? Instrucoes de teste sao claras? Adicione o que falta.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">✏️</span>
+            <div><span class="font-medium">Adjust PR</span><span class="text-neutral-500 text-sm ml-2">- Ajustando o PR</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Fazer ajustes finais no PR: adicionar labels, assignees, reviewers, milestone e qualquer metadado que o /pr nao adicionou automaticamente.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Metadata do PR facilita triagem e organizacao. Labels categorizam (bug, feature, refactor), reviewers agilizam o processo, e milestones conectam ao planejamento. O /pr cria o PR, voce personaliza.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Apos o /pr criar o PR, adicione: labels (tipo de mudanca, prioridade), reviewers (quem precisa aprovar), milestone (sprint/release) e linked issues (closes #123). O Claude pode ajudar via gh cli.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💡</span>
+            <div><span class="font-medium">Best Practices</span><span class="text-neutral-500 text-sm ml-2">- Melhores praticas de PR</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Principios para PRs de qualidade: tamanho ideal (200-400 linhas), uma preocupacao por PR, descricao que conta historia, e resposta rapida a review comments.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">PRs gigantes nao sao revisadas com cuidado. PRs pequenas e focadas recebem review rapido e de qualidade. O tamanho do PR afeta diretamente a qualidade do feedback que voce recebe.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Regras: PRs < 400 linhas, um proposito por PR, descricao com contexto e instrucoes de teste. Se a feature e grande, divida em PRs menores encadeados. Responda review comments em < 24h.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-7')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-7.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 3.8 ===== -->
+    <div id="mod-3-8" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.8</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🪵 Debug com Logs e Erros</h3>
+        <p class="text-neutral-400 text-sm">O workflow para debugar usando logs, stack traces e mensagens de erro. Cole o erro, pipe os logs e deixe o Claude tracar a causa raiz.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📋</span>
+            <div><span class="font-medium">Paste Error Directly</span><span class="text-neutral-500 text-sm ml-2">- Colando o erro diretamente</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">A forma mais direta de debugar: copiar o erro completo (stack trace, mensagem, contexto) e colar diretamente no Claude Code. Ele analisa o erro no contexto do seu codebase.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Claude tem acesso ao seu codebase. Quando voce cola um erro, ele nao so interpreta o stack trace mas navega ate os arquivos mencionados e entende o contexto real da falha.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Cole o erro completo, nao so a mensagem. Inclua: stack trace, linha do erro, tipo de excecao, e contexto de quando aconteceu. Prompt: "Este erro acontece quando [acao]. Aqui esta o stack trace: [cole tudo]."</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔀</span>
+            <div><span class="font-medium">Pipe Logs to Claude</span><span class="text-neutral-500 text-sm ml-2">- Enviando logs via pipe</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar pipe para enviar logs diretamente ao Claude: tail -f app.log | claude -p "analise estes logs". Ideal para logs longos que nao cabem em um paste manual.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Logs de producao podem ter milhares de linhas. Pipe permite filtrar e enviar apenas o relevante: tail -100 app.log | grep ERROR | claude -p "o que esta causando estes erros?".</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Exemplos: cat error.log | claude -p "analise". tail -500 app.log | grep -A5 "Exception" | claude -p "identifique o padrao de erro". Combine grep para filtrar antes de enviar ao Claude.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">🔗</span>
+            <div><span class="font-medium">Trace Root Cause</span><span class="text-neutral-500 text-sm ml-2">- Tracando a causa raiz</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Pedir ao Claude para tracar a causa raiz partindo do erro: seguir o stack trace, analisar o fluxo de dados, identificar onde o estado ficou inconsistente e por que.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">O Claude traca automaticamente: le o arquivo da linha do erro, segue a cadeia de chamadas, verifica inputs e outputs de cada funcao. E como ter um debugger que entende semantica.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Trace a causa raiz deste erro. Comece pela linha do stack trace e siga a cadeia de chamadas ate encontrar onde o dado ficou invalido." O Claude navega pelos arquivos e apresenta a cadeia causal.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🔧</span>
+            <div><span class="font-medium">Apply Fix</span><span class="text-neutral-500 text-sm ml-2">- Aplicando a correcao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Aplicar a correcao baseada na causa raiz identificada. O Claude edita os arquivos necessarios com a mudanca minima para resolver o problema.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Depois de entender a causa raiz, a correcao deve ser cirurgica. Mudancas minimas sao mais faceis de revisar, testar e reverter se necessario. O Claude aplica exatamente o necessario.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Aplique a correcao minima para resolver a causa raiz identificada." Revise o diff. Se a correcao e mais complexa do que esperado, questione se a causa raiz esta realmente correta.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">✅</span>
+            <div><span class="font-medium">Verify Resolution</span><span class="text-neutral-500 text-sm ml-2">- Verificando a resolucao</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Verificar que o fix realmente resolveu o problema: reproduzir o cenario que causava o erro e confirmar que agora funciona. Rodar testes relacionados.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Um fix que nao e verificado nao e um fix. Reproduza o erro original e confirme que nao acontece mais. Rode a suite de testes para garantir que nada mais quebrou.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Peca: "rode o cenario que causava o erro e confirme que esta resolvido. Depois rode todos os testes." O Claude executa o teste de verificacao e a suite completa, reportando os resultados.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">💡</span>
+            <div><span class="font-medium">Pro Tips para Debugging</span><span class="text-neutral-500 text-sm ml-2">- Dicas avancadas</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Tecnicas avancadas: adicionar logging temporario com Claude, usar breakpoints estrategicos, debugar race conditions e problemas de timing.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Nem todo bug tem stack trace claro. Bugs intermitentes, race conditions e problemas de state precisam de abordagens especializadas. O Claude pode sugerir e implementar estrategias de debugging avancadas.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Adicione logging temporario estrategico para rastrear o valor de [variavel] ao longo do fluxo." Ou: "Este bug e intermitente - sugira uma estrategia de debugging para race conditions." Remova logs temporarios apos resolver.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-8')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-8.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== MODULO 3.9 ===== -->
+    <div id="mod-3-9" class="bg-dark-800 rounded-xl border border-dark-600 mb-6">
+      <div class="p-6 border-b border-dark-600">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-400 font-bold">3.9</span>
+          <span class="text-xs text-neutral-500">~20 min</span>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">🔀 Refatoracao Multi-arquivo</h3>
+        <p class="text-neutral-400 text-sm">O workflow para refatoracoes grandes que afetam muitos arquivos. Planejamento, execucao em batches e uso de /compact durante migracoes longas.</p>
+      </div>
+      <div class="divide-y divide-dark-600">
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <span class="text-lg">📐</span>
+            <div><span class="font-medium">Start with Plan Mode</span><span class="text-neutral-500 text-sm ml-2">- Comecando pelo planejamento</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar plan mode (Shift+Tab) para mapear TODOS os arquivos afetados pela refatoracao antes de tocar em qualquer codigo. O Claude cria um inventario completo de mudancas necessarias.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Refatoracao multi-arquivo sem plano e caos. Voce muda um arquivo e quebra 15 outros. O plano mostra todas as dependencias, ordem de execucao e riscos antes de comecar.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt em plan mode: "Planeje a refatoracao de [X] para [Y]. Liste TODOS os arquivos afetados, a ordem de mudanca e dependencias entre eles." O Claude gera um plano de migracao completo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <span class="text-lg">🔎</span>
+            <div><span class="font-medium">Review Scope of Changes</span><span class="text-neutral-500 text-sm ml-2">- Revisando o escopo</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Revisar criticamente o escopo da refatoracao: quantos arquivos, quais sao criticos, qual a ordem de dependencia, e se o escopo nao cresceu alem do necessario.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Scope creep e o inimigo de refatoracoes grandes. O Claude pode incluir mudancas "nice to have" que nao sao necessarias agora. Revise e corte o escopo para o minimo viavel.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Pergunte: "Este arquivo realmente precisa mudar nesta fase?" e "Podemos dividir esta refatoracao em fases menores?" Priorize mudancas criticas e adie as opcionais para outro PR.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">Execute in Batches</span><span class="text-neutral-500 text-sm ml-2">- Executando em lotes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Dividir a refatoracao em batches (lotes) de 3-5 arquivos por vez. Cada batch e uma unidade completa que pode ser testada independentemente antes de prosseguir.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Mudar 50 arquivos de uma vez e impossivel de debugar se algo quebra. Em batches de 5, voce sabe exatamente qual batch introduziu o problema. E mais seguro e controlavel.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Execute o batch 1 do plano: arquivos [lista]. Aplique as mudancas e me avise quando terminar." Teste. Commit. Proximo batch. Cada batch e um checkpoint de seguranca.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+            <span class="text-lg">🧪</span>
+            <div><span class="font-medium">Test After Each Batch</span><span class="text-neutral-500 text-sm ml-2">- Testando apos cada lote</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Rodar todos os testes apos cada batch de mudancas. Se testes falham, corrigir ANTES de seguir para o proximo batch. Nunca acumular batches sem validacao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Testar apos cada batch mantem o projeto funcional durante toda a migracao. Se voce acumula 5 batches sem testar e algo quebra, encontrar a causa em 25 arquivos e pesadelo.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Fluxo: batch > test > fix se necessario > commit > proximo batch. Peca: "rode todos os testes apos este batch." Se falhar: "corrija as falhas mantendo as mudancas do batch." Nunca pule testes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+            <span class="text-lg">🔍</span>
+            <div><span class="font-medium">Final Sweep</span><span class="text-neutral-500 text-sm ml-2">- Varredura final</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Depois de todos os batches, fazer uma varredura final: verificar que nao ficou nenhuma referencia antiga, imports quebrados, ou inconsistencias entre os arquivos migrados.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Batches podem deixar inconsistencias entre si: um arquivo usa a interface nova, outro ainda referencia a antiga. A varredura final pega esses gaps que testes individuais nao captam.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt: "Faca uma varredura final: procure por referencias antigas a [nome antigo], imports quebrados, tipos inconsistentes e qualquer artefato da refatoracao que ficou para tras." O Claude varre todo o projeto.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="topic-item">
+          <button onclick="toggleTopic(this)" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left">
+            <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+            <span class="text-lg">📦</span>
+            <div><span class="font-medium">Use /compact During Migrations</span><span class="text-neutral-500 text-sm ml-2">- Usando /compact em migracoes</span></div>
+          </button>
+          <div class="topic-explanation px-6 pb-4">
+            <div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9">
+              <div><span class="text-purple-400 font-semibold">O que e:</span><p class="text-neutral-300 text-sm">Usar /compact estrategicamente durante migracoes longas para liberar contexto sem perder o plano de migracao. Compacte preservando o status: quais batches foram feitos, quais faltam.</p></div>
+              <div><span class="text-purple-400 font-semibold">Por que aprender:</span><p class="text-neutral-300 text-sm">Migracoes longas consomem muito contexto. Sem /compact, voce atinge o limite e o Claude comeca a esquecer o plano. Com /compact estrategico, voce mantem a sessao funcional durante toda a migracao.</p></div>
+              <div><span class="text-purple-400 font-semibold">Conceitos-chave:</span><p class="text-neutral-300 text-sm">Prompt para /compact: "Compacte preservando: o plano de migracao, quais batches ja foram concluidos (1-3), quais faltam (4-7), e quaisquer decisoes importantes tomadas." O Claude compacta mantendo o contexto critico.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+        <button onclick="openModal('modal-3-9')" class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors">
+          Ver em Modal
+        </button>
+        <a href="modulo-3-9.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">
+          Ver Completo
+        </a>
+      </div>
+    </div>
+
+    <!-- NAVEGACAO INFERIOR -->
+    <div class="flex flex-col sm:flex-row gap-4 mt-12">
+      <a href="../../index.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">
+        ← Voltar ao Inicio
+      </a>
+      <a href="../trilha4/index.html" class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors">
+        Proxima Trilha: Prompts →
+      </a>
+    </div>
+
+  </main>
+
+  <!-- MODAIS -->
+  <div id="modal-3-1" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.1</span><span class="font-semibold">Corrigir um Bug</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-1.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-2" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.2</span><span class="font-semibold">Construir Feature Nova</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-2.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-3" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.3</span><span class="font-semibold">Refatorar Codigo</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-3.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-4" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.4</span><span class="font-semibold">Entender um Codebase Novo</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-4.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-5" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.5</span><span class="font-semibold">Escrever Testes</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-5.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-6" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.6</span><span class="font-semibold">Code Review</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-6.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-7" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.7</span><span class="font-semibold">Criar Pull Request</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-7.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-8" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.8</span><span class="font-semibold">Debug com Logs e Erros</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-8.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+  <div id="modal-3-9" class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" onclick="if(event.target === this) closeModal()">
+    <div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+      <div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+        <div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.9</span><span class="font-semibold">Refatoracao Multi-arquivo</span></div>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <iframe src="modulo-3-9.html" class="flex-1 w-full rounded-b-xl"></iframe>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => {
+        if (exp !== explanation) {
+          exp.classList.remove('active');
+        }
+      });
+      explanation.classList.toggle('active');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.add('hidden');
+      });
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden');
+      html.classList.remove('dark');
+    } else {
+      themeToggleLightIcon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden');
+      themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 2.6 - O Comando /init | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Modulo 2.6</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.6</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🎬 O Comando /init</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Aprenda a usar o comando /init para gerar automaticamente um CLAUDE.md a partir da analise do seu projeto. Entenda o que ele gera, suas limitacoes e como combinar com edicao manual.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">20</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Basico</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Topico 1: O que faz -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🔍 O que o /init Faz</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O comando <strong class="text-blue-400">/init</strong> e um atalho do Claude Code que analisa automaticamente o seu projeto e gera um arquivo CLAUDE.md inicial. Ele examina a estrutura de pastas, arquivos de configuracao, dependencias e padroes existentes para criar um ponto de partida.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O /init funciona em tres etapas automaticas:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Analise</strong> - Le package.json, pyproject.toml, Dockerfile, configs de linting, etc.</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Inferencia</strong> - Identifica a stack, frameworks, padroes de codigo e estrutura</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Geracao</strong> - Cria (ou atualiza) o CLAUDE.md com as informacoes detectadas</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Para usar, basta digitar <code class="bg-dark-700 px-2 py-1 rounded text-blue-400">/init</code> no prompt do Claude Code. O comando funciona em qualquer diretorio e detecta automaticamente o tipo de projeto.</p>
+      </div>
+    </section>
+
+    <!-- Topico 2: Quando usar -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⏰ Quando Usar o /init</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O /init e mais util em <strong class="text-blue-400">situacoes especificas</strong>. Saber quando usa-lo (e quando nao usar) economiza tempo e evita resultados insatisfatorios.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Os melhores cenarios para usar /init:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Projeto existente sem CLAUDE.md</strong> - Ponto de partida rapido</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Onboarding em projeto novo</strong> - Entender a stack rapidamente</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Apos grandes mudancas na stack</strong> - Atualizar o CLAUDE.md existente</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Use /init como ponto de partida, nunca como resultado final. O CLAUDE.md gerado e um rascunho que precisa de revisao e personalizacao com as regras especificas do seu projeto.</p>
+      </div>
+    </section>
+
+    <!-- Topico 3: O que gera -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">📄 O que o /init Gera</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O /init gera um CLAUDE.md com as secoes padrao, preenchidas com base na <strong class="text-blue-400">analise automatica do projeto</strong>. O resultado varia conforme o tipo de projeto e as informacoes disponiveis nos arquivos de configuracao.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O /init tipicamente gera:</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <p class="text-neutral-500"># Exemplo de saida do /init em um projeto Next.js:</p>
+          <p class="mt-2 text-blue-400 font-bold"># CLAUDE.md</p>
+          <p class="mt-1">## Project Overview</p>
+          <p>Next.js application with TypeScript...</p>
+          <p class="mt-1">## Tech Stack</p>
+          <p>- Next.js 14, React 18, TypeScript</p>
+          <p>- Tailwind CSS, Prisma...</p>
+          <p class="mt-1">## Commands</p>
+          <p>- npm run dev, npm run build, npm test...</p>
+          <p class="mt-1">## Code Style</p>
+          <p>- ESLint config detected...</p>
+          <p class="mt-1">## Project Structure</p>
+          <p>- src/app/ - pages, src/components/ - components...</p>
+        </div>
+        <ul class="space-y-2 text-neutral-300 mt-4">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Detecta stack a partir de package.json/pyproject.toml</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Extrai comandos dos scripts definidos no projeto</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Mapeia a estrutura de diretorios principal</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Revise sempre o CLAUDE.md gerado. O /init pode detectar o framework mas nao sabe se voce usa App Router ou Pages Router, se prefere Server Components, ou quais convencoes de naming a equipe adota.</p>
+      </div>
+    </section>
+
+    <!-- Topico 4: Customizando -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">✏️ Customizando o Resultado</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Apos o /init gerar o CLAUDE.md, o proximo passo e <strong class="text-blue-400">customizar e enriquecer</strong> o conteudo com informacoes que so voce (e sua equipe) conhece sobre o projeto.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O processo de customizacao segue uma checklist:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">1.</span><span>Revise o overview - adicione contexto de negocio e escala</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">2.</span><span>Verifique versoes na tech stack - especifique versoes exatas</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">3.</span><span>Adicione o comando de teste individual (quase nunca gerado)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">4.</span><span>Escreva as Code Conventions da equipe</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">5.</span><span>Adicione a secao Things To Avoid (nunca gerada pelo /init)</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">6.</span><span>Inclua contexto adicional (migracoes, areas sensiveis, decisoes)</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">A secao "Things To Avoid" quase nunca e gerada pelo /init, mas e uma das mais valiosas. Adicione-a manualmente apos o /init com pelo menos 5 regras do que o Claude nao deve fazer no seu projeto.</p>
+      </div>
+    </section>
+
+    <!-- Topico 5: Limitacoes -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">⚠️ Limitacoes do /init</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O /init e uma ferramenta util, mas tem <strong class="text-blue-400">limitacoes claras</strong> que voce deve conhecer para nao confiar excessivamente no resultado gerado automaticamente.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Principais limitacoes a considerar:</p>
+        <ul class="space-y-2 text-neutral-300">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Nao conhece convencoes da equipe</strong> - So detecta o que esta nos configs, nao decisoes verbais</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Nao gera Things To Avoid</strong> - Nao sabe quais erros voce ja encontrou</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Pode ser generico demais</strong> - Descreve o framework, nao o SEU uso dele</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Nao detecta padroes arquiteturais</strong> - Nao sabe se voce usa DDD, Clean Architecture, etc.</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Pode detectar errado</strong> - Em monorepos complexos, pode confundir as stacks</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Nunca aceite o resultado do /init sem revisao. Trate-o como um rascunho que precisa de pelo menos 15 minutos de edicao para se tornar realmente util. A parte manual e o que faz a diferenca.</p>
+      </div>
+    </section>
+
+    <!-- Topico 6: Combinando com edicao manual -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">🔄 Combinando /init com Edicao Manual</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A melhor abordagem e usar o /init como <strong class="text-blue-400">bootstrap</strong> e depois refinar manualmente. Esse fluxo combinado cria um CLAUDE.md completo em minutos, em vez de horas escrevendo do zero.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">O fluxo recomendado em 5 passos:</p>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <p class="text-neutral-500"># Passo 1: Gere o base</p>
+          <p class="text-blue-400">$ claude</p>
+          <p class="text-blue-400">> /init</p>
+          <p class="mt-2 text-neutral-500"># Passo 2: Revise o resultado</p>
+          <p class="text-blue-400">> Revise o CLAUDE.md e me diga o que falta</p>
+          <p class="mt-2 text-neutral-500"># Passo 3: Adicione Things To Avoid</p>
+          <p class="text-neutral-500"># (edite manualmente ou peca ao Claude)</p>
+          <p class="mt-2 text-neutral-500"># Passo 4: Adicione convencoes especificas</p>
+          <p class="text-neutral-500"># (nomes de variaveis, padroes de commit, etc.)</p>
+          <p class="mt-2 text-neutral-500"># Passo 5: Commite e compartilhe com a equipe</p>
+          <p class="text-blue-400">$ git add CLAUDE.md && git commit -m "add CLAUDE.md"</p>
+        </div>
+        <ul class="space-y-2 text-neutral-300 mt-4">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Use /init para o esqueleto, adicione a alma manualmente</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Peca ao proprio Claude para sugerir melhorias no CLAUDE.md</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Atualize o CLAUDE.md ao longo do tempo conforme o projeto evolui</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Apos algumas semanas usando o Claude Code com o CLAUDE.md, rode /init novamente e compare. O Claude pode detectar novos padroes que surgiram. Faca merge das novas informacoes com as que voce ja tinha.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">O /init analisa e gera</strong><span class="text-neutral-400"> - Examina configs, dependencias e estrutura para criar o CLAUDE.md</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Use em projetos existentes</strong><span class="text-neutral-400"> - Ideal como ponto de partida rapido para projetos sem CLAUDE.md</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Gera um rascunho</strong><span class="text-neutral-400"> - Overview, stack, comandos e estrutura baseados em analise automatica</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Customize sempre</strong><span class="text-neutral-400"> - Adicione Things To Avoid, convencoes da equipe e contexto adicional</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Limitacoes conhecidas</strong><span class="text-neutral-400"> - Nao detecta convencoes verbais, arquitetura ou anti-patterns</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Combine os dois</strong><span class="text-neutral-400"> - /init como bootstrap + edicao manual = CLAUDE.md completo em minutos</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Trilha 2 Concluida!</h3>
+          <p class="text-neutral-300">Voce agora sabe tudo sobre CLAUDE.md. Volte para a pagina da Trilha 2 para revisar os modulos.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-2-5.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar</a>
+          <a href="index.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Voltar para Trilha 2</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) exp.classList.remove('active'); });
+      explanation.classList.toggle('active');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

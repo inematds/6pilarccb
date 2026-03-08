@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 2.5 - Exemplo Real: Python FastAPI Backend | 6 Pilares do Claude Code Resumido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) body { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%); }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-14">
+        <div class="flex items-center space-x-4">
+          <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+            <span class="text-2xl">🧠</span>
+            <span class="font-bold text-lg hidden sm:inline">6P Resumido</span>
+          </a>
+          <span class="text-neutral-600">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center space-x-1 sm:space-x-2">
+          <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Atalhos</span></a>
+          <a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Starter Pack</span></a>
+          <a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Workflows</span></a>
+          <a href="../trilha4/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Prompts</span></a>
+          <a href="../trilha5/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-teal-400 hover:bg-teal-500/10 transition-colors"><span class="sm:hidden">T5</span><span class="hidden sm:inline">Skills</span></a>
+          <a href="../trilha6/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"><span class="sm:hidden">T6</span><span class="hidden sm:inline">MCPs</span></a>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-2 text-sm text-neutral-400">
+      <a href="../../index.html" class="hover:text-blue-400">Inicio</a>
+      <span>/</span>
+      <a href="index.html" class="hover:text-blue-400">Trilha 2</a>
+      <span>/</span>
+      <span class="text-blue-400">Modulo 2.5</span>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULO 2.5</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mb-4">🎬 Exemplo Real: Python FastAPI Backend</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl">Veja como criar um CLAUDE.md completo para um backend Python com FastAPI, SQLAlchemy e uv. Compare as abordagens entre o ecossistema Python e JavaScript.</p>
+      <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">6</div>
+          <div class="text-xs text-neutral-400">Topicos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">35</div>
+          <div class="text-xs text-neutral-400">Minutos</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Interm.</div>
+          <div class="text-xs text-neutral-400">Nivel</div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+          <div class="text-xl font-bold text-blue-400">Pratico</div>
+          <div class="text-xs text-neutral-400">Tipo</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Topico 1: Overview -->
+    <section id="topico-1" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+        <h2 class="text-2xl font-bold">🏗️ Project Overview do Backend</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Para um backend Python com FastAPI, o overview deve focar na <strong class="text-blue-400">API e seus consumidores</strong>. Diferente de um frontend, o contexto aqui e sobre endpoints, integracao e processamento de dados.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Exemplo Completo</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <p class="text-blue-400 font-bold"># Project Overview</p>
+          <p class="mt-2">DataPipe is a REST API backend for a data analytics platform.</p>
+          <p>It handles user authentication, data ingestion from multiple</p>
+          <p>sources (CSV, APIs, databases), transformation pipelines,</p>
+          <p>and serves processed data to a React frontend and mobile app.</p>
+          <p class="mt-2">The API serves ~2k requests/minute and processes batch jobs</p>
+          <p>of up to 10GB via background workers (Celery). All endpoints</p>
+          <p>are versioned under /api/v1/.</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Mencione os consumidores da API (frontend React, mobile app) para que o Claude entenda o contexto completo. Isso influencia decisoes como formato de resposta e versionamento de endpoints.</p>
+      </div>
+    </section>
+
+    <!-- Topico 2: Tech Stack -->
+    <section id="topico-2" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+        <h2 class="text-2xl font-bold">⚙️ Tech Stack com FastAPI e SQLAlchemy</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">A stack Python tem suas particularidades. E essencial especificar se voce usa <strong class="text-blue-400">SQLAlchemy 1.x ou 2.x</strong>, se usa Pydantic v1 ou v2, e qual gerenciador de pacotes (pip, poetry ou uv).</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Exemplo Completo</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <p class="text-blue-400 font-bold"># Tech Stack</p>
+          <p class="mt-2">- Language: Python 3.12</p>
+          <p>- Framework: FastAPI 0.109+</p>
+          <p>- ORM: SQLAlchemy 2.0 (async, new-style mapped_column)</p>
+          <p>- Validation: Pydantic v2 (model_validator, not validator)</p>
+          <p>- Database: PostgreSQL 16 + Redis 7 (caching/sessions)</p>
+          <p>- Migrations: Alembic</p>
+          <p>- Task Queue: Celery with Redis broker</p>
+          <p>- Auth: python-jose for JWT + passlib for password hashing</p>
+          <p>- Package Manager: uv (NOT pip, NOT poetry)</p>
+          <p>- Linting: ruff (replaces flake8, isort, black)</p>
+          <p>- Testing: pytest + pytest-asyncio + httpx (async test client)</p>
+          <p>- Containerization: Docker + docker-compose for local dev</p>
+          <p>- Deploy: AWS ECS with ECR</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">O detalhe "SQLAlchemy 2.0 (async, new-style mapped_column)" e crucial. O Claude frequentemente gera codigo SQLAlchemy 1.x se nao for instruido. O mesmo vale para "Pydantic v2 (model_validator, not validator)" - as APIs mudaram significativamente entre v1 e v2.</p>
+      </div>
+    </section>
+
+    <!-- Topico 3: Commands com uv -->
+    <section id="topico-3" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+        <h2 class="text-2xl font-bold">🖥️ Comandos com uv</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O <strong class="text-blue-400">uv</strong> e o gerenciador de pacotes Python moderno e ultra-rapido. Se voce usa uv, e essencial documentar os comandos porque o Claude por padrao sugere pip ou poetry.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Exemplo Completo</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <p class="text-blue-400 font-bold"># Commands</p>
+          <p class="mt-2">- `uv sync` - install/sync all dependencies from pyproject.toml</p>
+          <p>- `uv run uvicorn app.main:app --reload` - start dev server</p>
+          <p>- `uv run pytest` - run all tests</p>
+          <p>- `uv run pytest tests/path/to/test_file.py::test_name` - run single test</p>
+          <p>- `uv run pytest -x -v` - run tests, stop on first failure</p>
+          <p>- `uv run ruff check .` - lint check</p>
+          <p>- `uv run ruff format .` - auto-format code</p>
+          <p>- `uv run alembic upgrade head` - apply all migrations</p>
+          <p>- `uv run alembic revision --autogenerate -m "description"` - create migration</p>
+          <p>- `uv run alembic downgrade -1` - rollback last migration</p>
+          <p>- `docker-compose up -d` - start local PostgreSQL + Redis</p>
+          <p>- `uv add package-name` - add a new dependency</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Note que todos os comandos usam <code class="bg-dark-700 px-2 py-1 rounded text-blue-400">uv run</code> como prefixo. Sem essa documentacao, o Claude usaria <code class="bg-dark-700 px-2 py-1 rounded text-blue-400">python -m pytest</code> ou <code class="bg-dark-700 px-2 py-1 rounded text-blue-400">pip install</code> e quebraria o ambiente virtual.</p>
+      </div>
+    </section>
+
+    <!-- Topico 4: Conventions -->
+    <section id="topico-4" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+        <h2 class="text-2xl font-bold">📐 Convencoes do FastAPI</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">As convencoes de um backend FastAPI incluem <strong class="text-blue-400">estrutura de rotas, schemas Pydantic, modelos SQLAlchemy</strong> e padroes de tratamento de erros. Cada uma impacta diretamente a qualidade do codigo gerado.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Exemplo Completo</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <p class="text-blue-400 font-bold"># Code Conventions</p>
+          <p class="mt-2">## API Structure</p>
+          <p>- Routers in app/api/v1/endpoints/ (one file per resource)</p>
+          <p>- Schemas (Pydantic) in app/schemas/ (Create, Update, Response)</p>
+          <p>- Models (SQLAlchemy) in app/models/ (one class per file)</p>
+          <p>- Business logic in app/services/ (never in routers)</p>
+          <p>- Database queries in app/crud/ (repository pattern)</p>
+          <p class="mt-2">## Pydantic v2 Patterns</p>
+          <p>- Use model_validator instead of validator decorator</p>
+          <p>- Use model_config = ConfigDict(...) instead of class Config</p>
+          <p>- Schema names: UserCreate, UserUpdate, UserResponse</p>
+          <p class="mt-2">## SQLAlchemy 2.0 Patterns</p>
+          <p>- Use Mapped[type] and mapped_column() (new style)</p>
+          <p>- Async sessions via async_sessionmaker</p>
+          <p>- Relationships with lazy="selectin" for async compat</p>
+          <p class="mt-2">## General</p>
+          <p>- All functions with type hints (params + return)</p>
+          <p>- Docstrings in Google format for all public functions</p>
+          <p>- snake_case everywhere (PEP 8)</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">A regra "Business logic in app/services/ (never in routers)" e fundamental. Sem ela, o Claude tende a colocar toda a logica direto nas rotas, criando controllers gordos e dificeis de testar.</p>
+      </div>
+    </section>
+
+    <!-- Topico 5: Things To Avoid -->
+    <section id="topico-5" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+        <h2 class="text-2xl font-bold">🚫 O que Evitar no FastAPI</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">O ecossistema Python tem <strong class="text-blue-400">armadilhas especificas</strong> que o Claude pode cair, especialmente na diferenca entre APIs sincronas e assincronas, e entre versoes antigas e novas de SQLAlchemy e Pydantic.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Exemplo Completo</h3>
+        <div class="bg-dark-900 rounded-lg p-4 font-mono text-sm text-neutral-300 overflow-x-auto">
+          <p class="text-blue-400 font-bold"># Things To Avoid</p>
+          <p class="mt-2">- NEVER use SQLAlchemy 1.x patterns (Column(), declarative_base())</p>
+          <p>&nbsp;&nbsp;→ Use Mapped[], mapped_column(), DeclarativeBase</p>
+          <p>- NEVER use Pydantic v1 patterns (validator, class Config)</p>
+          <p>&nbsp;&nbsp;→ Use model_validator, ConfigDict</p>
+          <p>- DO NOT use sync database sessions (use async throughout)</p>
+          <p>- NEVER use pip install or poetry → always use uv</p>
+          <p>- DO NOT put business logic in route handlers</p>
+          <p>&nbsp;&nbsp;→ Create a service function in app/services/</p>
+          <p>- NEVER use print() for logging → use structlog</p>
+          <p>- DO NOT use datetime.utcnow() → use datetime.now(UTC)</p>
+          <p>- AVOID raw SQL queries → use SQLAlchemy ORM</p>
+          <p>- NEVER modify existing Alembic migrations</p>
+          <p>- DO NOT use wildcard imports (from module import *)</p>
+        </div>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">A regra "DO NOT use datetime.utcnow()" e um classico. Essa funcao esta deprecated no Python 3.12, mas o Claude ainda a sugere por habito. Incluir a alternativa correta (<code class="bg-dark-700 px-2 py-1 rounded text-blue-400">datetime.now(UTC)</code>) e essencial.</p>
+      </div>
+    </section>
+
+    <!-- Topico 6: Comparando Abordagens -->
+    <section id="topico-6" class="mb-16">
+      <div class="flex items-center space-x-4 mb-6">
+        <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+        <h2 class="text-2xl font-bold">⚖️ Comparando com Next.js</h2>
+      </div>
+      <p class="text-neutral-300 mb-6 leading-relaxed">Comparar os dois exemplos (Next.js e FastAPI) revela <strong class="text-blue-400">padroes universais</strong> que se aplicam a qualquer CLAUDE.md, independente da linguagem ou framework.</p>
+
+      <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">💡</span> Conceito Principal</h3>
+        <p class="text-neutral-300 mb-4">Apesar das diferencas tecnologicas, a estrutura do CLAUDE.md e sempre a mesma. As 6 secoes funcionam para qualquer stack.</p>
+        <div class="bg-dark-900 rounded-lg p-4 text-sm text-neutral-300 overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="text-blue-400 text-left">
+                <th class="pb-2 pr-4">Aspecto</th>
+                <th class="pb-2 pr-4">Next.js SaaS</th>
+                <th class="pb-2">FastAPI Backend</th>
+              </tr>
+            </thead>
+            <tbody class="font-mono text-xs">
+              <tr><td class="py-1 pr-4 text-neutral-400">Pkg Manager</td><td class="py-1 pr-4">pnpm</td><td class="py-1">uv</td></tr>
+              <tr><td class="py-1 pr-4 text-neutral-400">ORM</td><td class="py-1 pr-4">Prisma</td><td class="py-1">SQLAlchemy 2.0</td></tr>
+              <tr><td class="py-1 pr-4 text-neutral-400">Validation</td><td class="py-1 pr-4">TypeScript + Zod</td><td class="py-1">Pydantic v2</td></tr>
+              <tr><td class="py-1 pr-4 text-neutral-400">Testing</td><td class="py-1 pr-4">Vitest + Playwright</td><td class="py-1">pytest + httpx</td></tr>
+              <tr><td class="py-1 pr-4 text-neutral-400">Linting</td><td class="py-1 pr-4">ESLint</td><td class="py-1">ruff</td></tr>
+              <tr><td class="py-1 pr-4 text-neutral-400">Migrations</td><td class="py-1 pr-4">Prisma Migrate</td><td class="py-1">Alembic</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="space-y-2 text-neutral-300 mt-4">
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>A estrutura das 6 secoes funciona para qualquer linguagem</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>O nivel de detalhe deve ser o mesmo - especifico e sem ambiguidade</span></li>
+          <li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>As secoes "Things To Avoid" sao as mais especificas por stack</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+        <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚡</span> Dica Pratica</h3>
+        <p class="text-neutral-300">Se voce trabalha com multiplas stacks, crie um CLAUDE.md template para cada uma. Assim, quando iniciar um novo projeto, so precisa personalizar o overview e os comandos. As convencoes e anti-patterns podem ser reutilizados.</p>
+      </div>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+        <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📋</span> Resumo do Modulo</h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Overview focado em API</strong><span class="text-neutral-400"> - Descreva endpoints, consumidores e escala do backend</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Stack Python moderna</strong><span class="text-neutral-400"> - FastAPI, SQLAlchemy 2.0 async, Pydantic v2, uv</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Comandos com uv</strong><span class="text-neutral-400"> - Sempre prefixar com uv run, documentar teste individual</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Convencoes FastAPI</strong><span class="text-neutral-400"> - Separacao router/service/crud, schemas Pydantic v2, modelos async</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Anti-patterns Python</strong><span class="text-neutral-400"> - No SQLAlchemy 1.x, no Pydantic v1, no pip, no print()</span></div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <span class="text-blue-400 mt-1">✓</span>
+            <div><strong class="text-white">Padroes universais</strong><span class="text-neutral-400"> - A estrutura de 6 secoes funciona para qualquer stack</span></div>
+          </div>
+        </div>
+        <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+          <h3 class="font-semibold text-blue-400 mb-2">Proximo Modulo:</h3>
+          <p class="text-neutral-300">2.6 - O Comando /init</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="modulo-2-4.html" class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors">← Voltar</a>
+          <a href="modulo-2-6.html" class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors">Proximo Modulo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-dark-600 py-8 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>6 Pilares do Claude Code Resumido - 2026 | <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTopic(button) {
+      const topicItem = button.closest('.topic-item');
+      const explanation = topicItem.querySelector('.topic-explanation');
+      const moduleCard = button.closest('.bg-dark-800');
+      moduleCard.querySelectorAll('.topic-explanation.active').forEach(exp => { if (exp !== explanation) exp.classList.remove('active'); });
+      explanation.classList.toggle('active');
+    }
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
